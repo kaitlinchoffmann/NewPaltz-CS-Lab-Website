@@ -1,20 +1,32 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import NavBar from "./components/NavBar.jsx"; 
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar.jsx';
+import Home from './pages/Home';
+import EventCalendar from './pages/EventCalendar';
+import StudentHighlights from './pages/StudentHighlights';
+import TechBlogDisplay from './pages/TechBlogDisplay';
+import StudentResources from './pages/StudentResources';
+import FacultyDirectory from './pages/FacultyDirectory';
+import FAQ from './pages/FAQ';
 
 const App = () => {
   return (
-    <div className="bg-neutral-100 min-h-screen">
-      {/* Include the Navigation Bar */}
-      <NavBar/>
-
-      {/* Example content for the rest of the page */}
-      <main className="p-6">
-        <h1 className="text-2xl font-bold">Welcome to the Computer Science Lab Website</h1>
-        <p className="mt-4 text-gray-700">This is the main content area of your website.</p>
-      </main>
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-stone-50">
+        <NavBar />
+        <main className="container mx-auto px-4 py-8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/calendar" element={<EventCalendar />} />
+            <Route path="/student-highlights" element={<StudentHighlights />} />
+            <Route path="/tech-blog" element={<TechBlogDisplay />} />
+            <Route path="/student-resources" element={<StudentResources />} />
+            <Route path="/faculty-directory" element={<FacultyDirectory />} />
+            <Route path="/faq" element={<FAQ />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 };
+
 export default App;
