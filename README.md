@@ -18,16 +18,13 @@ This project aims to develop a **fully functional and intuitive website** for th
 
 ✔ **Event Calendar** – Displays department events, workshops, and guest lectures with filtering options.  
 ✔ **Faculty Directory** – Lists faculty profiles, office hours, and expertise areas with search functionality.  
+✔ **Student Resources** – Lists various helpful links for computer science students.  
 ✔ **Student Highlights** – Showcases student projects with GitHub links, subject to admin approval.  
-✔ **Lab Rules & Resources** – Outlines lab usage guidelines and available facilities.  
 ✔ **FAQ Page** – Answers common department-related questions.  
 ✔ **Tech Blog & News** – Publishes faculty and student posts on tech topics, announcements, and coding tips.  
 ✔ **Internship Board** – Lists available internship opportunities, deadlines, and application links.  
 ✔ **User Authentication** – Admin panel for faculty to manage site content and submissions.  
 ✔ **Search Bar** – Enables users to search for events, faculty, resources, or blog posts.  
-✔ **Usage Analytics** – Tracks interactions to provide insights for faculty.  
-✔ **Notifications** – Sends reminders for upcoming events and student submission approvals.  
-✔ **API Integrations** – Connects to GitHub for project showcases and job board APIs for internship listings.  
 
 ---
 
