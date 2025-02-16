@@ -1,0 +1,28 @@
+{
+    
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "tailwindCSS.includeLanguages": {
+      "javascript": "javascript",
+      "html": "HTML",
+      "javascriptreact": "javascriptreact"
+    },
+    "editor.inlineHints.enabled": true,  // Changed from inlineSuggestions
+    "css.validate": false,
+    "tailwindCSS.emmetCompletions": true,
+    "editor.suggest.showColors": true,    // Added for better Tailwind support
+    "editor.quickSuggestions.strings": true  // Added for string suggestions
+}
