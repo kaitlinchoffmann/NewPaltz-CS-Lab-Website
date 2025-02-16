@@ -1,83 +1,162 @@
 import { Link } from 'react-router-dom';
+import { AiOutlineHome } from 'react-icons/ai';
+import { IoCalendarClearOutline } from 'react-icons/io5';
+import { BsPencil } from 'react-icons/bs';
+import { PiFactoryLight } from 'react-icons/pi';
 
 /**
  * NavBar Component
- * Main navigation component for the CS Lab website
- * Features:
- * - Responsive layout with flexbox
- * - Dropdown menus for Blogs and Resources
- * - Interactive hover states
- * - Mobile-friendly design
+ *
+ * Primary navigation component with the following features:
+ * - Responsive layout using flexbox
+ * - Interactive dropdown menus for Blogs and Resources
+ * - Smooth hover transitions and visual feedback
+ * - Accessible navigation structure
+ * - Consistent branding elements
+ *
+ * Navigation Structure:
+ * - Home
+ * - Calendar
+ * - Blogs (dropdown)
+ *   └─ Student Highlights
+ *   └─ Tech Blog
+ * - Resources (dropdown)
+ *   └─ Student Resources
+ *   └─ Faculty Directory
+ *   └─ FAQ
+ *
+ * @component
  */
-
 
 const NavBar = () => {
   return (
-
-    // Main navigation container with flexible layout
-    <nav className="flex items-center justify-between bg-stone-50 px-5 py-5">
-      {/* CS Lab Logo - Positioned to the left 
-          Circular design with hover state */}
-
-      <Link to="/" className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-black">
+    <nav className="relative z-10 flex items-center justify-between bg-stone-50 px-5 py-5">
+      {/* Brand Logo
+       * - Circular design with consistent branding colors
+       * - Links to homepage for easy navigation reset
+       */}
+      <Link
+        to="/"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-black"
+      >
         CS lab
       </Link>
 
-      {/* Navigation Items - Centered in layout
-          Uses rounded container with stone background */}
-      <ul className="flex cursor-pointer flex-row gap-5 rounded-full bg-stone-200 px-5 py-2 text-stone-700">
-        {/* Standard navigation items with hover effects */}
-        <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
-          <Link to="/">Home</Link>
-        </li>
-         
-        <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
-          <Link to="/calendar">Calendar</Link>
-        </li>
+      {/* Main Navigation Menu
+       * - Centered layout with flexible spacing
+       * - Semi-transparent background with blur effect
+       * - Consistent hover states across items
+       */}
+      <ul className="flex gap-6 rounded-full bg-stone-200/80 px-6 py-3 shadow-inner backdrop-blur-sm">
+        {/* Primary Navigation Items
+         * Each item features:
+         * - Icon + text combination
+         * - Hover feedback with background change
+         * - Consistent padding and spacing
+         */}
+        <Link to="/">
+          <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+            <p className="flex items-center gap-1">
+              {' '}
+              <AiOutlineHome /> Home
+            </p>
+          </li>
+        </Link>
 
-        {/* Blogs Dropdown Menu
-            Uses group hover functionality for showing/hiding dropdown
-            Absolute positioning relative to parent li */}
+        <Link to="/calendar">
+          <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+            <p className="flex items-center gap-1">
+              <IoCalendarClearOutline /> Calendar
+            </p>
+          </li>
+        </Link>
+
+        {/* Blogs Dropdown
+         * - Uses group hover for interaction
+         * - Animated entry/exit
+         * - Maintains hover state during submenu interaction
+         */}
         <li className="group relative rounded-xl px-1 py-1 hover:bg-rose-300 hover:text-black">
-          <span className="transition-color cursor-pointer rounded-xl px-1 py-1 text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-            Blogs
+          <span className="transition-color rounded-xl text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
+            <p className="flex items-center gap-1">
+              {' '}
+              <BsPencil /> Blogs
+            </p>
           </span>
+
           {/* Dropdown container - hidden by default, shown on group hover */}
-          <ul className="absolute top-8 flex hidden w-40 cursor-pointer flex-col rounded-lg bg-stone-200 text-center shadow-md group-hover:block">
-            <li className="rounded-lg py-1 text-stone-700 transition-colors duration-300 hover:bg-rose-300 hover:text-black">
-              <Link to="/student-highlights">Student Highlights</Link>
+          <ul className="invisible absolute left-0 mt-2 w-48 scale-95 transform rounded-xl bg-stone-50/90 py-2 opacity-0 shadow-xl backdrop-blur-sm transition-all duration-300 ease-in-out group-hover:visible group-hover:scale-100 group-hover:opacity-100">
+            <li>
+              <Link
+                to="/student-highlights"
+                className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
+              >
+                Student Highlights
+              </Link>
             </li>
-            <li className="transition-color rounded-lg px-1 py-1 text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-              <Link to="/tech-blog">Tech Blog</Link>
+            <li>
+              <Link
+                to="/tech-blog"
+                className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
+              >
+                Tech Blog
+              </Link>
             </li>
           </ul>
         </li>
 
-        {/* Resources Dropdown Menu
-            Similar structure to Blogs dropdown
-            Contains links to various resource pages */}
+        {/* Resources Dropdown
+         * - Mirrors Blogs dropdown behavior
+         * - Consistent styling with main navigation
+         * - Contains frequently accessed resource links
+         */}
         <li className="group relative rounded-xl px-1 py-1 hover:bg-rose-300 hover:text-black">
-          <span className="transition-color cursor-pointer rounded-xl px-1 py-1 text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-            Resources
+          <span className="transition-color rounded-xl text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
+            <p className="flex items-center gap-1">
+              {' '}
+              <PiFactoryLight size={20} /> Resources{' '}
+            </p>
           </span>
-          {/* Resources dropdown container */}
-          <ul className="absolute top-8 flex hidden w-40 cursor-pointer flex-col rounded-lg bg-stone-200 text-center shadow-md group-hover:block">
-            <li className="rounded-lg py-1 text-stone-700 transition-colors duration-300 hover:bg-rose-300 hover:text-black">
-              <Link to="/student-resources">Student Resources</Link>
+
+          {/*Drop Down*/}
+          <ul className="invisible absolute left-0 mt-2 w-48 scale-95 transform rounded-xl bg-white/90 py-2 opacity-0 shadow-xl backdrop-blur-sm transition-all duration-300 ease-in-out group-hover:visible group-hover:scale-100 group-hover:opacity-100">
+            <li>
+              <Link
+                to="/student-resources"
+                className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
+              >
+                Student Resources
+              </Link>
             </li>
-            <li className="transition-color rounded-lg px-1 py-1 text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-              <Link to="/faculty-directory">Faculty Directory</Link>
+            <li>
+              <Link
+                to="/faculty"
+                className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
+              >
+                Faculty Directory
+              </Link>
             </li>
-            <li className="transition-color rounded-lg px-1 py-1 text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-              <Link to="/faq">FAQ</Link>
+            <li>
+              <Link
+                to="/faq"
+                className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
+              >
+                FAQ
+              </Link>
             </li>
           </ul>
         </li>
       </ul>
 
-      {/* Login Button - Positioned to the right
-          Uses orange highlight color for visibility */}
-      <Link to="/login" className="rounded-full bg-orange-300 px-5 py-1 font-medium text-black">
+      {/* Login Button
+       * - High-visibility styling
+       * - Clear click target
+       * - Hover feedback for interaction
+       */}
+      <Link
+        to="/login"
+        className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
+      >
         <p>login</p>
       </Link>
     </nav>
