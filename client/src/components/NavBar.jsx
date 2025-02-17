@@ -30,7 +30,7 @@ import { PiFactoryLight } from 'react-icons/pi';
 
 const NavBar = () => {
   return (
-    <nav className="relative z-10 flex items-center justify-between bg-stone-50 px-5 py-5">
+    <nav className="relative z-10 flex items-center justify-between bg-stone-50 px-10 py-5">
       {/* Brand Logo
        * - Circular design with consistent branding colors
        * - Links to homepage for easy navigation reset

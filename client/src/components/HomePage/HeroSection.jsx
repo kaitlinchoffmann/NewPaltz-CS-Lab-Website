@@ -52,15 +52,14 @@ const HeroSection = () => {
   const handleScroll = () => {
     const targetSection = document.getElementById('bento-box-section');
     if (targetSection) {
-
       // Calculate position with offset
       const offset = 75; // Adjust this value to control scroll amount
       const elementPosition = targetSection.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
-  
+
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };
@@ -98,7 +97,7 @@ const HeroSection = () => {
        */}
       <div className="relative z-10 mx-auto max-w-6xl space-y-8 px-6 text-stone-700 md:px-12">
         {/* Primary heading - Add text shadow */}
-        <h1 className="sm:text-4xl md:text-7xl font-bold text-white drop-shadow-lg ">
+        <h1 className="font-bold text-white drop-shadow-lg sm:text-4xl md:text-7xl">
           Welcome to the Computer Science Lab!
         </h1>
 
@@ -118,7 +117,7 @@ const HeroSection = () => {
         {/* Navigation button with bouncing arrow animation */}
         <button
           onClick={handleScroll}
-          className="mt-8 transform rounded-full bg-rose-400/70 px-6 py-3 text-lg font-medium shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-rose-400 hover:shadow-xl"
+          className="mt-8 transform rounded-full bg-rose-400/80 px-6 py-3 text-lg font-medium shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-rose-400 hover:shadow-xl"
           aria-label="Scroll to explore more content"
         >
           <p className="flex items-center gap-3 text-white">
