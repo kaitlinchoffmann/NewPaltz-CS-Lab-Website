@@ -1,19 +1,47 @@
-const mysql = require("mysql2");
-require("dotenv").config();
+/**
+ * Database configuration and connection module
+ * Establishes and manages MariaDB connection pool
+ */
 
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+require('dotenv').config();
+const mariadb = require('mariadb');
+
+/**
+ * MariaDB connection pool configuration
+ * Uses environment variables for secure configuration
+ * @constant {Object} pool
+ */
+const pool = mariadb.createPool({
+    host: process.env.DB_HOST,         // Database host address
+    user: process.env.DB_USER,         // Database username
+    password: process.env.DB_PASSWORD, // Database password
+    database: process.env.DB_NAME,     // Target database name
+    port: process.env.DB_PORT,         // Database port
+    connectionLimit: 5                  // Maximum number of connections in the pool
 });
 
-db.connect((err) => {
-    if (err) {
-        console.error("Database connection failed:", err);
-    } else {
-        console.log("Connected to MariaDB");
+/**
+ * Tests the database connection
+ * Attempts to connect and execute a simple query
+ * @async
+ * @function testConnection
+ * @returns {Promise<void>}
+ */
+async function testConnection() {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query("SELECT 'Connected to MariaDB!' AS message");
+        console.log(rows[0].message);
+    } catch (err) {
+        console.error("Error connecting to MariaDB:", err);
+    } finally {
+        if (conn) conn.release(); // Always release the connection back to the pool
     }
-});
+}
 
-module.exports = db;
+// Test connection on module load
+testConnection();
+
+// Export the connection pool for use in other modules
+module.exports = pool;
