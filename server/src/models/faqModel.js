@@ -18,13 +18,19 @@ async function getAllFAQs() {
  * @returns {Promise<number>} The ID of the newly created FAQ
  */
 async function addFAQ(question, answer) {
-    const conn = await pool.getConnection();
-    const result = await conn.query(
-        "INSERT INTO FAQs (question, answer VALUES (?, ?)",
-        [question,answer]
-    );
-    conn.release();
-    return result.insertId;
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const result = await conn.query(
+            "INSERT INTO FAQs (question, answer) VALUES (?, ?)",
+            [question, answer]
+        );
+        return result.insertId;
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) await conn.release();
+    }
 }
 
 /**
@@ -34,7 +40,7 @@ async function addFAQ(question, answer) {
  */
 async function removeFAQ(id) {
     const con = await pool.getConnection();
-    const result = await conn-query (
+    const result = await conn.query (
         "DELETE FROM FAQs WHERE id = ?",
         [id]
     );

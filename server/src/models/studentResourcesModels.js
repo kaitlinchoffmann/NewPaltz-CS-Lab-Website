@@ -21,7 +21,7 @@ async function getAllStudentResources() {
 async function addStudentResource(name, description, link) {
     const conn = await pool.getConnection();
     const result = await conn.query(
-        "INSERT INTO StudentResources (name, description, link VALUES (?, ?, ?)",
+        "INSERT INTO StudentResources (name, description, link) VALUES (?, ?, ?)",
         [name, description, link]
     );
     conn.release();
