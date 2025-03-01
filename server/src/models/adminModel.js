@@ -9,10 +9,10 @@ async function getAllAdmins() {
     return rows;
 }
 
-// Find an admin by email (for authentication)
-async function getAdminByEmail(email) {
+
+async function getAdminByUser(user) {
     const conn = await pool.getConnection();
-    const rows = await conn.query("SELECT * FROM Admins WHERE email = ?", [email]);
+    const rows = await conn.query("SELECT * FROM Admins WHERE user = ?", [user]);
     conn.release();
     return rows.length ? rows[0] : null;
 }
@@ -37,9 +37,10 @@ async function adminExists(user) {
     return result.length ? result[0] : null; // Return the admin record or null
 }
 
+//service handles the login process
 async function login(admin) {
     let cAdmin = await adminExists(admin.user); // Fetch admin by user
-
+    
     if (!cAdmin) throw new Error('User not found');
 
     // Compare hashed password in DB with plaintext password entered
@@ -49,7 +50,7 @@ async function login(admin) {
     return cAdmin; // Successful login
 }
 
-module.exports = { getAllAdmins, getAdminByEmail, addAdmin };
+module.exports = { getAllAdmins, getAdminByUser, addAdmin };
 
 /*TODO:
 * ✅ Hash passwords before inserting into the database (already done in adminModel.js).

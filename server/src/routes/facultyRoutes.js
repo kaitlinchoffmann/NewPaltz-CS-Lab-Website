@@ -5,8 +5,10 @@ const faculty = require('../models/facultyModel');
 router.get("/", async (req, res) => {
     try {
         const rows = await faculty.getAllFaculty();
+        console.log('Sending faculty data: ', rows);
         res.json(rows);
     } catch (err) {
+        console.log('Error getting faculty data:', err);
         res.status(500).json({ message: err.message });
     }
 });
