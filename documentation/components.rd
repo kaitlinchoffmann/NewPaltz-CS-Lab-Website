@@ -1,4 +1,4 @@
-```mermaid
+//Login 
 sequenceDiagram
     participant User
     participant LoginComponent
@@ -52,3 +52,78 @@ sequenceDiagram
         AuthService-->>LoginComponent: Show error
         LoginComponent->>User: Display error message
     end
+
+
+//faculty
+sequenceDiagram
+    participant User
+    participant FacultyDirectory
+    participant FacultyService
+    participant APIClient
+    participant FacultyRoutes
+    participant Database
+
+    User->>FacultyDirectory: Visit /faculty
+    FacultyDirectory->>FacultyService: getAllFaculty()
+    FacultyService->>APIClient: GET /faculty
+    APIClient->>FacultyRoutes: HTTP GET Request
+    FacultyRoutes->>Database: Query Faculty
+    Database-->>FacultyRoutes: Return Faculty Data
+    FacultyRoutes-->>APIClient: JSON Response
+    APIClient-->>FacultyService: Process Response
+    FacultyService-->>FacultyDirectory: Update State
+    FacultyDirectory->>User: Display Faculty Cards
+
+    User->>FacultyDirectory: Enter Search Term
+    FacultyDirectory->>FacultyDirectory: Filter Results
+    FacultyDirectory->>User: Update Display
+
+    //faq
+    sequenceDiagram
+    participant User
+    participant FAQComponent
+    participant FAQService
+    participant APIClient
+    participant FAQRoutes
+    participant Database
+
+    User->>FAQComponent: Visit /faq
+    FAQComponent->>FAQService: getAllFAQs()
+    FAQService->>APIClient: GET /faq
+    APIClient->>FAQRoutes: HTTP GET Request
+    FAQRoutes->>Database: Query FAQs
+    Database-->>FAQRoutes: Return FAQ Data
+    FAQRoutes-->>APIClient: JSON Response
+    APIClient-->>FAQService: Process Response
+    FAQService-->>FAQComponent: Update State
+    FAQComponent->>User: Display FAQ Cards
+
+    User->>FAQComponent: Search FAQs
+    FAQComponent->>FAQComponent: Filter Results
+    FAQComponent->>User: Show Filtered FAQs
+
+
+    //student resources
+
+    sequenceDiagram
+    participant User
+    participant ResourcesComponent
+    participant ResourceService
+    participant APIClient
+    participant ResourceRoutes
+    participant Database
+
+    User->>ResourcesComponent: Visit /resources
+    ResourcesComponent->>ResourceService: getAllResources()
+    ResourceService->>APIClient: GET /resources
+    APIClient->>ResourceRoutes: HTTP GET Request
+    ResourceRoutes->>Database: Query Resources
+    Database-->>ResourceRoutes: Return Resource Data
+    ResourceRoutes-->>APIClient: JSON Response
+    APIClient-->>ResourceService: Process Response
+    ResourceService-->>ResourcesComponent: Update State
+    ResourcesComponent->>User: Display Resource Cards
+
+    User->>ResourcesComponent: Filter Resources
+    ResourcesComponent->>ResourcesComponent: Apply Filters
+    ResourcesComponent->>User: Show Filtered Resources
