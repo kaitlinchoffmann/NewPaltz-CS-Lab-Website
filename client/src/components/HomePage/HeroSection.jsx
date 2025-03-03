@@ -12,12 +12,6 @@ import { IoMdArrowDown } from 'react-icons/io';
  * - Responsive text overlay with main heading and subheading
  * - Location indicator with visual enhancement
  * - Interactive "Explore" button with smooth scroll functionality
- *
- * @component
- * @example
- * return (
- *   <HeroSection />
- * )
  */
 
 const HeroSection = () => {
