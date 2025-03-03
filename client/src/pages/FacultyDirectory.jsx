@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import FacultyCard from "../components/FacultyDirectory/FacultyCard";
 import SearchBar from "../components/FacultyDirectory/SearchBar";
-import facultyData from "../components/FacultyDirectory/FacultyData";
 import facultyService from "../services/facultyService";
 
 export default function FacultyDirectory() {

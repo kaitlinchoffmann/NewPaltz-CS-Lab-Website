@@ -13,9 +13,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/faqs", faqRoutes);
+app.use("/faq", faqRoutes);
 app.use("/faculty", facultyRoutes);
-app.use("/student-resources", studentRoutes); // This should match the frontend service URL
+app.use("/student-resources", studentRoutes); 
 app.use("/admins", adminRoutes);
 app.use("/auth", authRoutes);
 
