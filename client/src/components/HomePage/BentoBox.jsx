@@ -82,7 +82,7 @@ const BentoBox = () => {
          * Quick access to faculty information
          * Compact single-grid layout
          */}
-                <Link to="/faculty-directory" className="group relative col-span-1 row-span-1 flex cursor-pointer flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-200 to-sky-300 p-6 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg">
+                <Link to="/faculty" className="group relative col-span-1 row-span-1 flex cursor-pointer flex-col items-center justify-center gap-4 overflow-hidden rounded-3xl bg-gradient-to-br from-sky-200 to-sky-300 p-6 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg">
                     <div className="absolute inset-0 translate-x-[-200%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-1000 group-hover:translate-x-[200%]" />
                     <IoIosBook
                         size={50}
