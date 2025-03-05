@@ -7,6 +7,8 @@ const facultyRoutes = require("./routes/facultyRoutes");
 const studentRoutes = require("./routes/studentResourcesRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
+const techBlogRoutes = require("./routes/techBlogPostsRoutes");
+const studentHighlightRoutes = require("./routes/StudentHighlightRoutes");
 
 const app = express();
 
@@ -18,6 +20,8 @@ app.use("/faculty", facultyRoutes);
 app.use("/student-resources", studentRoutes); 
 app.use("/admins", adminRoutes);
 app.use("/auth", authRoutes);
+app.use("/tech-blog", techBlogRoutes);
+app.use("/student-highlights", studentHighlightRoutes);
 
 app.get("/", (req, res) => {
     res.send("CS Department Website API is running...");

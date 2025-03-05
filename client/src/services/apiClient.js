@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5001', // Remove /api
+  baseURL: 'http://localhost:5001', 
   headers: {
     'Content-Type': 'application/json'
   }
@@ -12,7 +12,7 @@ apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('adminToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-    console.log('User authenticated'); // Add this line
+    console.log('User authenticated'); 
   }
   return config;
 });

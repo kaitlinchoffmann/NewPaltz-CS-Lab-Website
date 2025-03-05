@@ -17,6 +17,7 @@ const pool = mariadb.createPool({
     password: process.env.DB_PASSWORD, // Database password
     database: process.env.DB_NAME,     // Target database name
     port: process.env.DB_PORT,         // Database port
+    allowPublicKeyRetrieval: true, //TODO: IS THIS SAFE?
     connectionLimit: 5                  // Maximum number of connections in the pool
 });
 
