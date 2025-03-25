@@ -13,6 +13,8 @@ export default function TechBlogDisplay() {
   //state to keep track of any errors
   const [error, setError] = useState(null);
 
+  //state to keep track of selected category
+  const [selectedCategory, setSelectedCategory] = useState('recent posts');
 
   //when the page loads, get the blog posts
   useEffect(() => {
@@ -31,21 +33,38 @@ export default function TechBlogDisplay() {
 
   }, []); //only do this when the page first loads
 
+  //make this a table in database
+  const categories = ['recent posts', 'programming', 'web development', 'cybersecurity', 'artificial intelligence', 'Technical Interviews'];
+
+  const filteredPosts = selectedCategory === 'recent posts'
+    ? blogPosts
+    : blogPosts.filter(post => post.category === selectedCategory);
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Tech Articles</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold mb-4">Tech Articles</h1>
+        <button className="bg-orange-300 hover:bg-orange-400 hover:shadow-lg hover:scale-105 transition-all ease-in-out duration-300 p-2 rounded-lg">Submit Article</button>
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="p-2 border rounded-md"
+        >
+          {categories.map(category => (
+            <option key={category} value={category}>
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </option>
+          ))}
+        </select>
 
-      {/* Show if we're still getting  Posts */}
-      {isLoading && <p>Getting Blog Posts...</p>}
+        {/* Show if we're still getting Posts */}
+        {isLoading && <p>Getting Blog Posts...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+      </div>
 
-      {/* Show if something went wrong */}
-      {error && <p className="text-red-500">{error}</p>}
-
-      {/* Display Tech Blog Posts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        {blogPosts.map((post) => (
-          <TechCard key={post.id} post={post} />
+        {filteredPosts.map((post, index) => (
+          <TechCard key={post.id} post={post} index={index} />
         ))}
       </div>
     </div>
