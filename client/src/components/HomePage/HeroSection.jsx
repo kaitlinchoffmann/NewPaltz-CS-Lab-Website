@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import labImage from '../../assets/homepage/lab-image.jpg';
-import labImage2 from '../../assets/homepage/lab-image-2.jpg';
-import labImage3 from '../../assets/homepage/lab-image-3.jpg';
+import labImage from '../../assets/homepage/lab-image.png';
+import labImage2 from '../../assets/homepage/lab-image-2.png';
+import labImage3 from '../../assets/homepage/lab-image-3.png';
+import labImage4 from '../../assets/homepage/lab-image-4.jpg';
 import { IoMdArrowDown } from 'react-icons/io';
 
 /**
@@ -20,7 +21,7 @@ const HeroSection = () => {
    * images: Array of imported background images for the carousel
    */
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [labImage, labImage2, labImage3];
+  const images = [labImage, labImage2, labImage3,labImage4];
 
   /**
    * Image Carousel Effect

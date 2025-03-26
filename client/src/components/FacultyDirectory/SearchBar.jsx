@@ -1,13 +1,19 @@
 
 
+import { IoIosSearch } from "react-icons/io";
+
+
 export default function SearchBar({ searchQuery, setSearchQuery }) {
-    return (
+  return (
+    <div className="flex gap-2 items-center flex-row ">
+      <IoIosSearch size={25}/>
       <input
         type="text"
-        placeholder="Search faculty..."
+        placeholder="Search Faculty..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full p-2 border rounded-md mb-4"
+        className=" p-2 border rounded-md "
       />
-    );
+    </div>
+  );
   }

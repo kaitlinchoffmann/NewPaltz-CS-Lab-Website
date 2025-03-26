@@ -10,6 +10,8 @@ import Contributions from './pages/Contributions.jsx';
 import Login from './pages/Login';
 import FAQ from './pages/FAQ';
 import Footer from './components/Footer.jsx';
+import ArticleForm from './pages/SubmitArticle.jsx';
+import ProjectForm from './pages/SubmitProject.jsx';
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contributions" element={<Contributions />} />
+            <Route path="/submit-article" element={<ArticleForm/>} />
+            <Route path="/submit-project" element={<ProjectForm/>} />
           </Routes>
         </main>
         <Footer />
