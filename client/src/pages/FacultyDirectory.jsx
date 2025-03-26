@@ -100,6 +100,10 @@ export default function FacultyDirectory() {
           Next
         </button>
       </div>
+
+      {!isLoading && filteredFaculty.length === 0 && (
+        <p className="text-stone-500 text-center mt-10">No resources found.</p>
+      )}
     </div>
   );
 }

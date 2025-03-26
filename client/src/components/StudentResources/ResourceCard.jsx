@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // Array of background colors to cycle through
 const bgColors = [
@@ -9,27 +9,34 @@ const bgColors = [
   'bg-indigo-200',
 ];
 
-
-
 export default function ResourceCard({ studentResource, index }) {
   const color = bgColors[index % bgColors.length];
-    return (
-      <div className={`border flex flex-col h-72  p-3 rounded-2xl shadow-md ${color}
-        hover:shadow-lg hover:-translate-y-3 transition-all duration-300`}>
-        <div className='flex flex-col gap-4 py-2 justify-center h-full text-center'>
-            <div className="flex flex-col gap-4 justify-center h-full text-center">
-              <h2 className="text-xl px-2  text-stone-800 font-semibold">{studentResource.name}</h2>
-              <p className="text-lg max-w-90 px-8 text-stone-600"> {studentResource.description}</p>
-            </div>
 
-            {/*if studentResource has a link, then show "More Info" */}
-            {studentResource.link && (
-              <div >
-                <a href={studentResource.link} target="_blank" className="md:text-lg cursor-pointer text-stone-800  p-2 rounded-lg hover:underline  hover:shadow-lg  transition-all duration-300 bg-neutral-50">More Info</a>
-              </div>
-            )}
+  return (
+    <div
+      className={`rounded-2xl border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-2 ${color}`}
+    >
+      <div className="flex flex-col justify-between h-60 p-6 text-center">
+        <div className="space-y-3">
+          <h2 className="text-xl font-semibold text-stone-800">
+            {studentResource.name}
+          </h2>
+          <p className="text-sm text-stone-700">
+            {studentResource.description}
+          </p>
         </div>
+
+        {studentResource.link && (
+          <a
+            href={studentResource.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 text-sm font-medium text-blue-600 px-4 py-2 rounded-md hover:underline transition"
+          >
+            More Info →
+          </a>
+        )}
       </div>
-    );
-  }
-  
+    </div>
+  );
+}

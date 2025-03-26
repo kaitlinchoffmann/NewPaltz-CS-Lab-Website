@@ -1,61 +1,50 @@
-
-
-//import necessary hooks and services
-import { useState } from 'react';  // For managing state
-import { useNavigate } from 'react-router-dom';  // For navigation after login
-import authService from '../services/authService';  // Our authentication service
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import authService from '../services/authService';
 
 const Login = () => {
-
-  // State to store form input values
   const [formData, setFormData] = useState({
-    username: '',  // Store username input
-    password: ''   // Store password input
+    username: '',
+    password: '',
   });
-
-  // State to store error messages
   const [error, setError] = useState('');
-
-  // Hook for programmatic navigation
   const navigate = useNavigate();
 
-  // Handler for input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;  // Get input name and new value
-    setFormData(prevState => ({
-      ...prevState,  // Keep existing form data
-      [name]: value  // Update only the changed field
-    }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Handler for form submission
   const handleLogin = async (e) => {
-    e.preventDefault();  // Prevent default form submission
+    e.preventDefault();
     try {
-      // Attempt to log in using authService(service)
       const response = await authService.login(formData);
       console.log('Login successful:', response);
-      navigate("/");  // Redirect after successful login(hook)
+      navigate('/');
     } catch (err) {
-      //state hooks updates error message
-      // Handle login errors
-      console.error("Login Error:", err.message);
-      setError(err.message || "Invalid credentials. Please try again.");
+      console.error('Login Error:', err.message);
+      setError(err.message || 'Invalid credentials. Please try again.');
     }
   };
 
-  // JSX for the login form
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-        <h1 className="mb-4 text-4xl font-bold text-gray-800">Admin Login</h1>
-        {/* Show error message if exists */}
-        {error && <p className="text-red-300">{error}</p>}
-        {/* Login form */}
-        <form onSubmit={handleLogin} className="space-y-4">  {/* BUG: handleSubmit should be handleLogin */}
-          {/* Username input */}
-          <div>
-            <label htmlFor="username">Username</label>
+    <div className="flex h-screen items-center justify-center bg-stone-50 px-4">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-md">
+        <h1 className="text-3xl font-bold text-stone-800">Admin Login</h1>
+
+        {error && (
+          <p className="text-red-500 text-sm font-medium bg-red-100 p-2 rounded">
+            {error}
+          </p>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-4">
+
+          {/* Username */}
+          <div className="flex flex-col">
+            <label htmlFor="username" className="text-sm font-medium text-stone-700 mb-1">
+              Username
+            </label>
             <input
               type="text"
               name="username"
@@ -63,11 +52,15 @@ const Login = () => {
               value={formData.username}
               onChange={handleChange}
               required
+              className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          {/* Password input */}
-          <div>
-            <label htmlFor="password">Password</label>
+
+          {/* Password */}
+          <div className="flex flex-col">
+            <label htmlFor="password" className="text-sm font-medium text-stone-700 mb-1">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -75,10 +68,17 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          {/* Submit button */}
-          <button type="submit">Login</button>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-300 text-white rounded-md hover:bg-blue-400 transition font-medium"
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
