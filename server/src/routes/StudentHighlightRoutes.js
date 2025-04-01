@@ -17,18 +17,12 @@ router.get("/", async (req, res) => {
 // POST new student highlight
 router.post("/", async (req, res) => {
     try {
-        const { title, summary, projectLink, githubLink, name } = req.body;
-        const result = await highlightPosts.addPost(
-            title,
-            summary,
-            projectLink,
-            githubLink,
-            name
-        );
-        res.status(201).json({ id: result });
+        await highlightPosts.addPost(req.body);
+
+        res.status(201).json({ message: "Student highlight added successfully" });
     } catch (err) {
-        console.error('Error adding student highlight:', err);
-        res.status(500).json({ message: err.message });
+        console.error("Error adding student highlight:", err);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 

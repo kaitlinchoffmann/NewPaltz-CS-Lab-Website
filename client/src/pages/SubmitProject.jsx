@@ -1,37 +1,45 @@
 import { useState } from "react";
-
+import studentHighlightService from "../services/studentHighlightService";
 export default function SubmitProject() {
+  
   const [formData, setFormData] = useState({
     title: "",
     author: "",
+    description: "",
     summary: "",
-    link: "",
-    image: null,
+    websiteLink: "",
+    githubLink: "",
+    headshotURL: "",
   });
 
   const maxSummaryLength = 300;
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "image") {
-      setFormData((prev) => ({
-        ...prev,
-        image: files[0],
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting Project:", formData);
-    // Here, you'd usually send `formData` to your server or API
-  };
+
+    const postData = {
+        title: formData.title,
+        summary: formData.summary,
+        description: formData.description,
+        projectLink: formData.link || null,
+        githubLink: formData.githubLink || null,
+        name: formData.author,
+        headshot: formData.image || null,
+    };
+
+    try {
+        const response = await studentHighlightService.createPost(postData);
+        console.log("Project submitted successfully:", response);
+        alert("Project submitted successfully!");
+    } catch (error) {
+        console.error("Error submitting project:", error);
+        alert("Failed to submit project. Please try again.");
+    }
+};
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
@@ -95,34 +103,49 @@ export default function SubmitProject() {
           </div>
         </div>
 
-        {/* Post */}
-        <div className="flex flex-col">
-          <label htmlFor="summary" className="text-sm font-medium text-stone-700 mb-1">
-            Project Full Description 
-          </label>
-          <textarea
-            name="summary"
-            id="summary"
-            rows={6}
-            value={formData.summary}
-            onChange={handleChange}
-            required
-            className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300 resize-none"
-          />
-        </div>
+        {/* Description */}
+          <div className="flex flex-col">
+            <label htmlFor="description" className="text-sm font-medium text-stone-700 mb-1">
+              Project Full Description 
+            </label>
+            <textarea
+              name="description"
+              id="description"
+              rows={6}
+              value={formData.description}
+              onChange={handleChange}
+              required
+              className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300 resize-none"
+            />
+          </div>
 
-        {/* Link */}
+          {/* Website link */}
         <div className="flex flex-col">
           <label htmlFor="link" className="text-sm font-medium text-stone-700 mb-1">
-            Link to Website or Github
+            Link to Website(If Applicable)
           </label>
           <input
             type="url"
-            name="link"
-            id="link"
-            value={formData.link}
+            name="websiteLink"
+            id="websiteLink"
+            value={formData.websiteLink || ""}
             onChange={handleChange}
-            required
+            placeholder="https://example.com/article"
+            className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+
+        {/* Github link */}
+        <div className="flex flex-col">
+          <label htmlFor="githublink" className="text-sm font-medium text-stone-700 mb-1">
+            Link to Github(If Applicable)
+          </label>
+          <input
+            type="url"
+            name="githubLink"
+            id="githubLink"
+            value={formData.githubLink || ""}
+            onChange={handleChange}
             placeholder="https://example.com/article"
             className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
           />
