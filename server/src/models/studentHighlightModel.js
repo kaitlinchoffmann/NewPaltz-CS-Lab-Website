@@ -19,14 +19,22 @@ async function getAllPosts() {
  * @returns {Promise<number>} The ID of the newly created post
  */
 
-async function addPost(title, summary, projectLink, githubLink, name) {
+async function addPost(postData) {
+    const { title, summary, description, projectLink, githubLink, name, headshot } = postData;
+    
     const conn = await pool.getConnection();
-    const result = await conn.query(
-        "INSERT INTO TechBlog (project_title, summary, project_link, github_link, student_name) VALUES (?, ?, ?, ?, ?)",
-        [title, summary, projectLink, githubLink, name]
-    );
-    conn.release();
-    return result.insertId;
+    try {
+        const result = await conn.query(
+            "INSERT INTO StudentHighlightBlog (project_title, summary, project_description, project_link, github_link, student_name, headshot_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [title, summary, description, projectLink, githubLink, name, headshot]
+        );
+        return result.insertId; // Return the ID of the newly created post
+    } catch (err) {
+        console.error("Database Error:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
 }
 
 
