@@ -1,4 +1,5 @@
 import { useState } from "react";
+import techBlogService from "../services/techBlogService";
 
 export default function ArticleForm() {
   const [formData, setFormData] = useState({
@@ -6,32 +7,35 @@ export default function ArticleForm() {
     author: "",
     summary: "",
     link: "",
-    image: null,
+    image: "",
   });
 
   const maxSummaryLength = 300;
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "image") {
-      setFormData((prev) => ({
-        ...prev,
-        image: files[0],
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting Article:", formData);
-    // Here, you'd usually send `formData` to your server or API
-  };
+
+    const postData = {
+        title: formData.title,
+        summary: formData.summary,
+        link: formData.link,
+        author: formData.author,
+        image: formData.image || null,
+    };
+
+    try {
+        const response = await techBlogService.createPost(postData);
+        console.log("Article submitted successfully:", response);
+        alert("Article submitted successfully!");
+    } catch (error) {
+        console.error("Error submitting Article:", error);
+        alert("Failed to submit Article. Please try again.");
+    }
+};
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">

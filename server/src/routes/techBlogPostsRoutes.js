@@ -15,17 +15,12 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const result = await techPosts.addPost(
-            req.body.name,
-            req.body.email,
-            req.body.website,
-            req.body.office,
-            req.body.office_hours,
-            req.body.expertise
-        );
-        res.json({ id: result });
+        await techPosts.addPost(req.body);
+
+        res.status(201).json({ message: "Tech Blog Post added successfully" });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("Error adding tech blog post :", err);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 

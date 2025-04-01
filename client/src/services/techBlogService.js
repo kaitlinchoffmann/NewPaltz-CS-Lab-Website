@@ -11,7 +11,17 @@ const techBlogService = {
       console.error('Error fetching Tech Blog Posts:', error);
       throw new Error('Failed to load Blog Posts');
     }
-  }
+  },
+
+  async createPost(postData) {
+    try {
+        const response = await axios.post(baseURL, postData);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating Technology Post:", error);
+        throw new Error("Failed to create Blog Post");
+    }
+  },
 };
 
 export default techBlogService;

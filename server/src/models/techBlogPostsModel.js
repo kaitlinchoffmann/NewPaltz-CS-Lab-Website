@@ -6,7 +6,7 @@ const pool = require('../config/db');
  */
 async function getAllPosts() {
     const conn = await pool.getConnection();
-    const rows = await conn.query("SELECT * FROM TechBlog");
+    const rows = await conn.query("SELECT * FROM TechBlog WHERE approved = 1");
     conn.release();
     return rows;
 }
@@ -14,12 +14,13 @@ async function getAllPosts() {
 /**
  * Adds a new post to the database
  * @param {string} title - Post title
- * @param {string} summary - Post content summmary
+ * @param {string} summary - Post content summary
  * @param {string} author - Post author
  * @returns {Promise<number>} The ID of the newly created post
  */
 
-async function addPost(title, summary, link, author) {
+async function addPost(postData) {
+    const { title, summary, link, author } = postData;
     const conn = await pool.getConnection();
     const result = await conn.query(
         "INSERT INTO TechBlog (title, summary, external_link, author_name) VALUES (?, ?, ?, ?)",

@@ -6,7 +6,7 @@ const pool = require('../config/db');
  */
 async function getAllPosts() {
     const conn = await pool.getConnection();
-    const rows = await conn.query("SELECT * FROM StudentHighlightBlog");
+    const rows = await conn.query("SELECT * FROM StudentHighlightBlog WHERE approved = 1");
     conn.release();
     return rows;
 }
