@@ -25,6 +25,7 @@ const authService = {
   //handles logout
   logout() {
     localStorage.removeItem('adminToken');
+    console.log('Logged out successfully');
   },
 
   //checks if user is logged in
@@ -35,6 +36,7 @@ const authService = {
   getToken() {
     return localStorage.getItem('adminToken');
   }
+  
 };
 
 export default authService;

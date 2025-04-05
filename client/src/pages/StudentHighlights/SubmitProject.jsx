@@ -1,5 +1,5 @@
 import { useState } from "react";
-import studentHighlightService from "../services/studentHighlightService";
+import studentHighlightService from "../../services/studentHighlightService";
 export default function SubmitProject() {
   
   const [formData, setFormData] = useState({

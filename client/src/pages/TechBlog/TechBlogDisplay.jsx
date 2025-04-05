@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import TechCard from "../components/TechBlog/TechCard";
-import techBlogService from "../services/techBlogService";
+import TechCard from "../../components/TechBlog/TechCard";
+import techBlogService from "../../services/techBlogService";
 
 export default function TechBlogDisplay() {
   // State to store blog posts

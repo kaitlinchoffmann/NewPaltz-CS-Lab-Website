@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineHome } from 'react-icons/ai';
 import { IoCalendarClearOutline } from 'react-icons/io5';
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 import { BsPencil } from 'react-icons/bs';
 import { PiFactoryLight } from 'react-icons/pi';
-
+import authService from '../services/authService';
 /**
  * NavBar Component
  *
@@ -29,12 +31,19 @@ import { PiFactoryLight } from 'react-icons/pi';
  */
 
 const NavBar = () => {
+
+  const isAuthenticated = authService.isAuthenticated();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate('/');
+  };
+
+
   return (
     <nav className="relative z-10 flex items-center justify-between bg-stone-50 px-10 py-5">
-      {/* Brand Logo
-       * - Circular design with consistent branding colors
-       * - Links to homepage for easy navigation reset
-       */}
+      {/* Logo*/}
       <Link
         to="/"
         className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-black"
@@ -64,7 +73,7 @@ const NavBar = () => {
         </Link>
 
         <Link to="/calendar">
-          <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+          <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300  hover:shadow">
             <p className="flex items-center gap-1">
               <IoCalendarClearOutline /> Calendar
             </p>
@@ -76,9 +85,9 @@ const NavBar = () => {
          * - Animated entry/exit
          * - Maintains hover state during submenu interaction
          */}
-        <li className="group relative rounded-xl px-1 py-1 hover:bg-rose-300 hover:text-black">
-          <span className="transition-color rounded-xl text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-            <p className="flex items-center gap-1">
+        <li className="group relative rounded-xl px-1 py-1 hover:bg-rose-300 ">
+          <span className="transition-color rounded-xl text-stone-700 duration-300 hover:bg-rose-300">
+            <p className="flex items-center gap-1 text-black">
               {' '}
               <BsPencil /> Blogs
             </p>
@@ -110,9 +119,9 @@ const NavBar = () => {
          * - Consistent styling with main navigation
          * - Contains frequently accessed resource links
          */}
-        <li className="group relative rounded-xl px-1 py-1 hover:bg-rose-300 hover:text-black">
-          <span className="transition-color rounded-xl text-stone-700 duration-300 hover:bg-rose-300 hover:text-black">
-            <p className="flex items-center gap-1">
+        <li className="group relative rounded-xl px-1 py-1 hover:bg-rose-300 ">
+          <span className="transition-color rounded-xl text-black duration-300 hover:bg-rose-300">
+            <p className="flex items-center gap-1 text-black">
               {' '}
               <PiFactoryLight size={20} /> Resources{' '}
             </p>
@@ -145,20 +154,37 @@ const NavBar = () => {
               </Link>
             </li>
           </ul>
+          
         </li>
+            {/* Admin Option (Visible only when authenticated) */}
+            {isAuthenticated && (
+            <Link to="/admin-panel">
+              <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+                <p className="flex items-center gap-1">
+                <MdOutlineAdminPanelSettings size = {20} />
+                Admin Panel</p>
+              </li>
+            </Link>
+        )}
+
       </ul>
 
-      {/* Login Button
-       * - High-visibility styling
-       * - Clear click target
-       * - Hover feedback for interaction
+      {/* Login/Logout
        */}
-      <Link
-        to="/login"
-        className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
-      >
-        <p>login</p>
-      </Link>
+       {isAuthenticated ? (
+        <button
+          onClick={handleLogout}
+          className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
+        >
+          <p>Logout</p>
+        </button>) : (
+          <Link
+            to="/admin-login"
+            className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
+          >
+            <p>Login</p>
+          </Link>
+        )}
     </nav>
   );
 };

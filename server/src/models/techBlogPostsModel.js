@@ -11,6 +11,21 @@ async function getAllPosts() {
     return rows;
 }
 
+async function getPendingPosts() {
+    const conn = await pool.getConnection();
+    try {
+        const rows = await conn.query("SELECT * FROM TechBlog WHERE approved = 0");
+        console.log("Query result:", rows);
+        return rows;
+    } catch(error)
+    {
+        console.error("Error executing query:", error);
+        throw error; // Rethrow the error to be handled by the caller
+    } finally {
+        conn.release();
+    }
+}
+
 /**
  * Adds a new post to the database
  * @param {string} title - Post title
@@ -99,5 +114,53 @@ async function updateAuthor(id, author) {
     return result.affectedRows;
 }
 
-module.exports = { getAllPosts, addPost, removePost, updateTitle, updateSummary, updateLink, updateAuthor };
+async function approvePost(id) {
+    const conn = await pool.getConnection();
+    const result = await conn.query(
+        "UPDATE TechBlog SET approved = 1 WHERE id = ?",
+        [id]
+    );
+    conn.release();
+    return result.affectedRows;
+}
+
+async function getPostById(id) {
+    const conn = await pool.getConnection();
+    const result = await conn.query(
+        "SELECT * FROM TechBlog WHERE id = ?",
+        [id]
+    );
+    conn.release();
+    return result;
+}
+
+async function editPost(id, updatedData) {
+    const conn = await pool.getConnection();
+    try {
+        const query = `
+            UPDATE TechBlog
+            SET title = ?, author_name = ?, summary = ?, external_link = ?, image = ?
+            WHERE id = ?
+        `;
+        const values = [
+            updatedData.title,
+            updatedData.author_name,
+            updatedData.summary,
+            updatedData.external_link,
+            updatedData.image,
+            id,
+        ];
+        const result = await conn.query(query, values); // Remove destructuring for debugging
+        console.log("Query Result:", result);
+        return result.affectedRows; // Adjust this based on the actual structure of `result`
+    } catch (err) {
+        console.error("Error in editPost:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
+}
+
+module.exports = { getAllPosts, getPendingPosts, getPostById, addPost, approvePost, removePost, 
+    updateTitle, updateSummary, updateLink, updateAuthor, editPost };
 

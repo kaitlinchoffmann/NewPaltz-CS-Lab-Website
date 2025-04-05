@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const highlightPosts = require('../models/studentHighlightModel');
 
-// GET all student highlights
+// GET approved student highlights
 router.get("/", async (req, res) => {
     try {
         const rows = await highlightPosts.getAllPosts();
@@ -13,6 +13,37 @@ router.get("/", async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+
+// GET pending student highlights
+router.get("/pending", async (req, res) => {
+    try {
+        const rows = await highlightPosts.getPendingPosts();
+        console.log('Sending student highlights:', rows);
+        res.json(rows);
+    } catch (err) {
+        console.error('Error getting student highlights:', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// GET student highlight by ID
+router.get("/:id", async (req, res) => {
+    try {
+        const rows = await highlightPosts.getPostById(req.params.id);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "Student highlight not found" });
+        }
+        console.log('Sending student highlights:', rows);
+        res.json(rows[0]);
+    } catch (err) {
+        console.error('Error getting student highlights:', err);
+        res.status(500).json({ message: err.message });
+    }
+}
+);
+
 
 // POST new student highlight
 router.post("/", async (req, res) => {
@@ -29,9 +60,9 @@ router.post("/", async (req, res) => {
 // DELETE student highlight
 router.delete("/:id", async (req, res) => {
     try {
-        const result = await highlightPosts.removePost(req.params.id);
+        const result = await highlightPosts.deletePost(req.params.id);
         if (result === 0) {
-            return res.status(404).json({ message: "Student highlight not found" });
+            return res.status(404).json({ message: "Student highlight not found"});
         }
         res.json({ affectedRows: result });
     } catch (err) {
@@ -120,6 +151,34 @@ router.put("/:id/headshot", async (req, res) => {
         res.json({ affectedRows: result });
     } catch (err) {
         console.error('Error updating headshot:', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// UPDATE headshot URL
+router.put("/approve/:id", async (req, res) => {
+    try {
+        const result = await highlightPosts.approve(req.params.id);
+        if (result === 0) {
+            return res.status(404).json({ message: "Student highlight not found" });
+        }
+        res.json({ affectedRows: result });
+    } catch (err) {
+        console.error('Error updating approval:', err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// UPDATE all fields of a student highlight
+router.put("/:id", async (req, res) => {
+    try {
+        const result = await highlightPosts.editPost(req.params.id, req.body); // Pass all form data to the model
+        if (result === 0) {
+            return res.status(404).json({ message: "Student highlight not found" });
+        }
+        res.json({ affectedRows: result });
+    } catch (err) {
+        console.error("Error updating student highlight:", err);
         res.status(500).json({ message: err.message });
     }
 });

@@ -11,10 +11,25 @@ async function getAllPosts() {
     return rows;
 }
 
+async function getPendingPosts() {
+    const conn = await pool.getConnection();
+    try {
+        const rows = await conn.query("SELECT * FROM StudentHighlightBlog WHERE approved = 0");
+        console.log("Query result:", rows);
+        return rows;
+    } catch(error)
+    {
+        console.error("Error executing query:", error);
+        throw error; // Rethrow the error to be handled by the caller
+    } finally {
+        conn.release();
+    }
+}
+
 /**
  * Adds a new post to the database
  * @param {string} title - Post title
- * @param {string} summary - Post content summmary
+ * @param {string} summary - Post content summary
  * @param {string} author - Post author
  * @returns {Promise<number>} The ID of the newly created post
  */
@@ -38,7 +53,7 @@ async function addPost(postData) {
 }
 
 
-async function removePost(id) {
+async function deletePost(id) {
     const conn = await pool.getConnection();
     const result = await conn.query(
         "DELETE FROM StudentHighlightBlog WHERE id = ?",
@@ -148,5 +163,56 @@ async function updateStudentName(id, studentName) {
     return result.affectedRows;
 }
 
-module.exports = { getAllPosts, addPost, removePost, updateTitle, updateSummary, updateDescription, updateProjectLink, updateHeadshot, updateTechnologies, updateGithubLink, updateStudentName };
+async function approve(id) {
+    const conn = await pool.getConnection();
+    const result = await conn.query(
+        "UPDATE StudentHighlightBlog SET approved = 1 WHERE id = ?",
+        [id]
+    );
+    conn.release();
+    return result.affectedRows;
+}
+
+async function getPostById(id) {
+    const conn = await pool.getConnection();
+    const result = await conn.query(
+        "SELECT * FROM StudentHighlightBlog WHERE id = ?",
+        [id]
+    );
+    conn.release();
+    return result;
+}
+
+async function editPost(id, updatedData) {
+    const conn = await pool.getConnection();
+    try {
+        const query = `
+            UPDATE StudentHighlightBlog
+            SET project_title = ?, student_name = ?, project_description = ?, summary = ?, project_link = ?, github_link = ?, headshot_url = ?
+            WHERE id = ?
+        `;
+        const values = [
+            updatedData.project_title,
+            updatedData.student_name,
+            updatedData.project_description,
+            updatedData.summary,
+            updatedData.project_link,
+            updatedData.github_link,
+            updatedData.headshot_url,
+            id,
+        ];
+        const result = await conn.query(query, values); // Remove destructuring for debugging
+        console.log("Query Result:", result);
+        return result.affectedRows; // Adjust this based on the actual structure of `result`
+    } catch (err) {
+        console.error("Error in editPost:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
+}
+
+module.exports = { getAllPosts, getPendingPosts, addPost, deletePost, updateTitle, updateSummary, updateDescription, 
+    updateProjectLink, updateHeadshot, updateTechnologies, updateGithubLink, updateStudentName,
+     approve, getPostById, editPost};
 

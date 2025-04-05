@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import StudentCard from "../components/StudentHighlights/studentCard";
-import studentHighlightService from "../services/studentHighlightService";
+import StudentCard from "../../components/StudentHighlights/studentCard";
+import studentHighlightService from "../../services/studentHighlightService";
 import { Link } from "react-router-dom";
 
 export default function StudentHighlights() {
@@ -16,7 +16,7 @@ export default function StudentHighlights() {
 
   //state to keep track of selected category
   const [selectedCategory, setSelectedCategory] = useState('recent posts');
-
+ 
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 4; // Number of resource cards to display per page
 
@@ -45,30 +45,30 @@ export default function StudentHighlights() {
     ? blogPosts
     : blogPosts.filter(post => post.category === selectedCategory);
 
-    // Calculate pagination indices
-    const indexOfLastCard = currentPage * cardsPerPage;
-    const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-    const currentResources = filteredResources.slice(indexOfFirstCard, indexOfLastCard);
-  
-    /**
-     * Handles pagination navigation
-     * @param {string} direction - Direction to navigate ("next" or "prev")
-     */
-    const handlePageChange = (direction) => {
-      if (direction === "next" && currentPage < Math.ceil(filteredResources.length / cardsPerPage)) {
-        setCurrentPage(currentPage + 1);
-      } else if (direction === "prev" && currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
-    };
+  // Calculate pagination indices
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentResources = filteredResources.slice(indexOfFirstCard, indexOfLastCard);
+
+  /**
+   * Handles pagination navigation
+   * @param {string} direction - Direction to navigate ("next" or "prev")
+   */
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < Math.ceil(filteredResources.length / cardsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold mb-4">Student Projects </h1>
-        <Link to = "/submit-project">
+        <Link to="/submit-project">
           <button className="bg-orange-300 hover:bg-orange-400 hover:shadow-lg hover:scale-105 transition-all ease-in-out duration-300 p-2 rounded-lg">Submit A Project</button>
-       </Link>
+        </Link>
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -116,8 +116,8 @@ export default function StudentHighlights() {
       </div>
 
       {!isLoading && filteredResources.length === 0 && (
-          <p className="text-stone-500 text-center mt-10">No resources found.</p>
+        <p className="text-stone-500 text-center mt-10">No resources found.</p>
       )}
-  </div>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import techBlogService from "../services/techBlogService";
+import techBlogService from "../../services/techBlogService";
 
 export default function ArticleForm() {
   const [formData, setFormData] = useState({
@@ -20,29 +20,29 @@ export default function ArticleForm() {
     e.preventDefault();
 
     const postData = {
-        title: formData.title,
-        summary: formData.summary,
-        link: formData.link,
-        author: formData.author,
-        image: formData.image || null,
+      title: formData.title,
+      summary: formData.summary,
+      link: formData.link,
+      author: formData.author,
+      image: formData.image || null,
     };
 
     try {
-        const response = await techBlogService.createPost(postData);
-        console.log("Article submitted successfully:", response);
-        alert("Article submitted successfully!");
+      const response = await techBlogService.createPost(postData);
+      console.log("Article submitted successfully:", response);
+      alert("Article submitted successfully!");
     } catch (error) {
-        console.error("Error submitting Article:", error);
-        alert("Failed to submit Article. Please try again.");
+      console.error("Error submitting Article:", error);
+      alert("Failed to submit Article. Please try again.");
     }
-};
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h2 className="text-3xl font-bold text-stone-800 mb-2">Submit an Article</h2>
       <p className="text-stone-600 p-2">
         Tell us about an article you'd like to feature — our admins will take a look!
-       </p>
+      </p>
       <form
         onSubmit={handleSubmit}
         className="space-y-6 bg-white p-6 rounded-xl shadow-md"
