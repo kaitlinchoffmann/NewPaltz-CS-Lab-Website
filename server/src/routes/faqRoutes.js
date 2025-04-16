@@ -11,21 +11,30 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/:id", async (req, res) => {
+    try {
+        const faq = await faqs.getFaqByID(req.params.id);
+        res.json(faq);
+    } catch (err) {
+        console.error("Error in getFAQById route:", err);
+        res.status(500).json({ message: "Failed to fetch FAQ", error: err.message });
+    }
+});
+
+//add faq
 router.post("/", async (req, res) => {
     try {
-        const result = await faqs.addFAQ(
-            req.body.question,
-            req.body.answer
-        );
-        res.json({ id: result });
+        const result = await faqs.addFAQ(req.body);
+        res.status(201).json({ id: result, message: "FAQ added successfully" }); // Return a clear success response
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("Error in addFAQ route:", err);
+        res.status(500).json({ message: "Failed to add FAQ", error: err.message });
     }
 });
 
 router.delete("/:id", async (req, res) => {
     try {
-        const result = await faqs.removeFAQ(req.params.id);
+        const result = await faqs.deleteFAQ(req.params.id);
         res.json({ affectedRows: result });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -47,6 +56,16 @@ router.put("/:id/answer", async (req, res) => {
         res.json({ affectedRows: result });
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+});
+
+router.put("/:id", async (req, res) => {
+    try {
+        const result = await faqs.updateFAQ(req.params.id, req.body);
+        res.json({ affectedRows: result, message: "FAQ updated successfully" });
+    } catch (err) {
+        console.error("Error in updateFAQ route:", err);
+        res.status(500).json({ message: "Failed to update FAQ", error: err.message });
     }
 });
 

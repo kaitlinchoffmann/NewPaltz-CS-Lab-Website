@@ -8,7 +8,7 @@ const bgColors = [
   "bg-indigo-200",
 ];
 
-export default function FaqCard({ faq, index }) {
+export default function faqCard({ faq, index }) {
   const color = bgColors[index % bgColors.length];
 
   return (

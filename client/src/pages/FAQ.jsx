@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import FaqCard from "../components/FAQPage/FAQCard";
 import SearchBar from "../components/FAQPage/SearchBar";
+import FaqCard from "../components/FAQPage/faqCard";
 import faqService from "../services/faqService";
 
 export default function FAQ() {
