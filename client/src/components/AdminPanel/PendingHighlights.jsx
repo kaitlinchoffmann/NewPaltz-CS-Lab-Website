@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import studentHighlightService from "../../services/studentHighlightService";
-import StudentCard from "../../components/StudentHighlights/studentCard"; // Corrected path
+import StudentCard from "../../components/StudentHighlights/StudentCard"; // Corrected path
 
 export default function PendingHighlights() {
     const [isLoading, setIsLoading] = useState(true);

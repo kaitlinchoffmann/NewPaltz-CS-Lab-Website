@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import StudentCard from "../../components/StudentHighlights/studentCard";
 import studentHighlightService from "../../services/studentHighlightService";
+import StudentCard from "../../components/StudentHighlights/StudentCard.jsx";
 import { Link } from "react-router-dom";
 
 export default function StudentHighlights() {
