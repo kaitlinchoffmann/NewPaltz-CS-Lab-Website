@@ -59,6 +59,7 @@ router.put("/:id/answer", async (req, res) => {
     }
 });
 
+//edit all columns
 router.put("/:id", async (req, res) => {
     try {
         const result = await faqs.updateFAQ(req.params.id, req.body);

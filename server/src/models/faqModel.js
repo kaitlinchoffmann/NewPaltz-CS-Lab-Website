@@ -139,7 +139,7 @@ async function getFaqByID(id) {
             const result = await conn.query(query, values);
             return result.affectedRows;
         } catch (err) {
-            console.error("Error in updateAllFields:", err);
+            console.error("Error in updateFAQ:", err);
             throw err;
         } finally {
             conn.release();

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import FacultyCard from "../FacultyDirectory/FacultyCard";
 import SearchBar from "../FacultyDirectory/SearchBar";
 import facultyService from "../../services/facultyService";
+import { Link } from "react-router-dom";
 
 
 export default function FacultySection() {
@@ -79,15 +80,17 @@ export default function FacultySection() {
     }
     };
 
+
+
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <div className="flex justify-between mb-6">
-        <button 
+        <Link 
+            to="/create-faculty"
             className = "px-4 py-2 bg-yellow-300 rounded-md hover:bg-yellow-400 transition"
-            onClick={() => handleAdd()}
         >
             Add Faculty Member
-        </button>
+        </Link>
 
         {/* Show if we're still getting the faculty */}
         {isLoading && <p>Getting faculty list...</p>}
@@ -102,22 +105,24 @@ export default function FacultySection() {
       {/* Display faculty cards */}
       <div className="grid md:grid-cols-1 lg:grid-cols-2  gap-4 mt-4">
         {currentFaculty.map((faculty, index) => (
-            <div className="w-full flex flex-col items-center justify-center" key={faculty.id}>
+            <div className = "w-full flex flex-col items-center justify-center"key={faculty.id}>
                 <FacultyCard key={faculty.id} faculty={faculty} index={index} />
-                <div className="flex py-1 gap-2">
-                    <button
-                        className="px-4 py-2 bg-green-300 rounded-md hover:bg-green-400 transition"
-                    >
-                        Edit
-                    </button>
-                    <button
-                        onClick={() => handleDelete(faculty.id)} 
-                        className="px-4 py-2 bg-red-300 rounded-md hover:bg-red-400 transition"
-                    >
-                        Delete
-                    </button>
-                </div>
-            </div>
+
+              <div className="flex py-1 gap-2" >
+                  <Link
+                      to={`/admin-panel/faculty/edit/${faculty.id}`}
+                      className="px-4 py-2 bg-green-300 rounded-md hover:bg-green-400 transition"
+                  >
+                      Edit
+                  </Link>
+                  <button
+                      onClick={() => handleDelete(faculty.id)} 
+                      className="px-4 py-2 bg-red-300 rounded-md hover:bg-red-400 transition"
+                  >
+                      Delete
+                  </button>
+              </div>
+          </div>
         ))}
       </div>
 

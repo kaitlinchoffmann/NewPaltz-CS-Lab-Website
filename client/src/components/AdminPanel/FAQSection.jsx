@@ -79,11 +79,6 @@ export default function FAQ() {
         }
     };
 
-    // Handle adding a faq
-    const handleAdd = async () => {
-
-    };
-
     return (
         <div className="p-6 max-w-5xl mx-auto">
             {/* Heading Container - Title & Search Box */}

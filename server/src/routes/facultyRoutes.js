@@ -13,22 +13,40 @@ router.get("/", async (req, res) => {
     }
 });
 
+//add faculty
 router.post("/", async (req, res) => {
     try {
-        const result = await faculty.addFaculty(
-            req.body.name,
-            req.body.email,
-            req.body.website,
-            req.body.office,
-            req.body.office_hours,
-            req.body.expertise
-        );
-        res.json({ id: result });
+        const result = await faculty.addFaculty(req.body);
+        res.status(201).json({ id: result.toString(), message: "FAQ added successfully" }); // Return a clear success response
+    } catch (err) {
+        console.error("Error adding faculty:", err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//get faculty by id
+router.get("/:id", async (req, res) => {
+    try {
+        const row = await faculty.getFacultyById(req.params.id);
+        res.json(row);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
+//edit all columns
+router.put("/:id", async (req, res) => {
+    try {
+        const result = await faculty.editFaculty(req.params.id, req.body);
+        res.json({ affectedRows: result, message: "Faculty Member updated successfully"  });
+    } catch (err) {
+        console.error("Cannot Update Faculty Member", err)
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+//delete faculty
 router.delete("/:id", async (req, res) => {
     try {
         const result = await faculty.removeFaculty(req.params.id);
@@ -38,41 +56,6 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-router.put("/:id/email", async (req, res) => {
-    try {
-        const result = await faculty.updateEmail(req.params.id, req.body.email);
-        res.json({ affectedRows: result });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-router.put("/:id/office", async (req, res) => {
-    try {
-        const result = await faculty.updateOffice(req.params.id, req.body.office);
-        res.json({ affectedRows: result });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-router.put("/:id/office_hours", async (req, res) => {
-    try {
-        const result = await faculty.updateOfficeHours(req.params.id, req.body.office_hours);
-        res.json({ affectedRows: result });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-}); 
-
-router.put("/:id/expertise", async (req, res) => {
-    try {
-        const result = await faculty.updateExpertise(req.params.id, req.body.expertise);
-        res.json({ affectedRows: result });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
 
 
 module.exports = router;

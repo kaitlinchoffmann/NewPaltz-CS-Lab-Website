@@ -19,6 +19,8 @@ import StudentHighlightsAdminEdit from './pages/AdminPanel/StudentHighlightsAdmi
 import CreateFAQPage from './pages/AdminPanel/FAQ/FAQAddPage';
 import FAQAdminEdit from './pages/AdminPanel/FAQ/FAQEditPage';
 import FAQEditPage from './pages/AdminPanel/FAQ/FAQEditPage';
+import FacultyAddPage from './pages/AdminPanel/Faculty/FacultyAddPage';
+import FacultyEditPage from './pages/AdminPanel/Faculty/FacultyEditPage';
 
 const App = () => {
   return (
@@ -40,17 +42,18 @@ const App = () => {
             <Route path="/student-resources" element={<StudentResources />} />
 
             <Route path="/faculty" element={<FacultyDirectory />} />
+            <Route path="/admin-panel/faculty/edit/:id" element={<FacultyEditPage />} />
+            <Route path="/create-faculty" element={<FacultyAddPage />} />
 
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/faq/edit/:id" element={<FAQAdminEdit />} />
             <Route path="/admin-panel/faq/edit/:id" element={<FAQEditPage />} />
+            <Route path="/create-faq" element={<CreateFAQPage />} />
 
             <Route path="/admin-login" element={<Login />} />
             <Route path="/contributions" element={<Contributions />} />
             <Route path="/submit-article" element={<ArticleForm />} />
             <Route path="/submit-project" element={<ProjectForm />} />
             <Route path="/admin-panel" element={<AdminPanel />} />
-            <Route path="/create-faq" element={<CreateFAQPage />} />
           </Routes>
         </main>
         <Footer />

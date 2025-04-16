@@ -14,7 +14,7 @@ export default function FacultyCard({ faculty, index }) {
 
   return (
     <div
-      className={`flex h-64 rounded-2xl border shadow-sm p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-2 ${color}`}
+      className={`flex h-64 rounded-2xl border w-full shadow-sm p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-2 ${color}`}
     >
       {/* Left: Image + Role */}
       <div className="w-1/3 flex flex-col justify-center items-center gap-3">

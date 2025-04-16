@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 // Get all admins (for debugging, no password included)
 async function getAllAdmins() {
     const conn = await pool.getConnection();
-    const rows = await conn.query("SELECT admin_id, name, email, role FROM Admins");
+    const rows = await conn.query("SELECT id, name, email, role FROM Admins");
     conn.release();
     return rows;
 }
@@ -52,8 +52,3 @@ async function login(admin) {
 
 module.exports = { getAllAdmins, getAdminByUser, addAdmin };
 
-/*TODO:
-* ✅ Hash passwords before inserting into the database (already done in adminModel.js).
-* 🔒 Authenticate admin users: Implement JWT authentication for login/logout.
-* 🚀 Restrict access: Allow only authenticated admins to manage faculty, resources, and FAQs.
-*/

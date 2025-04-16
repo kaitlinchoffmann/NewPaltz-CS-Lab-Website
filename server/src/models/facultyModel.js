@@ -13,23 +13,31 @@ async function getAllFaculty() {
 
 /**
  * Adds a new faculty member to the database
- * @param {string} name - Faculty member's name
- * @param {string} email - Faculty member's email
- * @param {string} website - Faculty member's website URL
- * @param {string} office - Faculty member's office location
- * @param {string} office_hours - Faculty member's office hours
- * @param {string} expertise - Faculty member's areas of expertise
- * @returns {Promise<number>} The ID of the newly created faculty record
+ * @param {Object} faculty - Object containing faculty details
+ * @param {string} faculty.name - Faculty member's name
+ * @param {string} faculty.email - Faculty member's email
+ * @param {string} faculty.office - Faculty member's office location
+ * @param {string} faculty.office_hours - Faculty member's office hours
+ * @param {string} faculty.expertise - Faculty member's areas of expertise
+ * @param {string} faculty.website - Faculty member's website URL
+ * @returns {Promise<number>} ID of the newly added faculty member
  */
-async function addFaculty(name, email, website, office, office_hours, expertise) {
+async function addFaculty(faculty) {
     const conn = await pool.getConnection();
-    const result = await conn.query(
-        "INSERT INTO Faculty (name, email, website, office, office_hours, expertise) VALUES (?, ?, ?, ?, ?, ?)",
-        [name, email, website, office, office_hours, expertise]
-    );
-    conn.release();
-    return result.insertId;
+    try {
+        const result = await conn.query(
+            "INSERT INTO Faculty (name, email, phone_number, office_location, office_hours, role, website, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            [faculty.name, faculty.email, faculty.phone_number, faculty.office_location, faculty.office_hours, faculty.role, faculty.website, faculty.img]
+        );
+        return result.insertId;
+    } catch (err) {
+        console.error("Error in addFaculty:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
 }
+
 
 /**
  * Removes a faculty member from the database
@@ -46,101 +54,7 @@ async function removeFaculty(id) {
     return result.affectedRows;
 }
 
-/**
- * Updates a faculty member's email
- * @param {number} id - Faculty member's ID
- * @param {string} email - New email address
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateEmail(id, email) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE Faculty SET email = ? WHERE id = ?",
-        [email, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
 
-/**
- * Updates a faculty member's office location
- * @param {number} id - Faculty member's ID
- * @param {string} office - New office location
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateOffice(id, office) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE Faculty SET office = ? WHERE id = ?",
-        [office, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
-
-/**
- * Updates a faculty member's office hours
- * @param {number} id - Faculty member's ID
- * @param {string} office_hours - New office hours
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateOfficeHours(id, office_hours) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE Faculty SET office_hours = ? WHERE id = ?",
-        [office_hours, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
-
-/**
- * Updates a faculty member's expertise areas
- * @param {number} id - Faculty member's ID
- * @param {string} expertise - New areas of expertise
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateExpertise(id, expertise) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE Faculty SET expertise = ? WHERE id = ?",
-        [expertise, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
-
-/**
- * Updates a faculty member's name
- * @param {number} id - Faculty member's ID
- * @param {string} name - New name
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateName(id, name) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE Faculty SET name = ? WHERE id = ?",
-        [name, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
-
-/**
- * Updates a faculty member's website URL
- * @param {number} id - Faculty member's ID
- * @param {string} website - New website URL
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateWebsite(id, website) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE Faculty SET website = ? WHERE id = ?",
-        [website, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
 
 /**
  * Retrieves a specific faculty member by ID
@@ -154,5 +68,52 @@ async function getFaculty(id) {
     return rows;
 }
 
-module.exports = { getAllFaculty, addFaculty, removeFaculty, updateEmail, updateOffice, 
-    updateOfficeHours, updateExpertise, updateName, updateWebsite, getFaculty };
+/**
+ * Updates multiple fields of a faculty member
+ * @param {number} id - Faculty member's ID
+ * @param {Object} updates - Object containing the fields to update and their new values
+ * @returns {Promise<number>} Number of affected rows
+ */
+async function editFaculty(id, data) {
+    const conn = await pool.getConnection();
+    console.log("Updating faculty with data:", data);
+    console.log("Faculty ID:", id);
+    try {
+        const query = `
+            UPDATE Faculty
+            SET name = ?, role = ?, email = ?, office_hours = ?, office_location = ?, phone_number = ?, website = ?, img = ? 
+            WHERE id = ?
+        `;
+        const values = [
+            data.name, 
+            data.role, 
+            data.email, 
+            data.office_hours, 
+            data.office_location, 
+            data.phone_number, 
+            data.website, 
+            data.img,
+            id];
+        const result = await conn.query(query, values);
+        return result.affectedRows;
+    } catch (err) {
+        console.error("Error in updateFAQ:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
+}
+
+/**
+ * Retrieves a faculty member by their ID
+ * @param {number} id - The ID of the faculty member to retrieve
+ * @returns {Promise<Object|null>} Faculty member object or null if not found
+ */
+async function getFacultyById(id) {
+    const conn = await pool.getConnection();
+    const rows = await conn.query("SELECT * FROM Faculty WHERE id = ?", [id]);
+    conn.release();
+    return rows.length > 0 ? rows[0] : null;
+}
+
+module.exports = { getAllFaculty, addFaculty, removeFaculty,editFaculty,getFaculty, getFacultyById};
