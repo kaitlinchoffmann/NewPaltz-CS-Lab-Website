@@ -66,18 +66,20 @@ export default function FacultySection() {
 
     // Handle deleting a faculty
     const handleDelete = async (id) => {
-    if (!id) {
-        console.error("Faculty ID is undefined");
-        return;
-    }
-    try {
-        await facultyService.deleteFaculty(id);
-        console.log(`Deleted Faculty with ID: ${id}`);
-        // Optionally, update the state to remove the deleted Faculty
-        setFaculty((prevFaculty) => prevFaculty.filter((f) => f.id !== id));
-    } catch (error) {
-        console.error(`Error deleting Faculty with id: ${id}`, error);
-    }
+      if (window.confirm("Are you sure you want to delete this Faculty Member?")) {
+        if (!id) {
+            console.error("Faculty ID is undefined");
+            return;
+        }
+        try {
+            await facultyService.deleteFaculty(id);
+            console.log(`Deleted Faculty with ID: ${id}`);
+            // Optionally, update the state to remove the deleted Faculty
+            setFaculty((prevFaculty) => prevFaculty.filter((f) => f.id !== id));
+        } catch (error) {
+            console.error(`Error deleting Faculty with id: ${id}`, error);
+        }
+      }
     };
 
 

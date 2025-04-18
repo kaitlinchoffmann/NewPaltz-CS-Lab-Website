@@ -65,18 +65,20 @@ export default function FAQ() {
 
     // Handle deleting a faq
     const handleDelete = async (faqID) => {
-        if (!faqID) {
-            console.error("FAQ ID is undefined");
-            return;
-        }
-        try {
-            await faqService.deleteFAQ(faqID);
-            console.log(`Deleted FAQ with ID: ${faqID}`);
-            // Optionally, update the state to remove the deleted FAQ
-            setFaq((prevFaq) => prevFaq.filter((f) => f.id !== faqID));
-        } catch (error) {
-            console.error(`Error deleting faq with id: ${faqID}`, error);
-        }
+        if (window.confirm("Are you sure you want to delete this FAQ?")) {
+            if (!faqID) {
+                console.error("FAQ ID is undefined");
+                return;
+            }
+            try {
+                await faqService.deleteFAQ(faqID);
+                console.log(`Deleted FAQ with ID: ${faqID}`);
+                // Optionally, update the state to remove the deleted FAQ
+                setFaq((prevFaq) => prevFaq.filter((f) => f.id !== faqID));
+            } catch (error) {
+                console.error(`Error deleting faq with id: ${faqID}`, error);
+            }
+     }
     };
 
     return (

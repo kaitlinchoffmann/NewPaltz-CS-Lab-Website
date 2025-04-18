@@ -11,23 +11,27 @@ export default function PendingArticles() {
 
     // Approve a post
     const handleApproveArticle = async (postId) => {
-        try {
-            await techBlogService.approveArticle(postId);
-            console.log(`Approved Article with ID: ${postId}`);
-            setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
-        } catch (error) {
-            console.error("Error approving Article:", error);
+        if (window.confirm("Are you sure you want to delete this Article?")) {
+            try {
+                await techBlogService.approveArticle(postId);
+                console.log(`Approved Article with ID: ${postId}`);
+                setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
+            } catch (error) {
+                console.error("Error approving Article:", error);
+            }
         }
     };
 
     // Handle deleting a post
     const handleDeleteArticle = async (postId) => {
-        try {
-            await techBlogService.deleteArticle(postId);
-            console.log(`Deleted post with ID: ${postId}`);
-            setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the deleted post from the list
-        } catch (error) {
-            console.error("Error deleting post:", error);
+        if (window.confirm("Are you sure you want to Delete this Article?")) {
+            try {
+                await techBlogService.deleteArticle(postId);
+                console.log(`Deleted post with ID: ${postId}`);
+                setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the deleted post from the list
+            } catch (error) {
+                console.error("Error deleting post:", error);
+            }
         }
     };
 

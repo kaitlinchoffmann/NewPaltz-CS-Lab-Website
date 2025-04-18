@@ -18,14 +18,22 @@ async function getAllStudentResources() {
  * @param {string} link - Resource URL or location
  * @returns {Promise<number>} The ID of the newly created resource
  */
-async function addStudentResource(name, description, link) {
+async function addStudentResource(postData) {
+    const { name, description, link } = postData;
+    
     const conn = await pool.getConnection();
-    const result = await conn.query(
-        "INSERT INTO StudentResources (name, description, link) VALUES (?, ?, ?)",
-        [name, description, link]
-    );
-    conn.release();
-    return result.insertId;
+    try {
+        const result = await conn.query(
+            "INSERT INTO StudentResources (name, description, link) VALUES (?, ?, ?)",
+            [name, description, link]
+        );
+        return result.insertId; // Return the ID of the newly created post
+    } catch (err) {
+        console.error("Database Error:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
 }
 
 /**
@@ -44,52 +52,65 @@ async function removeStudentResource(id) {
 }
 
 /**
- * Updates a student resource's name
- * @param {number} id - Resource ID
- * @param {string} name - New resource name
+ * Updates an existing student resource in the database
+ * @param {Object} body - The request body containing updated resource data
+ * @param {number} body.id - The ID of the resource to update
+ * @param {string} body.name - New resource name
+ * @param {string} body.description - New resource description
+ * @param {string} body.link - New resource URL or location
  * @returns {Promise<number>} Number of affected rows
  */
-async function updateName(id, name) {  
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE StudentResources SET name = ? WHERE id = ?",
-        [name, id]
-    );
-    conn.release();
-    return result.affectedRows;
+async function editStudentResource(id, updatedData) {
+    const conn = await pool.getConnection();
+    try {
+        const query = `
+            UPDATE StudentResources
+            SET name = ?, description = ?, link = ?
+            WHERE id = ?
+        `;
+        const values = [
+            updatedData.name,
+            updatedData.description,
+            updatedData.link,
+            id,
+        ];
+        const result = await conn.query(query, values);
+        return result.affectedRows;
+    } catch (err) {
+        console.error("Error in editStudentResource:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
 }
 
 /**
- * Updates a student resource's description
- * @param {number} id - Resource ID
- * @param {string} description - New resource description
- * @returns {Promise<number>} Number of affected rows
+ * Retrieves a specific student resource by its ID
+ * @param {number} id - The ID of the resource to retrieve
+ * @returns {Promise<Object|null>} The resource object if found, or null if not found
  */
-async function updateDescription(id, description) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE StudentResources SET description = ? WHERE id = ?",
-        [description, id]
-    );
-    conn.release();
-    return result.affectedRows;
+async function getResourceByID(id) {
+    const conn = await pool.getConnection();
+    try {
+        const result = await conn.query(
+            "SELECT * FROM StudentResources WHERE id = ?",
+            [id]
+        );
+        conn.release();
+        return result[0] || null; // Return the first row or null if not found
+    } catch (err) {
+        console.error("Error in getResourceByID:", err);
+        throw err;
+    } finally {
+        conn.release();
+    }
 }
 
-/**
- * Updates a student resource's link
- * @param {number} id - Resource ID
- * @param {string} link - New resource URL or location
- * @returns {Promise<number>} Number of affected rows
- */
-async function updateLink(id, link) {
-    const conn = await pool.getConnection();    
-    const result = await conn.query(
-        "UPDATE StudentResources SET link = ? WHERE id = ?",
-        [link, id]
-    );
-    conn.release();
-    return result.affectedRows;
-}
-
-module.exports = { getAllStudentResources, addStudentResource, removeStudentResource, updateName, updateDescription, updateLink };
+module.exports = {
+    getAllStudentResources,
+    addStudentResource,
+    removeStudentResource,
+    editStudentResource,
+    getResourceByID
+};
 

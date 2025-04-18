@@ -3,6 +3,8 @@ import PendingHighlights from "../../components/AdminPanel/PendingHighlights";
 import PendingArticles from "../../components/AdminPanel/PendingArticles";
 import FAQSection from "../../components/AdminPanel/FAQSection"
 import FacultySection from "../../components/AdminPanel/FacultySection"
+import StudentResourceSection from "../../components/AdminPanel/StudentResourceSection";
+import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
 
 export default function AdminPanel() {
     const [activeCategory, setActiveCategory] = useState("student-highlights");
@@ -132,9 +134,19 @@ export default function AdminPanel() {
                 <FAQSection/>
             )}
 
-            {/* Faqs section */}
+            {/* Faculty directory section */}
             {activeCategory === "faculty-directory" && (
                 <FacultySection/>
+            )}
+
+            {/* Student Resources section */}
+            {activeCategory === "student-resources" && (
+                <StudentResourceSection/>
+            )}
+
+            {/* Current Student Highlights section */}
+            {activeCategory === "cur-student-highlights" && (
+                <HighlightsSection/>
             )}
 
         </div>
