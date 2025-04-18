@@ -21,6 +21,8 @@ import FAQAdminEdit from './pages/AdminPanel/FAQ/FAQEditPage';
 import FAQEditPage from './pages/AdminPanel/FAQ/FAQEditPage';
 import FacultyAddPage from './pages/AdminPanel/Faculty/FacultyAddPage';
 import FacultyEditPage from './pages/AdminPanel/Faculty/FacultyEditPage';
+import StudentResourcesAddPage from './pages/AdminPanel/StudentResources/ResourceAddPage';
+import StudentResourcesEditPage from './pages/AdminPanel/StudentResources/ResourceEditPage';
 
 const App = () => {
   return (
@@ -40,6 +42,8 @@ const App = () => {
             <Route path="/tech-blog/edit/:id" element={<TechBlogAdminEdit />} />
 
             <Route path="/student-resources" element={<StudentResources />} />
+            <Route path="/admin-panel/student-resources/edit/:id" element={<StudentResourcesEditPage />} />
+            <Route path="/create-student-resource" element={<StudentResourcesAddPage />} />
 
             <Route path="/faculty" element={<FacultyDirectory />} />
             <Route path="/admin-panel/faculty/edit/:id" element={<FacultyEditPage />} />

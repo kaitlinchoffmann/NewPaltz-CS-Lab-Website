@@ -13,12 +13,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const result = await studentResources.addStudentResource(
-            req.body.name,
-            req.body.description,
-            req.body.link
-        );
-        res.json({ id: result });
+        const result = await studentResources.addStudentResource(req.body);
+        res.status(201).json({ message: "Student highlight added successfully" });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -33,30 +29,26 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-router.put("/:id/name", async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
-        const result = await studentResources.updateName(req.params.id, req.body.name);
+        const result = await studentResources.editStudentResource(req.params.id, req.body);
         res.json({ affectedRows: result });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
-router.put("/:id/description", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
-        const result = await studentResources.updateDescription(req.params.id, req.body.description);
-        res.json({ affectedRows: result });
+        const resource = await studentResources.getResourceByID(req.params.id);
+        if (!resource) {
+            return res.status(404).json({ message: "Student resource not found" });
+        }
+        console.log("Sending student resource:", resource);
+        res.json(resource); // Send the resource object
     } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
-
-router.put("/:id/link", async (req, res) => {
-    try {
-        const result = await studentResources.updateLink(req.params.id, req.body.link);
-        res.json({ affectedRows: result });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("Error getting student resource by ID:", err);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 

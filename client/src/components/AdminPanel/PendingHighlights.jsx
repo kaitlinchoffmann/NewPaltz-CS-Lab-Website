@@ -26,25 +26,29 @@ export default function PendingHighlights() {
 
     // Approve a post
     const handleApproveHighlight = async (postId) => {
-        try {
-            await studentHighlightService.approvePost(postId);
-            console.log(`Approved post with ID: ${postId}`);
+        if (window.confirm("Are you sure you want to delete this Highlight?")) {
+            try {
+                await studentHighlightService.approvePost(postId);
+                console.log(`Approved post with ID: ${postId}`);
 
-            setPendingPosts((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
-        } catch (error) {
-            console.error("Error approving post:", error);
+                setPendingPosts((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
+            } catch (error) {
+                console.error("Error approving post:", error);
+            }
         }
     };
 
     // Handle deleting a post
     const handleDeleteHighlight = async (postId) => {
-        try {
-            await studentHighlightService.deletePost(postId);
-            console.log(`Deleted post with ID: ${postId}`);
+        if (window.confirm("Are you sure you want to delete this Highlight?")) {
+            try {
+                await studentHighlightService.deletePost(postId);
+                console.log(`Deleted post with ID: ${postId}`);
 
-            setPendingPosts((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
-        } catch (error) {
-            console.error("Error deleting post:", error);
+                setPendingPosts((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
+            } catch (error) {
+                console.error("Error deleting post:", error);
+            }
         }
     };
 
