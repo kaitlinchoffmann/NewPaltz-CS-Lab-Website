@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ResourceCard from "../StudentResources/ResourceCard.jsx";
-import SearchBar from "../FacultyDirectory/SearchBar.jsx";
+import SearchBar from "../StudentResources/SearchBar.jsx";
 import resourceService from "../../services/resourceService";
 import { Link } from "react-router-dom";
 

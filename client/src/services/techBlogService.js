@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseURL = '/api/tech-blog';
 
 const techBlogService = {
-  async getAllPosts() {
+  async getAllArticles() {
     try {
       const response = await axios.get(baseURL);
       return response.data;
@@ -13,7 +13,7 @@ const techBlogService = {
     }
   },
 
-  async createPost(postData) {
+  async createArticle(postData) {
     try {
         const response = await axios.post(baseURL, postData);
         return response.data;

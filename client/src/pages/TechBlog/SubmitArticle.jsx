@@ -19,16 +19,8 @@ export default function ArticleForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const postData = {
-      title: formData.title,
-      summary: formData.summary,
-      link: formData.link,
-      author: formData.author,
-      image: formData.image || null,
-    };
-
     try {
-      const response = await techBlogService.createPost(postData);
+      const response = await techBlogService.createArticle(formData);
       console.log("Article submitted successfully:", response);
       alert("Article submitted successfully!");
     } catch (error) {

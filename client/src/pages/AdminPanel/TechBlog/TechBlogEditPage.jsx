@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import studentHighlightService from "../../services/studentHighlightService";
-
-export default function StudentHighlightsAdminEdit() {
+import techBlogService from "../../../services/techBlogService";
+export default function TechBlogEditPage() {
     const { id } = useParams(); // Get the post ID from the URL
 
     const [formData, setFormData] = useState({
-        project_title: "",
-        student_name: "",
-        project_description: "",
+        title: "",
+        author_name: "",
         summary: "",
-        project_link: "",
-        github_link: "",
-        headshot_url: "",
+        external_link: "",
+        image: "",
     });
+
+
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const data = await studentHighlightService.getPostById(id); // Fetch the post by ID
+                const data = await techBlogService.getArticleById(id); // Fetch the post by ID
+                console.log("Fetched Data:", data);
                 setFormData(data);
             } catch (err) {
-                setError("Failed to load the post. Please try again.");
                 console.error("Error fetching post:", err);
             }
         };
@@ -40,7 +39,7 @@ export default function StudentHighlightsAdminEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await studentHighlightService.editPost(id, formData);
+            const response = await techBlogService.editArticle(id, formData);
             console.log("Edits submitted successfully:", response);
             alert("Edits submitted successfully!");
         } catch (error) {
@@ -51,9 +50,9 @@ export default function StudentHighlightsAdminEdit() {
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-10">
-            <h2 className="text-3xl font-bold text-stone-800 mb-2">Project Editor</h2>
+            <h2 className="text-3xl font-bold text-stone-800 mb-2">Article Editor</h2>
             <p className="text-stone-600 p-2">
-                Feel free to edit the project details below. Once you're done, click "Save Edits" to save your changes.
+                Fill in the article details below. Once you're done, click "Create Article".
             </p>
             <form
                 onSubmit={handleSubmit}
@@ -61,14 +60,14 @@ export default function StudentHighlightsAdminEdit() {
             >
                 {/* Title */}
                 <div className="flex flex-col">
-                    <label htmlFor="project_title" className="text-sm font-medium text-stone-700 mb-1">
-                        Project Title
+                    <label htmlFor="title" className="text-sm font-medium text-stone-700 mb-1">
+                        Article Title
                     </label>
                     <input
                         type="text"
-                        name="project_title" // Matches the key in formData
-                        id="project_title"
-                        value={formData.project_title} 
+                        name="title" // Matches the key in formData
+                        id="title"
+                        value={formData.title}
                         onChange={handleChange}
                         required
                         className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
@@ -77,14 +76,14 @@ export default function StudentHighlightsAdminEdit() {
 
                 {/* Author */}
                 <div className="flex flex-col">
-                    <label htmlFor="student_name" className="text-sm font-medium text-stone-700 mb-1">
-                        Your Name
+                    <label htmlFor="author_name" className="text-sm font-medium text-stone-700 mb-1">
+                        Author Name
                     </label>
                     <input
                         type="text"
-                        name="student_name" // Matches the key in formData
-                        id="student_name"
-                        value={formData.student_name} // Binds to formData.student_name
+                        name="author_name" // Matches the key in formData
+                        id="author_name"
+                        value={formData.author_name} // Binds to formData.student_name
                         onChange={handleChange}
                         required
                         className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
@@ -111,68 +110,39 @@ export default function StudentHighlightsAdminEdit() {
                     </div>
                 </div>
 
-                {/* Description */}
+                {/* External Link */}
                 <div className="flex flex-col">
-                    <label htmlFor="project_description" className="text-sm font-medium text-stone-700 mb-1">
-                        Project Full Description
+                    <label htmlFor="external_link" className="text-sm font-medium text-stone-700 mb-1">
+                        Link to Article
                     </label>
-                    <textarea
-                        name="project_description" // Matches the key in formData
-                        id="project_description"
-                        rows={6}
-                        value={formData.project_description} // Binds to formData.project_description
+                    <input
+                        type="url"
+                        name="external_link" // Matches the key in formData
+                        id="external_link"
+                        value={formData.external_link} // Binds to formData.project_link
                         onChange={handleChange}
                         required
-                        className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300 resize-none"
-                    />
-                </div>
-
-                {/* Website Link */}
-                <div className="flex flex-col">
-                    <label htmlFor="project_link" className="text-sm font-medium text-stone-700 mb-1">
-                        Link to Website (If Applicable)
-                    </label>
-                    <input
-                        type="url"
-                        name="project_link" // Matches the key in formData
-                        id="project_link"
-                        value={formData.project_link} // Binds to formData.project_link
-                        onChange={handleChange}
+                        placeholder="https://example.com"
                         className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                     />
                 </div>
 
-                {/* GitHub Link */}
+                {/* Featured Image */}
                 <div className="flex flex-col">
-                    <label htmlFor="github_link" className="text-sm font-medium text-stone-700 mb-1">
-                        Link to GitHub (If Applicable)
-                    </label>
-                    <input
-                        type="url"
-                        name="github_link" // Matches the key in formData
-                        id="github_link"
-                        value={formData.github_link || ""} // Binds to formData.github_link
-                        onChange={handleChange}
-                        className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
-                    />
-                </div>
-
-                {/* Headshot */}
-                <div className="flex flex-col">
-                    <label htmlFor="headshot_url" className="text-sm font-medium text-stone-700 mb-1">
-                        Your Headshot
+                    <label htmlFor="image" className="text-sm font-medium text-stone-700 mb-1">
+                        Featured Image
                     </label>
                     <input
                         type="file"
-                        name="headshot_url" // Matches the key in formData
-                        id="headshot_url"
+                        name="image" // Matches the key in formData
+                        id="image"
                         accept="image/*"
                         onChange={handleChange}
                         className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
                     />
-                    {formData.headshot_url && (
+                    {formData.image && (
                         <p className="text-xs text-stone-600 mt-1">
-                            Selected: {formData.headshot_url}
+                            Selected: {formData.image}
                         </p>
                     )}
                 </div>
@@ -182,7 +152,7 @@ export default function StudentHighlightsAdminEdit() {
                     type="submit"
                     className="w-full py-2 px-4 bg-blue-300 text-white rounded-md hover:bg-blue-400 transition font-medium"
                 >
-                    Save Edits
+                    Create Article
                 </button>
             </form>
         </div>

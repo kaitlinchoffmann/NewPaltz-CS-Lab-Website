@@ -26,7 +26,7 @@ export default function TechBlogDisplay() {
   useEffect(() => {
     const loadPosts = async () => {
       try {
-        const data = await techBlogService.getAllPosts();
+        const data = await techBlogService.getAllArticles();
         setBlogPosts(data);
       } catch (err) {
         setError(err.message); // Say if something went wrong
@@ -38,7 +38,7 @@ export default function TechBlogDisplay() {
     loadPosts(); // Call function
   }, []); // Only do this when the page first loads
 
-  // Filter posts based on selected category
+  // Filter posts based on selected category - doesnt work right now
   const filteredPosts = selectedCategory === 'recent posts'
     ? blogPosts
     : blogPosts.filter(post => post.category === selectedCategory);

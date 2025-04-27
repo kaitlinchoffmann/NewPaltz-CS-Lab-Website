@@ -35,13 +35,13 @@ async function getPendingPosts() {
  */
 
 async function addPost(postData) {
-    const { title, summary, description, projectLink, githubLink, name, headshot } = postData;
+    const { project_title, summary, project_description, project_link, github_link, student_name, headshot_url } = postData;
     
     const conn = await pool.getConnection();
     try {
         const result = await conn.query(
             "INSERT INTO StudentHighlightBlog (project_title, summary, project_description, project_link, github_link, student_name, headshot_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [title, summary, description, projectLink, githubLink, name, headshot]
+            [project_title, summary, project_description, project_link, github_link, student_name, headshot_url]
         );
         return result.insertId; // Return the ID of the newly created post
     } catch (err) {
