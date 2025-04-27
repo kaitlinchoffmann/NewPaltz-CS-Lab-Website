@@ -2,27 +2,40 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import EventCalendar from './pages/EventCalendar';
+
 import StudentHighlights from './pages/StudentHighlights/StudentHighlights';
-import TechBlogDisplay from './pages/TechBlog/TechBlogDisplay';
-import StudentResources from './pages/StudentResources';
-import FacultyDirectory from './pages/FacultyDirectory';
-import Contributions from './pages/Contributions';
-import Login from './pages/Login';
-import FAQ from './pages/FAQ';
-import Footer from './components/Footer';
-import ArticleForm from './pages/TechBlog/SubmitArticle';
-import TechBlogAdminEdit from './pages/AdminPanel/TechBlogAdminEdit';
-import ProjectForm from './pages/StudentHighlights/SubmitProject';
-import AdminPanel from './pages/AdminPanel/AdminPanel';
 import HighlightDetails from './pages/StudentHighlights/StudentHighlightDetails';
-import StudentHighlightsAdminEdit from './pages/AdminPanel/StudentHighlightsAdminEdit';
-import CreateFAQPage from './pages/AdminPanel/FAQ/FAQAddPage';
-import FAQAdminEdit from './pages/AdminPanel/FAQ/FAQEditPage';
-import FAQEditPage from './pages/AdminPanel/FAQ/FAQEditPage';
-import FacultyAddPage from './pages/AdminPanel/Faculty/FacultyAddPage';
-import FacultyEditPage from './pages/AdminPanel/Faculty/FacultyEditPage';
+import StudentHighlightsAddPage from './pages/AdminPanel/StudentHighlights/StudentHighlightAddPage';
+import StudentHighlightsEditPage from './pages/AdminPanel/StudentHighlights/StudentHighlightsEditPage';
+import ProjectForm from './pages/StudentHighlights/SubmitProject';
+
+import TechBlogDisplay from './pages/TechBlog/TechBlogDisplay';
+import TechBlogEditPage from './pages/AdminPanel/TechBlog/TechBlogEditPage';
+import TechBlogAddPage from './pages/AdminPanel/TechBlog/TechBlogAddPage';
+import ArticleForm from './pages/TechBlog/SubmitArticle';
+
+import StudentResources from './pages/StudentResources';
 import StudentResourcesAddPage from './pages/AdminPanel/StudentResources/ResourceAddPage';
 import StudentResourcesEditPage from './pages/AdminPanel/StudentResources/ResourceEditPage';
+
+import FacultyDirectory from './pages/FacultyDirectory';
+import FacultyAddPage from './pages/AdminPanel/Faculty/FacultyAddPage';
+import FacultyEditPage from './pages/AdminPanel/Faculty/FacultyEditPage';
+
+import FAQ from './pages/FAQ';
+import CreateFAQPage from './pages/AdminPanel/FAQ/FAQAddPage';
+import FAQEditPage from './pages/AdminPanel/FAQ/FAQEditPage';
+
+import AdminPanel from './pages/AdminPanel/AdminPanel';
+import UsersAddPage from './pages/AdminPanel/Users/UsersAddPage';
+import UsersEditPage from './pages/AdminPanel/Users/UsersEditPage';
+
+import Contributions from './pages/Contributions';
+
+import Login from './pages/Login';
+
+import Footer from './components/Footer';
+
 
 const App = () => {
   return (
@@ -32,14 +45,19 @@ const App = () => {
         <main className="container mx-auto px-4">
           <Routes>
             <Route path="/" element={<Home />} />
+
             <Route path="/calendar" element={<EventCalendar />} />
 
             <Route path="/student-highlights" element={<StudentHighlights />} />
             <Route path="/student-highlights/:id" element={<HighlightDetails />} />
-            <Route path="/student-highlights/edit/:id" element={<StudentHighlightsAdminEdit />} />
+            <Route path="admin-panel/student-highlights/edit/:id" element={<StudentHighlightsEditPage />} />
+            <Route path="/create-student-highlight" element={<StudentHighlightsAddPage />} />
+            <Route path="/submit-project" element={<ProjectForm />} />
 
             <Route path="/tech-blog" element={<TechBlogDisplay />} />
-            <Route path="/tech-blog/edit/:id" element={<TechBlogAdminEdit />} />
+            <Route path="/admin-panel/tech-blog/edit/:id" element={<TechBlogEditPage />} />
+            <Route path="/create-tech-blog" element={<TechBlogAddPage />} />
+            <Route path="/submit-article" element={<ArticleForm />} />
 
             <Route path="/student-resources" element={<StudentResources />} />
             <Route path="/admin-panel/student-resources/edit/:id" element={<StudentResourcesEditPage />} />
@@ -54,10 +72,15 @@ const App = () => {
             <Route path="/create-faq" element={<CreateFAQPage />} />
 
             <Route path="/admin-login" element={<Login />} />
+              <Route path="/admin-panel" element={<AdminPanel />} />
+            
+            
+            <Route path="/admin-panel/users/create-user" element={<UsersAddPage />} /> 
+            <Route path="/admin-panel/users/edit-admin/:id" element={<UsersEditPage />} /> 
+
             <Route path="/contributions" element={<Contributions />} />
-            <Route path="/submit-article" element={<ArticleForm />} />
-            <Route path="/submit-project" element={<ProjectForm />} />
-            <Route path="/admin-panel" element={<AdminPanel />} />
+
+
           </Routes>
         </main>
         <Footer />

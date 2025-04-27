@@ -56,7 +56,11 @@ export default function PendingArticles() {
             <div className="w-full grid grid-cols-2 gap-4 items-center justify-center">
                 {pendingArticles.map((article, index) => (
                     <div key={article.id} className="w-full flex flex-col items-center justify-center">
-                        <TechBlogCard post={article} index={index} />
+                        <div className="w-5/6">
+                            <TechBlogCard post={article} index={index} />
+                        </div>
+
+                        {/* Buttons for Approve, Delete, and Edit */}
                         <div className="flex py-1 gap-2">
                             <button
                                 onClick={() => handleApproveArticle(article.id)}
@@ -71,7 +75,7 @@ export default function PendingArticles() {
                                 Delete
                             </button>
                             <Link
-                                to={`/tech-blog/edit/${article.id}`}
+                                to={`admin-panel/tech-blog/edit/${article.id}`}
                                 onClick={() => console.log(`Editing post with ID: ${article.id}`)}
                                 className="px-4 py-2 bg-orange-300 rounded-md hover:bg-orange-400 transition"
                             >

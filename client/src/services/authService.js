@@ -35,7 +35,9 @@ const authService = {
 
   getToken() {
     return localStorage.getItem('adminToken');
-  }
+  },
+
+
   
 };
 

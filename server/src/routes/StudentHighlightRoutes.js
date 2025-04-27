@@ -55,6 +55,7 @@ router.post("/", async (req, res) => {
         console.error("Error adding student highlight:", err);
         res.status(500).json({ message: "Internal Server Error" });
     }
+    
 });
 
 // DELETE student highlight

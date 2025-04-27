@@ -72,7 +72,7 @@ export default function PendingHighlights() {
                                 Delete
                             </button>
                             <Link
-                                to={`/student-highlights/edit/${post.id}`}
+                                to={`/admin-panel/student-highlights/edit/${post.id}`}
                                 onClick={() => console.log(`Editing post with ID: ${post.id}`)}
                                 className="px-4 py-2 bg-orange-300 rounded-md hover:bg-orange-400 transition"
                             >
