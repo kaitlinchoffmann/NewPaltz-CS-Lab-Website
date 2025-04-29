@@ -15,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use("/faq", faqRoutes);
 app.use("/faculty", facultyRoutes);
 app.use("/student-resources", studentRoutes); 
@@ -22,6 +23,16 @@ app.use("/admins", adminRoutes);
 app.use("/auth", authRoutes);
 app.use("/tech-blog", techBlogRoutes);
 app.use("/student-highlights", studentHighlightRoutes);
+
+/*
+app.use("/api/faq", faqRoutes);
+app.use("/api/faculty", facultyRoutes);
+app.use("/api/student-resources", studentRoutes);
+app.use("/api/admins", adminRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/tech-blog", techBlogRoutes);
+app.use("/api/student-highlights", studentHighlightRoutes);
+*/
 
 app.get("/", (req, res) => {
     res.send("CS Department Website API is running...");

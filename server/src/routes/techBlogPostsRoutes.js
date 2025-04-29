@@ -4,6 +4,7 @@ const techPosts = require('../models/techBlogPostsModel');
 
 router.get("/", async (req, res) => {
     try {
+        console.log("Hi from tech blog");
         const rows = await techPosts.getAllPosts();
         console.log('Sending techPosts data: ', rows);
         res.json(rows);
