@@ -21,8 +21,16 @@ export default function ArticleForm() {
 
     try {
       const response = await techBlogService.createArticle(formData);
-      console.log("Article submitted successfully:", response);
-      alert("Article submitted successfully!");
+      alert("Thank you! Your Article has been submitted and is awaiting admin review.");
+      setFormData({
+        title: "",
+        author: "",
+        description: "",
+        summary: "",
+        websiteLink: "",
+        githubLink: "",
+        headshotURL: "",
+      });
     } catch (error) {
       console.error("Error submitting Article:", error);
       alert("Failed to submit Article. Please try again.");
