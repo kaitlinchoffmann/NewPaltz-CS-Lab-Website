@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:5001/student-resources';
+const baseURL = '/api/student-resources';
 
 const resourceService = {
   async getAllResources() {

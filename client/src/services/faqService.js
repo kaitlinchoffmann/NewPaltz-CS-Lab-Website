@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:5001/faq';
+const baseURL = '/api/faq';
 
 const faqService = {
   async getAllFaq() {

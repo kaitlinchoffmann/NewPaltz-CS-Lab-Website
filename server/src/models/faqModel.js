@@ -6,7 +6,7 @@ const pool = require('../config/db');
  */
 async function getAllFAQs() {
     const conn = await pool.getConnection();
-    const rows = await conn.query("SELECT * FROM FAQs");
+    const rows = await conn.query("SELECT * FROM Faqs");
     conn.release();
     return rows;
 }
@@ -23,7 +23,7 @@ async function addFAQ(data) {
     const conn = await pool.getConnection();
     try {
         const query = `
-            INSERT INTO FAQs (question, answer, link)
+            INSERT INTO Faqs (question, answer, link)
             VALUES (?, ?, ?)
         `;
         const values = [data.question, data.answer, data.link];
@@ -51,7 +51,7 @@ async function deleteFAQ(id) {
     try {
         conn = await pool.getConnection();
         const result = await conn.query(
-            "DELETE FROM FAQs WHERE id = ?",
+            "DELETE FROM Faqs WHERE id = ?",
             [id]
         );
         return result.affectedRows;
@@ -71,7 +71,7 @@ async function deleteFAQ(id) {
 async function updateQuestion(id, question) {  
     const conn = await pool.getConnection();    
     const result = await conn.query(
-        "UPDATE FAQs SET question = ? WHERE id = ?",
+        "UPDATE Faqs SET question = ? WHERE id = ?",
         [question, id]
     );
     conn.release();
@@ -87,7 +87,7 @@ async function updateQuestion(id, question) {
 async function updateAnswer(id, answer) {
     const conn = await pool.getConnection();    
     const result = await conn.query(
-        "UPDATE FAQs SET answer = ? WHERE id = ?",
+        "UPDATE Faqs SET answer = ? WHERE id = ?",
         [answer, id]
     );
     conn.release();
@@ -103,7 +103,7 @@ async function getFaqByID(id) {
     const conn = await pool.getConnection();
     try {
         const rows = await conn.query(
-            "SELECT * FROM FAQs WHERE id = ?",
+            "SELECT * FROM Faqs WHERE id = ?",
             [id]
         );
         if (rows.length === 0) {
@@ -130,7 +130,7 @@ async function getFaqByID(id) {
         const conn = await pool.getConnection();
         try {
             const query = `
-                UPDATE FAQs
+                UPDATE Faqs
                 SET question = ?, answer = ?, link = ?
                 WHERE id = ?
             `;

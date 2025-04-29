@@ -80,8 +80,9 @@ router.post("/login", async (req, res) => {
                 id: userFound.id, 
                 username: userFound.username 
             },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+           process.env.JWT_SECRET,
+//           "3a29fa08430f496877c49d95769dbe973a96816e211f462029867e442b9b16ef" 
+           { expiresIn: "1h" }
         );
 
         // Send successful response with token

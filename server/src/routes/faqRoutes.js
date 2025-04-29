@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
         const rows = await faqs.getAllFAQs();
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(501).json({ message: err.message });
     }
 });
 
