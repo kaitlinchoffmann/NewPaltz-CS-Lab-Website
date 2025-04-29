@@ -25,7 +25,7 @@ export default function PendingHighlights() {
 
     // Approve a post
     const handleApproveHighlight = async (postId) => {
-        if (window.confirm("Are you sure you want to delete this Highlight?")) {
+        if (window.confirm("Are you sure you want to approve this Highlight?")) {
             try {
                 await studentHighlightService.approvePost(postId);
 
