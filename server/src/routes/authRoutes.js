@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
 
         // Query database for user
         const results = await conn.query(
-            "SELECT * FROM admins WHERE user = ?", 
+            "SELECT * FROM Admins WHERE user = ?", 
             [username]
         );
 
