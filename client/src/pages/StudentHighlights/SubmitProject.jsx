@@ -2,39 +2,36 @@ import { useState } from "react";
 import studentHighlightService from "../../services/studentHighlightService";
 export default function SubmitProject() {
   
-  const [formData, setFormData] = useState({
-    title: "",
-    author: "",
-    description: "",
-    summary: "",
-    websiteLink: "",
-    githubLink: "",
-    headshotURL: "",
-  });
+    const [formData, setFormData] = useState({
+        project_title: "",
+        student_name: "",
+        project_description: "",
+        summary: "",
+        project_link: "",
+        github_link: "",
+        headshot_url: "",
+    });
 
   const maxSummaryLength = 300;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const postData = {
-        title: formData.title,
-        summary: formData.summary,
-        description: formData.description,
-        projectLink: formData.link || null,
-        githubLink: formData.githubLink || null,
-        name: formData.author,
-        headshot: formData.image || null,
-    };
-
     try {
-        const response = await studentHighlightService.createPost(postData);
-        console.log("Project submitted successfully:", response);
-        alert("Project submitted successfully!");
+        const response = await studentHighlightService.createPost(formData);
+        alert("Thank you! Your project has been submitted and is awaiting admin review.");
+        setFormData({
+          project_title: "",
+          student_name: "",
+          project_description: "",
+          summary: "",
+          project_link: "",
+          github_link: "",
+          headshot_url: "",
+        });
     } catch (error) {
         console.error("Error submitting project:", error);
         alert("Failed to submit project. Please try again.");
@@ -43,7 +40,7 @@ export default function SubmitProject() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
-      <h2 className="text-3xl font-bold text-stone-800 mb-2">Submit an Project</h2>
+      <h2 className="text-3xl font-bold text-stone-800 mb-2">Submit a Project</h2>
       <p className="text-stone-600 p-2">
         Tell us about a project you'd like to feature — our admins will take a look!
        </p>
@@ -53,14 +50,14 @@ export default function SubmitProject() {
       >
         {/* Title */}
         <div className="flex flex-col">
-          <label htmlFor="title" className="text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="project_title" className="text-sm font-medium text-stone-700 mb-1">
             Project Title
           </label>
           <input
             type="text"
-            name="title"
-            id="title"
-            value={formData.title}
+            name="project_title"
+            id="project_title"
+            value={formData.project_title}
             onChange={handleChange}
             required
             className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
@@ -69,14 +66,14 @@ export default function SubmitProject() {
 
         {/* Author */}
         <div className="flex flex-col">
-          <label htmlFor="author" className="text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="student_name" className="text-sm font-medium text-stone-700 mb-1">
             Your Name
           </label>
           <input
             type="text"
-            name="author"
-            id="author"
-            value={formData.author}
+            name="student_name"
+            id="student_name"
+            value={formData.student_name}
             onChange={handleChange}
             required
             className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
@@ -105,14 +102,14 @@ export default function SubmitProject() {
 
         {/* Description */}
           <div className="flex flex-col">
-            <label htmlFor="description" className="text-sm font-medium text-stone-700 mb-1">
+            <label htmlFor="project_description" className="text-sm font-medium text-stone-700 mb-1">
               Project Full Description 
             </label>
             <textarea
-              name="description"
-              id="description"
+              name="project_description"
+              id="project_description"
               rows={6}
-              value={formData.description}
+              value={formData.project_description}
               onChange={handleChange}
               required
               className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300 resize-none"
@@ -121,14 +118,14 @@ export default function SubmitProject() {
 
           {/* Website link */}
         <div className="flex flex-col">
-          <label htmlFor="link" className="text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="project_link" className="text-sm font-medium text-stone-700 mb-1">
             Link to Website(If Applicable)
           </label>
           <input
             type="url"
-            name="websiteLink"
-            id="websiteLink"
-            value={formData.websiteLink || ""}
+            name="project_link"
+            id="project_link"
+            value={formData.project_link || ""}
             onChange={handleChange}
             placeholder="https://example.com/article"
             className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
@@ -137,14 +134,14 @@ export default function SubmitProject() {
 
         {/* Github link */}
         <div className="flex flex-col">
-          <label htmlFor="githublink" className="text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="github_link" className="text-sm font-medium text-stone-700 mb-1">
             Link to Github(If Applicable)
           </label>
           <input
             type="url"
-            name="githubLink"
-            id="githubLink"
-            value={formData.githubLink || ""}
+            name="github_link"
+            id="github_link"
+            value={formData.github_link || ""}
             onChange={handleChange}
             placeholder="https://example.com/article"
             className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
@@ -153,18 +150,18 @@ export default function SubmitProject() {
 
         {/* Image Upload */}
         <div className="flex flex-col">
-          <label htmlFor="image" className="text-sm font-medium text-stone-700 mb-1">
+          <label htmlFor="headshot_url" className="text-sm font-medium text-stone-700 mb-1">
             Your Headshot
           </label>
           <input
             type="file"
-            name="image"
-            id="image"
+            name="headshot_url"
+            id="headshot_url"
             accept="image/*"
             onChange={handleChange}
             className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
           />
-          {formData.image && (
+          {formData.headshot_url && (
             <p className="text-xs text-stone-600 mt-1">
               Selected: {formData.image.name}
             </p>

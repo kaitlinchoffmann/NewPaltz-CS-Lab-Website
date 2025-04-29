@@ -11,7 +11,7 @@ export default function PendingArticles() {
 
     // Approve a post
     const handleApproveArticle = async (postId) => {
-        if (window.confirm("Are you sure you want to delete this Article?")) {
+        if (window.confirm("Are you sure you want to approve this Article?")) {
             try {
                 await techBlogService.approveArticle(postId);
                 setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
