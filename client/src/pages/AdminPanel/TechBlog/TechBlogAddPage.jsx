@@ -23,8 +23,8 @@ export default function TechBlogEditPage() {
 
         try {
             const response = await techBlogService.createArticle(formData);
-            console.log("Article submitted successfully:", response);
             alert("Article submitted successfully! Please Approve it in the admin panel.");
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error creating article:", error);
             alert("Failed to create Article. Please try again.");

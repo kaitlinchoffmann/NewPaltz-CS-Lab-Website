@@ -28,7 +28,6 @@ async function addFAQ(data) {
         `;
         const values = [data.question, data.answer, data.link];
         const result = await conn.query(query, values);
-        console.log("Query Result:", result);
 
         // Convert BigInt to a regular number if necessary
         const insertId = typeof result.insertId === 'bigint' ? Number(result.insertId) : result.insertId;

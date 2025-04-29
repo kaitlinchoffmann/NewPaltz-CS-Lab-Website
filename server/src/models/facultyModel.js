@@ -76,8 +76,6 @@ async function getFaculty(id) {
  */
 async function editFaculty(id, data) {
     const conn = await pool.getConnection();
-    console.log("Updating faculty with data:", data);
-    console.log("Faculty ID:", id);
     try {
         const query = `
             UPDATE Faculty

@@ -96,16 +96,13 @@ router.get('/check-username/:user', async (req, res) => {
     const { user } = req.params;
 
         const isAvailable = await Admin.isUserAvailable(user);
-        console.log("Username availability result:", isAvailable);
         res.json({ available: isAvailable });
 });
 
 // Route to check if an email is available
 router.get('/check-email/:email', async (req, res) => {
     const { email } = req.params;
-    console.log("Checking email availability for:", email); 
     const isAvailable = await Admin.isEmailAvailable(email);
-    console.log("Email availability result:", isAvailable);
     res.json({ available: isAvailable });
 
 });

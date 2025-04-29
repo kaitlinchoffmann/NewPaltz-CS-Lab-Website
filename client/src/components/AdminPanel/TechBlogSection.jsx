@@ -22,7 +22,6 @@ export default function TechBlogSection() {
         if (window.confirm("Are you sure you want to Delete this Article?")) {
             try {
                 await techBlogService.deleteArticle(postId);
-                console.log(`Deleted post with ID: ${postId}`);
                 setArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the deleted post from the list
             } catch (error) {
                 console.error("Error deleting post:", error);
@@ -104,7 +103,6 @@ export default function TechBlogSection() {
                             <div className="flex py-1 gap-2">
                                 <Link
                                     to={`/admin-panel/tech-blog/edit/${article.id}`}
-                                    onClick={() => console.log(`Editing post with ID: ${article.id}`)}
                                     className="px-4 py-2 bg-green-300 rounded-md hover:bg-green-400 transition"
                                 >
                                     Edit

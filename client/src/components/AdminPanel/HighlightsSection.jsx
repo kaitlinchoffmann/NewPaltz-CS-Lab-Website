@@ -71,7 +71,6 @@ export default function StudentHighlights() {
             }
             try {
                 await studentHighlightService.deletePost(id);
-                console.log(`Deleted Highlight with ID: ${id}`);
                 // Optionally, update the state to remove the deleted FAQ
                 setBlogPosts((prevblogPosts) => prevblogPosts.filter((f) => f.id !== id));
             } catch (error) {

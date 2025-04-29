@@ -6,5 +6,4 @@ async function hashPassword(password) {
     console.log("Hashed Password:", hashedPassword);
 }
 
-// Replace "yourpassword" with your desired password
-hashPassword("admin123");
+console.log (hashPassword("test123"));

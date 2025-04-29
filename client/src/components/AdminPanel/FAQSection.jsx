@@ -72,7 +72,6 @@ export default function FAQ() {
             }
             try {
                 await faqService.deleteFAQ(faqID);
-                console.log(`Deleted FAQ with ID: ${faqID}`);
                 // Optionally, update the state to remove the deleted FAQ
                 setFaq((prevFaq) => prevFaq.filter((f) => f.id !== faqID));
             } catch (error) {

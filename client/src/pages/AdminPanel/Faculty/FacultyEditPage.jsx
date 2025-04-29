@@ -48,8 +48,8 @@ export default function FacultyAddPage() {
         e.preventDefault();
         try {
             const response = await facultyService.editFaculty(id, formData);
-            console.log("Faculty Edited successfully:", response);
             alert(`Faculty Edited successfully!`);
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error editing Faculty:", error.message);
             alert(error.message || "Failed to add Faculty. Please try again.");

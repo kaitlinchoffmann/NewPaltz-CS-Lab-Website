@@ -14,7 +14,6 @@ export default function PendingArticles() {
         if (window.confirm("Are you sure you want to delete this Article?")) {
             try {
                 await techBlogService.approveArticle(postId);
-                console.log(`Approved Article with ID: ${postId}`);
                 setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
             } catch (error) {
                 console.error("Error approving Article:", error);
@@ -27,7 +26,6 @@ export default function PendingArticles() {
         if (window.confirm("Are you sure you want to Delete this Article?")) {
             try {
                 await techBlogService.deleteArticle(postId);
-                console.log(`Deleted post with ID: ${postId}`);
                 setPendingArticles((prev) => prev.filter((post) => post.id !== postId)); // Remove the deleted post from the list
             } catch (error) {
                 console.error("Error deleting post:", error);
@@ -39,7 +37,6 @@ export default function PendingArticles() {
         const loadArticles = async () => {
             try {
                 const data = await techBlogService.getPendingArticles();
-                console.log("Pending Articles:", data);
                 setPendingArticles(data);
             } catch (err) {
                 setError(err.message); // Handle errors
@@ -76,7 +73,6 @@ export default function PendingArticles() {
                             </button>
                             <Link
                                 to={`admin-panel/tech-blog/edit/${article.id}`}
-                                onClick={() => console.log(`Editing post with ID: ${article.id}`)}
                                 className="px-4 py-2 bg-orange-300 rounded-md hover:bg-orange-400 transition"
                             >
                                 Edit

@@ -36,7 +36,6 @@ export default function StudentResourceSection() {
             try {
                 setIsLoading(true);
                 const data = await resourceService.getAllResources();
-                console.log("Resources loaded:", data);
                 setResources(data);
             } catch (err) {
                 console.error("Error loading resources:", err);

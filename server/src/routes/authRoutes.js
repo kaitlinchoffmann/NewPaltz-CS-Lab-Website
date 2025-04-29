@@ -39,7 +39,6 @@ router.post("/login", async (req, res) => {
     try {
         // Extract username and password from request body
         const { username, password } = req.body;
-        console.log('Login attempt:', { username });
 
         // Validate that both fields are provided
         if (!username || !password) {

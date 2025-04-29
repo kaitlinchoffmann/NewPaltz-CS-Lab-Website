@@ -44,7 +44,6 @@ router.get("/:id", async (req, res) => {
         if (!resource) {
             return res.status(404).json({ message: "Student resource not found" });
         }
-        console.log("Sending student resource:", resource);
         res.json(resource); // Send the resource object
     } catch (err) {
         console.error("Error getting student resource by ID:", err);

@@ -19,7 +19,6 @@ export default function TechBlogEditPage() {
         const fetchPost = async () => {
             try {
                 const data = await techBlogService.getArticleById(id); // Fetch the post by ID
-                console.log("Fetched Data:", data);
                 setFormData(data);
             } catch (err) {
                 console.error("Error fetching post:", err);
@@ -40,8 +39,8 @@ export default function TechBlogEditPage() {
         e.preventDefault();
         try {
             const response = await techBlogService.editArticle(id, formData);
-            console.log("Edits submitted successfully:", response);
             alert("Edits submitted successfully!");
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error submitting edits:", error);
             alert("Failed to submit edits. Please try again.");
