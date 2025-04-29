@@ -8,8 +8,9 @@ blue-300
 violet-300
 
 
-# Possible Fixes
-    1) With the student highlight link being "/student-highlights/:id" , this may cause the possibility of 
-        anyone seeing the details of any post, even pending ones that are not supposed to be public
+# Things to add that I didn't get too - Taylor 
+ 1) Hash all URL links in admin panel  
+ 2) Design and implement Contribution Page
+ 3) Event calendar
+ 4) Detailed Student Project Blog Post (I only have the tiny thumbnail so far)
 
-    2) Also, Storing Images / obtaining the images people submit into the forms. I haven't implemented this yet.

@@ -21,8 +21,8 @@ export default function UsersEditPage() {
         e.preventDefault();
         try {
             const response = await adminService.editAdmin(id, formData);
-            console.log("Edits submitted successfully:", response);
             alert("Edits submitted successfully!");
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error submitting edits:", error);
             alert("Failed to submit edits. Please try again.");

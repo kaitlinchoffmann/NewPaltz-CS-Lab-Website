@@ -37,8 +37,8 @@ export default function FAQEditPage() {
         e.preventDefault();
         try {
             const response = await faqService.editFAQ(id, formData);
-            console.log("FAQ Updated successfully:", response);
             alert(`FAQ Updated successfully!`); // Display the ID of the new FAQ
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error adding FAQ:", error.message);
             alert(error.message || "Failed to Update FAQ. Please try again.");

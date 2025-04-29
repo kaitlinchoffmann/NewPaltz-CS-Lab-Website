@@ -15,7 +15,7 @@ async function getPendingPosts() {
     const conn = await pool.getConnection();
     try {
         const rows = await conn.query("SELECT * FROM StudentHighlightBlog WHERE approved = 0");
-        console.log("Query result:", rows);
+
         return rows;
     } catch(error)
     {
@@ -202,7 +202,6 @@ async function editPost(id, updatedData) {
             id,
         ];
         const result = await conn.query(query, values); // Remove destructuring for debugging
-        console.log("Query Result:", result);
         return result.affectedRows; // Adjust this based on the actual structure of `result`
     } catch (err) {
         console.error("Error in editPost:", err);

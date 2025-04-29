@@ -24,8 +24,8 @@ export default function StudentHighlightsAddPage() {
         e.preventDefault();
         try {
             const response = await studentHighlightService.createPost(formData);
-            console.log("Post created successfully:", response);
             alert("Post created successfully! Please Approve it in the admin panel.");
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error creating post:", error);
             alert("Failed to create post. Please try again.");

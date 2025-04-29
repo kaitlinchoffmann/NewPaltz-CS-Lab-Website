@@ -4,6 +4,7 @@
  */
 
 require('dotenv').config();
+
 const mariadb = require('mariadb');
 
 /**
@@ -46,7 +47,9 @@ async function testConnection() {
 }
 
 // Test connection on module load
-testConnection();
+if (process.env.NODE_ENV !== 'test') {
+    testConnection();
+}
 
 // Export the connection pool for use in other modules
 module.exports = pool;

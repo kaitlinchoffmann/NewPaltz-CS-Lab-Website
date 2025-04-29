@@ -52,7 +52,6 @@ async function addAdmin(user, email, password) {
         [user, email, hashedPassword]
     );
     conn.release();
-    console.log("New admin added with ID:", result.insertId); // Log the new admin ID for debugging
     return result.insertId;
 }
 // Delete an admin by ID
@@ -61,7 +60,6 @@ async function deleteAdmin(id) {
     try {
         conn = await pool.getConnection();
         const result = await conn.query("DELETE FROM Admins WHERE id = ?", [id]);
-        console.log("Delete result:", result.affectedRows); // Log the result for debugging
         return result.affectedRows > 0; // Return true if the deletion was successful
     } catch (error) {
         console.error("Error deleting admin:", error); // Log the error for debugging
@@ -77,7 +75,6 @@ async function isUserAvailable(user) {
         conn = await pool.getConnection();
         const rows = await conn.query("SELECT COUNT(*) as count FROM Admins WHERE user = ?", [user]);
         const result = Number(rows[0].count) === 0; // Convert BigInt to number before comparison
-        console.log("Username availability check result:", result); // Log the result for debugging
         conn.release(); // Ensure the connection is released
         return result; // Return true if the username is available
 
@@ -88,9 +85,7 @@ async function isEmailAvailable(email) {
     let conn;
         conn = await pool.getConnection();
         const rows = await conn.query("SELECT COUNT(*) as count FROM Admins WHERE email = ?", [email]);
-        console.log("Rows returned from email availability check:", rows); // Log the rows for debugging
         const result = Number(rows[0].count) === 0; // Convert BigInt to number before comparison
-        console.log("Email availability check result:", result); // Log the result for debugging
         conn.release(); // Ensure the connection is released
         return result;
 

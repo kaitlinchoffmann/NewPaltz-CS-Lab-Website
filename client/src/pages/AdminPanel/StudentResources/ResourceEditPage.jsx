@@ -37,8 +37,8 @@ export default function ResourceEditPage() {
         e.preventDefault();
         try {
             const response = await resourceService.editResource(id, formData);
-            console.log("Resource updated successfully:", response);
             alert(`Resource updated successfully!`); // Display success message
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error updating resource:", error.message);
             alert(error.message || "Failed to update resource. Please try again.");

@@ -17,8 +17,8 @@ export default function FAQAddPage() {
         e.preventDefault();
         try {
             const response = await faqService.addFAQ(formData);
-            console.log("FAQ added successfully:", response);
             alert(`FAQ added successfully! ID: ${response.id}`); // Display the ID of the new FAQ
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error adding FAQ:", error.message);
             alert(error.message || "Failed to add FAQ. Please try again.");

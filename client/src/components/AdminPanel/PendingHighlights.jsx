@@ -12,7 +12,6 @@ export default function PendingHighlights() {
         const loadPosts = async () => {
             try {
                 const data = await studentHighlightService.getPendingPosts();
-                console.log("Pending posts:", data);
                 setPendingPosts(data);
             } catch (err) {
                 setError(err.message); // Say if something went wrong
@@ -29,7 +28,6 @@ export default function PendingHighlights() {
         if (window.confirm("Are you sure you want to delete this Highlight?")) {
             try {
                 await studentHighlightService.approvePost(postId);
-                console.log(`Approved post with ID: ${postId}`);
 
                 setPendingPosts((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
             } catch (error) {
@@ -43,7 +41,6 @@ export default function PendingHighlights() {
         if (window.confirm("Are you sure you want to delete this Highlight?")) {
             try {
                 await studentHighlightService.deletePost(postId);
-                console.log(`Deleted post with ID: ${postId}`);
 
                 setPendingPosts((prev) => prev.filter((post) => post.id !== postId)); // Remove the approved post from the list
             } catch (error) {
@@ -73,14 +70,12 @@ export default function PendingHighlights() {
                             </button>
                             <Link
                                 to={`/admin-panel/student-highlights/edit/${post.id}`}
-                                onClick={() => console.log(`Editing post with ID: ${post.id}`)}
                                 className="px-4 py-2 bg-orange-300 rounded-md hover:bg-orange-400 transition"
                             >
                                 Edit
                             </Link>
                             <Link
                                 to={`/student-highlights/${post.id}`}
-                                onClick={() => console.log(`Previewing post with ID: ${post.id}`)}
                                 className="px-4 py-2 bg-blue-300 rounded-md hover:bg-blue-400 transition"
                             >
                                 Preview

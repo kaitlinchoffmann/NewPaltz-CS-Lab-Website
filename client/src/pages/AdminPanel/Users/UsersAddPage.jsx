@@ -42,8 +42,8 @@ export default function UsersAddPage() {
 
             // Add admin
             const response = await adminService.addAdmin(formData);
-            console.log("User added successfully:", response);
             alert(`Admin added successfully! ID: ${response}`); // Display the ID of the new Admin
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error adding admin:", error);
             alert("An error occurred while adding the admin. Please try again.");

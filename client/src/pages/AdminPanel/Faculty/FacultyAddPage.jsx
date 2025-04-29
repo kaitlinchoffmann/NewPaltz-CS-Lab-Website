@@ -22,8 +22,8 @@ export default function FacultyAddPage() {
         e.preventDefault();
         try {
             const response = await facultyService.addFaculty(formData);
-            console.log("Faculty added successfully:", response);
             alert(`Faculty added successfully! ID: ${response.id}`); // Display the ID of the new faculty
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error adding Faculty:", error.message);
             alert(error.message || "Failed to add Faculty. Please try again.");

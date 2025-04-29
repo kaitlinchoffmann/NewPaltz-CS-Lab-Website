@@ -18,7 +18,6 @@ export default function AdminPanel() {
     // Handle category selection
     const handleSelect = (e) => {
         const selectedId = e.currentTarget.id;
-        console.log("Selected:", selectedId);
         setActiveCategory(selectedId); // Update the active category
     };
 
@@ -27,7 +26,6 @@ export default function AdminPanel() {
             try {
                 setIsLoading(true);
                 const admins = await adminService.getAllAdmins();
-                console.log("Admins loaded:", admins);
                 setAdmins(admins);
             } catch (err) {
                 console.error("Error loading admins:", err);
@@ -42,7 +40,6 @@ export default function AdminPanel() {
 
     const handleDelete = async (adminId) => {
         if (window.confirm("Are you sure you want to delete this Admin?")) {
-            console.log("Deleting admin with ID:", adminId); // Debugging log
             try {
                 await adminService.deleteAdmin(adminId);
                 setAdmins((prevAdmins) => prevAdmins.filter((admin) => admin.id !== adminId));
@@ -189,6 +186,8 @@ export default function AdminPanel() {
                 <TechBlogSection />
             )}
 
+            {/* User management section
+            TODO: make into its own component */}
             <div className="flex-col justify-between items-center mb-6">
                 <h1 className="text-2xl font-semibold text-stone-700 mb-4">User Controls</h1>
                 <div className="overflow-x-auto">

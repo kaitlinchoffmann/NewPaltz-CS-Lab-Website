@@ -17,8 +17,8 @@ export default function StudentResourceAddPage() {
         e.preventDefault();
         try {
             const response = await studentResourceService.addResource(formData);
-            console.log("Student resource added successfully:", response);
             alert(`Resource added successfully! ID: ${response.id}`); // Display the ID of the new resource
+            window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error adding resource:", error.message);
             alert(error.message || "Failed to add resource. Please try again.");

@@ -6,10 +6,8 @@ router.get("/", async (req, res) => {
     try {
         console.log("Hi from tech blog");
         const rows = await techPosts.getAllPosts();
-        console.log('Sending techPosts data: ', rows);
         res.json(rows);
     } catch (err) {
-        console.log('Error getting techPosts data:', err);
         res.status(500).json({ message: err.message });
     }
 });
@@ -17,10 +15,8 @@ router.get("/", async (req, res) => {
 router.get("/pending", async (req, res) => {
     try {
         const rows = await techPosts.getPendingPosts();
-        console.log('Sending techPosts data: ', rows);
         res.json(rows);
     } catch (err) {
-        console.log('Error getting techPosts data:', err);
         res.status(500).json({ message: err.message });
     }
 }

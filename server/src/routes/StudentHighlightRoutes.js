@@ -6,7 +6,6 @@ const highlightPosts = require('../models/studentHighlightModel');
 router.get("/", async (req, res) => {
     try {
         const rows = await highlightPosts.getAllPosts();
-        console.log('Sending student highlights:', rows);
         res.json(rows);
     } catch (err) {
         console.error('Error getting student highlights:', err);
@@ -20,7 +19,6 @@ router.get("/", async (req, res) => {
 router.get("/pending", async (req, res) => {
     try {
         const rows = await highlightPosts.getPendingPosts();
-        console.log('Sending student highlights:', rows);
         res.json(rows);
     } catch (err) {
         console.error('Error getting student highlights:', err);
@@ -35,7 +33,6 @@ router.get("/:id", async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ message: "Student highlight not found" });
         }
-        console.log('Sending student highlights:', rows);
         res.json(rows[0]);
     } catch (err) {
         console.error('Error getting student highlights:', err);

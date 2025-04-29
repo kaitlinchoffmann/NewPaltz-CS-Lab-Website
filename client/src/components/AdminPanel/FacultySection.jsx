@@ -73,7 +73,6 @@ export default function FacultySection() {
         }
         try {
             await facultyService.deleteFaculty(id);
-            console.log(`Deleted Faculty with ID: ${id}`);
             // Optionally, update the state to remove the deleted Faculty
             setFaculty((prevFaculty) => prevFaculty.filter((f) => f.id !== id));
         } catch (error) {
