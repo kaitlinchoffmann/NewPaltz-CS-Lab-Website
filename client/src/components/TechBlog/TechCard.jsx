@@ -8,13 +8,14 @@ const bgColors = [
   'bg-indigo-200',
 ]
 export default function TechCard({ post, index }) {
+    const img = post.img ? post.img : "./src/assets/article_pictures/tech_placeholder.png";
 
     const color = bgColors[index % bgColors.length];
     return (
       <div className={`${color} rounded-2xl shadow-sm border border-stone-200 transition-all ease-in-out duration-300 hover:shadow-md hover:-translate-y-3 `}>
           <img
-            src={post.img || "./src/assets/article_pictures/tech_placeholder.png"}
             className="w-full h-32 rounded-2xl object-cover"
+            src=  {img}
           />
   
         <div className="flex flex-col p-4 ">
