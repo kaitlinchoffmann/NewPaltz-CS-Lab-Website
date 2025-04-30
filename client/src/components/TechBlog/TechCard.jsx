@@ -15,7 +15,8 @@ export default function TechCard({ post, index }) {
     return (
       <div className={`${color} rounded-2xl shadow-sm border border-stone-200 transition-all ease-in-out duration-300 hover:shadow-md hover:-translate-y-3 `}>
 
-        <img src={placeholderImg} alt="Tech placeholder" />  
+        <img className ="w-full h-32 object-cover rounded-t-2xl"
+        src={placeholderImg} alt="Tech placeholder" />  
  
         <div className="flex flex-col p-4 ">
             <h3 className="text-lg font-semibold text-stone-700">{post.title}</h3>
