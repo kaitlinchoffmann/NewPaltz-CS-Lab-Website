@@ -18,7 +18,7 @@ export default function StudentCard({ post, index }) {
   }
 
   const color = bgColors[index % bgColors.length];
-  const headshot = post.headshot_url ? post.headshot_url : './src/assets/student_pictures/placeholder.png';
+  const headshot = post.headshot_url || './src/assets/student_pictures/placeholder.png';
   const projectTitle = post.project_title || 'Untitled Project';
   const studentName = post.student_name || 'Unknown Student';
   const summary = post.summary || 'No description available.';
