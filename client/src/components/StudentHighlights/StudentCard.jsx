@@ -24,7 +24,7 @@ export default function StudentCard({ post, index }) {
   const summary = post.summary || 'No description available.';
 
   return (
-    <div className={`${color} rounded-2xl shadow-sm border border-stone-200 p-4 transition-all ease-in-out duration-300 hover:shadow-md hover:-translate-y-3 flex w-1/2 items-center gap-3`}>
+    <div className={`${color} h-80 rounded-2xl shadow-sm border border-stone-200 p-4 transition-all ease-in-out duration-300 hover:shadow-md hover:-translate-y-3 flex w-1/2 items-center gap-3`}>
       <img
         src={headshot}
         alt={`${studentName} headshot`}
