@@ -131,7 +131,7 @@ export default function StudentResourceSection() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {currentResources.map((resource, index) => (
-                    <div className="w-full flex flex-col items-center justify-center" key={resource.id}>
+                    <div className="" key={resource.id}>
                         <ResourceCard
                             key={resource.id}
                             studentResource={resource}
