@@ -9,14 +9,14 @@ const bgColors = [
   'bg-indigo-200',
 ]
 export default function TechCard({ post, index }) {
-    const img = post.img ? post.img : "./src/assets/article_pictures/tech_placeholder.png";
+    const img = post.image || "./src/assets/article_pictures/tech_placeholder.png";
 
     const color = bgColors[index % bgColors.length];
     return (
       <div className={`${color} rounded-2xl shadow-sm border border-stone-200 transition-all ease-in-out duration-300 hover:shadow-md hover:-translate-y-3 `}>
 
         <img className ="w-full h-32 object-cover rounded-t-2xl"
-        src={placeholderImg} alt="Tech placeholder" />  
+        src={img} alt="Tech placeholder" />  
  
         <div className="flex flex-col p-4 ">
             <h3 className="text-lg font-semibold text-stone-700">{post.title}</h3>
@@ -38,10 +38,10 @@ export default function TechCard({ post, index }) {
   
 
               <a
-                href={post.link}
+                href={post.external_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block text-xs text-blue-600 mt-3 hover:underline"
+                className="inline-block text-xs cursor-pointer text-blue-600 mt-3 hover:underline"
               >
                 Article Link →
               </a>

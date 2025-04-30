@@ -11,6 +11,8 @@ const bgColors = [
 
 export default function FacultyCard({ faculty, index }) {
   const color = bgColors[index % bgColors.length];
+  const headshot = faculty.img || '../assets/faculty_pictures/placeholder.png';
+
 
   return (
     <div
@@ -19,7 +21,7 @@ export default function FacultyCard({ faculty, index }) {
       {/* Left: Image + Role */}
       <div className="w-1/3 flex flex-col justify-center items-center gap-3">
         <img
-          src={faculty.img || "./src/assets/faculty_pictures/placeholder.png"}
+          src={headshot}
           alt="Profile"
           className="w-24 h-24 rounded-full object-cover shadow-sm"
         />
