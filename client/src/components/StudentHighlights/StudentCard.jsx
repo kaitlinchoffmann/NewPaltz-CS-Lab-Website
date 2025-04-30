@@ -26,7 +26,7 @@ export default function StudentCard({ post, index }) {
   return (
     <div className={`${color} h-full rounded-2xl shadow-sm border border-stone-200 p-4 transition-all ease-in-out duration-300 hover:shadow-md hover:-translate-y-3 flex w-1/2 items-center gap-3`}>
       <img
-        src={"./src/assets/student_pictures/placeholder.png"}
+        src={"../assets/student_pictures/placeholder.png"}
         alt={`${studentName} headshot`}
         className="w-28 rounded-full object-cover"
       />
