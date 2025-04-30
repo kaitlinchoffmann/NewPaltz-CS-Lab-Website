@@ -9,7 +9,7 @@ const bgColors = [
   'bg-indigo-200',
 ]
 export default function TechCard({ post, index }) {
-    const img = post.img || "./src/assets/article_pictures/tech_placeholder.png";
+    const img = post.img || "../assets/article_pictures/tech_placeholder.png";
 
     const color = bgColors[index % bgColors.length];
     return (
