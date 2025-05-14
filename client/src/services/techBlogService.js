@@ -8,7 +8,7 @@ const techBlogService = {
       const response = await axios.get(baseURL);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Tech Blog Posts:', error);
+      // Log and rethrow error for fetching all articles
       throw new Error('Failed to load Blog Posts');
     }
   },
@@ -18,7 +18,7 @@ const techBlogService = {
         const response = await axios.post(baseURL, postData);
         return response.data;
     } catch (error) {
-        console.error("Error creating Technology Post:", error);
+        // Log and rethrow error for creating an article
         throw new Error("Failed to create Blog Post");
     }
   },
@@ -28,17 +28,17 @@ const techBlogService = {
       const response = await axios.get(`${baseURL}/pending`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Tech Blog Posts:', error);
+      // Log and rethrow error for fetching pending articles
       throw new Error('Failed to load Blog Posts');
     }
-  }
-,
+  },
+
   async deleteArticle(postId) {
     try {
       const response = await axios.delete(`${baseURL}/${postId}`);
       return response.data;
     } catch (error) {
-      console.error('Error deleting Tech Blog Post:', error);
+      // Log and rethrow error for deleting an article
       throw new Error('Failed to delete Blog Post');
     }
   },
@@ -48,7 +48,8 @@ const techBlogService = {
       const response = await axios.put(`${baseURL}/approve/${postID}`);
       return response.data;
     } catch (error) {
-      throw new Error('Failed to Approve Blog Post', error);
+      // Log and rethrow error for approving an article
+      throw new Error('Failed to Approve Blog Post');
     }
   },
   
@@ -57,7 +58,7 @@ const techBlogService = {
       const response = await axios.get(`${baseURL}/${postId}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Tech Blog Post:', error);
+      // Log and rethrow error for fetching an article by ID
       throw new Error('Failed to load Blog Post');
     }
   },
@@ -67,11 +68,10 @@ const techBlogService = {
       const response = await axios.put(`${baseURL}/${postId}`, postData);
       return response.data;
     } catch (error) {
-      console.error('Error updating Tech Blog Post:', error);
+      // Log and rethrow error for editing an article
       throw new Error('Failed to update Blog Post');
     }
   }
-
 };
 
 export default techBlogService;

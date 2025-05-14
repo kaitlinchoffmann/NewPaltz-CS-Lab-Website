@@ -1,27 +1,31 @@
 import { useState } from "react";
 import faqService from "../../../services/faqService";
 
+// Component for adding a new FAQ
 export default function FAQAddPage() {
+    // State to manage form data
     const [formData, setFormData] = useState({
         question: "",
         answer: "",
         link: ""
     });
 
+    // Handle input changes and update form data
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    // Handle form submission to add a new FAQ
     const handleAdd = async (e) => {
         e.preventDefault();
         try {
-            const response = await faqService.addFAQ(formData);
-            alert(`FAQ added successfully! ID: ${response.id}`); // Display the ID of the new FAQ
-            window.location.href = "/admin-panel";
+            const response = await faqService.addFAQ(formData); // Call API to add FAQ
+            alert(`FAQ added successfully! ID: ${response.id}`); // Notify user
+            window.location.href = "/admin-panel"; // Redirect to admin panel
         } catch (error) {
-            console.error("Error adding FAQ:", error.message);
-            alert(error.message || "Failed to add FAQ. Please try again.");
+            console.error("Error adding FAQ:", error.message); // Log error
+            alert(error.message || "Failed to add FAQ. Please try again."); // Notify user
         }
     };
 
@@ -35,7 +39,7 @@ export default function FAQAddPage() {
                 onSubmit={handleAdd}
                 className="space-y-6 bg-white p-6 rounded-xl shadow-md"
             >
-                {/* Question */}
+                {/* Question input field */}
                 <div className="flex flex-col">
                     <label htmlFor="question" className="text-sm font-medium text-stone-700 mb-1">
                         Question
@@ -51,7 +55,7 @@ export default function FAQAddPage() {
                     />
                 </div>
 
-                {/* Answer */}
+                {/* Answer input field */}
                 <div className="flex flex-col">
                     <label htmlFor="answer" className="text-sm font-medium text-stone-700 mb-1">
                         Answer
@@ -67,7 +71,7 @@ export default function FAQAddPage() {
                     />
                 </div>
 
-                {/* Website Link */}
+                {/* Optional link input field */}
                 <div className="flex flex-col">
                     <label htmlFor="link" className="text-sm font-medium text-stone-700 mb-1">
                         Link to "More Information" (If Applicable)
@@ -82,7 +86,7 @@ export default function FAQAddPage() {
                     />
                 </div>
 
-                {/* Submit */}
+                {/* Submit button */}
                 <button
                     type="submit"
                     className="w-full py-2 px-4 bg-blue-300 text-white rounded-md hover:bg-blue-400 transition font-medium"

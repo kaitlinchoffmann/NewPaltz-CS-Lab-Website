@@ -3,56 +3,52 @@ import axios from 'axios';
 const baseURL = '/api/student-resources';
 
 const resourceService = {
+  // Fetch all student resources
   async getAllResources() {
     try {
       const response = await axios.get(baseURL);
       return response.data;
     } catch (error) {
-      console.error('Error fetching questions:', error);
-      throw new Error('Failed to load question data');
+      throw new Error('Failed to load resource data');
     }
   },
 
+  // Add a new student resource
   async addResource(resourceData) {
     try {
       const response = await axios.post(baseURL, resourceData);
-      console.log('Resource added:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error adding resource:', error);
       throw new Error('Failed to add resource');
     }
-    },
+  },
 
-    async deleteResource(resourceId) {
-      try {
-        const response = await axios.delete(`${baseURL}/${resourceId}`);
-        console.log('Resource deleted:', response.data);
-        return response.data;
-      } catch (error) {
-        console.error('Error deleting resource:', error);
-        throw new Error('Failed to delete resource');
-      }
-    },
+  // Delete a student resource by ID
+  async deleteResource(resourceId) {
+    try {
+      const response = await axios.delete(`${baseURL}/${resourceId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to delete resource');
+    }
+  },
 
+  // Edit an existing student resource by ID
   async editResource(resourceId, updatedData) {
     try {
       const response = await axios.put(`${baseURL}/${resourceId}`, updatedData);
-      console.log('Resource updated:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error updating resource:', error);
       throw new Error('Failed to update resource');
     }
   },
 
+  // Fetch a specific student resource by ID
   async getResourceByID(resourceId) {
     try {
       const response = await axios.get(`${baseURL}/${resourceId}`);
-      console.log('Resource fetched by ID:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching resource by ID:', error);
       throw new Error('Failed to fetch resource by ID');
     }
   }

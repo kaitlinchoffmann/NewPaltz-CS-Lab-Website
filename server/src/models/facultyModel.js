@@ -7,19 +7,13 @@ const pool = require('../config/db');
 async function getAllFaculty() {
     const conn = await pool.getConnection();
     const rows = await conn.query("SELECT * FROM Faculty");
-    conn.release();
+    conn.release(); // Release the connection back to the pool
     return rows;
 }
 
 /**
  * Adds a new faculty member to the database
  * @param {Object} faculty - Object containing faculty details
- * @param {string} faculty.name - Faculty member's name
- * @param {string} faculty.email - Faculty member's email
- * @param {string} faculty.office - Faculty member's office location
- * @param {string} faculty.office_hours - Faculty member's office hours
- * @param {string} faculty.expertise - Faculty member's areas of expertise
- * @param {string} faculty.website - Faculty member's website URL
  * @returns {Promise<number>} ID of the newly added faculty member
  */
 async function addFaculty(faculty) {
@@ -34,10 +28,9 @@ async function addFaculty(faculty) {
         console.error("Error in addFaculty:", err);
         throw err;
     } finally {
-        conn.release();
+        conn.release(); // Ensure the connection is released in all cases
     }
 }
-
 
 /**
  * Removes a faculty member from the database
@@ -50,11 +43,9 @@ async function removeFaculty(id) {
         "DELETE FROM Faculty WHERE id = ?",
         [id]
     );
-    conn.release();
-    return result.affectedRows;
+    conn.release(); // Release the connection back to the pool
+    return result.affectedRows; // Return the number of rows affected
 }
-
-
 
 /**
  * Retrieves a specific faculty member by ID
@@ -64,7 +55,7 @@ async function removeFaculty(id) {
 async function getFaculty(id) {
     const conn = await pool.getConnection();
     const rows = await conn.query("SELECT * FROM Faculty WHERE id = ?", [id]);
-    conn.release();
+    conn.release(); // Release the connection back to the pool
     return rows;
 }
 
@@ -91,14 +82,15 @@ async function editFaculty(id, data) {
             data.phone_number, 
             data.website, 
             data.img,
-            id];
+            id
+        ];
         const result = await conn.query(query, values);
         return result.affectedRows;
     } catch (err) {
         console.error("Error in updateFAQ:", err);
         throw err;
     } finally {
-        conn.release();
+        conn.release(); // Ensure the connection is released in all cases
     }
 }
 
@@ -110,8 +102,8 @@ async function editFaculty(id, data) {
 async function getFacultyById(id) {
     const conn = await pool.getConnection();
     const rows = await conn.query("SELECT * FROM Faculty WHERE id = ?", [id]);
-    conn.release();
-    return rows.length > 0 ? rows[0] : null;
+    conn.release(); // Release the connection back to the pool
+    return rows.length > 0 ? rows[0] : null; // Return the faculty member or null if not found
 }
 
-module.exports = { getAllFaculty, addFaculty, removeFaculty,editFaculty,getFaculty, getFacultyById};
+module.exports = { getAllFaculty, addFaculty, removeFaculty, editFaculty, getFaculty, getFacultyById };

@@ -8,7 +8,7 @@ const studentHighlightService = {
       const response = await axios.get(baseURL);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Student Highlights Posts:', error);
+      // Log and rethrow error for fetching all posts
       throw new Error('Failed to load Blog Posts');
     }
   },
@@ -18,7 +18,7 @@ const studentHighlightService = {
         const response = await axios.post(baseURL, postData);
         return response.data;
     } catch (error) {
-        console.error("Error creating Student Highlights Post:", error);
+        // Log and rethrow error for creating a post
         throw new Error("Failed to create Blog Post");
     }
   },
@@ -28,7 +28,7 @@ const studentHighlightService = {
       const response = await axios.get(`${baseURL}/pending`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Student Highlights Posts:', error);
+      // Log and rethrow error for fetching pending posts
       throw new Error('Failed to load Blog Posts');
     }
   },
@@ -38,7 +38,7 @@ const studentHighlightService = {
       const response = await axios.delete(`${baseURL}/${postId}`);
       return response.data;
     } catch (error) {
-      console.error('Error deleting Student Highlights Post:', error);
+      // Log and rethrow error for deleting a post
       throw new Error('Failed to delete Blog Post');
     }
   },
@@ -48,7 +48,8 @@ const studentHighlightService = {
       const response = await axios.put(`${baseURL}/approve/${postID}`);
       return response.data;
     } catch (error) {
-      throw new Error('Failed to Approve Blog Post', error);
+      // Log and rethrow error for approving a post
+      throw new Error('Failed to Approve Blog Post');
     }
   },
 
@@ -57,20 +58,20 @@ const studentHighlightService = {
       const response = await axios.get(`${baseURL}/${postId}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching Student Highlights Post:', error);
+      // Log and rethrow error for fetching a post by ID
       throw new Error('Failed to load Blog Post');
     }
   },
 
   async editPost(id, updatedData) {
     try {
-        const response = await axios.put(`${baseURL}/${id}`, updatedData); // Send all form data
+        const response = await axios.put(`${baseURL}/${id}`, updatedData);
         return response.data;
     } catch (error) {
-        console.error("Error editing post:", error);
+        // Log and rethrow error for editing a post
         throw new Error("Failed to edit post");
     }
-},
+  },
 };
 
 export default studentHighlightService;
