@@ -153,38 +153,46 @@ const NavBar = () => {
                 FAQ
               </Link>
             </li>
+            <li>
+              <Link
+                to="/student-request"
+                className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
+              >
+                Request Page
+              </Link>
+            </li>
           </ul>
-          
+
         </li>
-            {/* Admin Option (Visible only when authenticated) */}
-            {isAuthenticated && (
-            <Link to="/admin-panel">
-              <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
-                <p className="flex items-center gap-1">
-                <MdOutlineAdminPanelSettings size = {20} />
+        {/* Admin Option (Visible only when authenticated) */}
+        {isAuthenticated && (
+          <Link to="/admin-panel">
+            <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+              <p className="flex items-center gap-1">
+                <MdOutlineAdminPanelSettings size={20} />
                 Admin Panel</p>
-              </li>
-            </Link>
+            </li>
+          </Link>
         )}
 
       </ul>
 
       {/* Login/Logout
        */}
-       {isAuthenticated ? (
+      {isAuthenticated ? (
         <button
           onClick={handleLogout}
           className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
         >
           <p>Logout</p>
         </button>) : (
-          <Link
-            to="/admin-login"
-            className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
-          >
-            <p>Login</p>
-          </Link>
-        )}
+        <Link
+          to="/admin-login"
+          className="rounded-full bg-orange-300 px-7 py-1 font-medium text-stone-700 duration-300 hover:bg-orange-400 hover:text-black"
+        >
+          <p>Login</p>
+        </Link>
+      )}
     </nav>
   );
 };
