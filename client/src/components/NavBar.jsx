@@ -155,10 +155,10 @@ const NavBar = () => {
             </li>
             <li>
               <Link
-                to="/student-request"
+                to="/student-forms"
                 className="block px-4 py-2 transition-colors hover:bg-rose-300/90"
               >
-                Request Page
+                Student Forms
               </Link>
             </li>
           </ul>
