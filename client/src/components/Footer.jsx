@@ -8,10 +8,6 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-between md:flex-row">
           {/* Left Section */}
           <div className="text-center md:text-left">
-            <h2 className="text-lg font-semibold text-rose-300">
-              Computer Science Lab ...Hi Louris, Molly and Joel! Delete me if you can find me XD...
-              nah...
-            </h2>
             <p className="text-sm">
               Your central hub for all things Computer Science!
             </p>
