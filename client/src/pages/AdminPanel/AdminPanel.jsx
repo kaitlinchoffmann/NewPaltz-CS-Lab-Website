@@ -76,16 +76,22 @@ export default function AdminPanel() {
                         <h2>Technology Blog</h2>
                     </div>
                     <div
-                        className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "events" ? "bg-stone-300" : ""
-                            }`}
+                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "events" ? "bg-stone-300" : ""}`}
                         onClick={handleSelect}
                         id="events"
                     >
                         <h2>Events</h2>
                     </div>
+
+                    <div
+                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "pending-accounts" ? "bg-stone-300" : ""}`}
+                        onClick={handleSelect}
+                        id="pending-accounts"
+                    >
+                        <h2>Pending Accounts</h2>
+                    </div>
                 </div>
             </div>
-
             {/* Pending Student Highlights Section */}
             {activeCategory === "student-highlights" && (
                 <PendingHighlights />
