@@ -18,7 +18,8 @@ import StudentResources from './pages/StudentResources';
 import StudentResourcesAddPage from './pages/AdminPanel/StudentResources/ResourceAddPage';
 import StudentResourcesEditPage from './pages/AdminPanel/StudentResources/ResourceEditPage';
 
-import StudentRequest from './pages/StudentRequest';
+import StudentForms from './pages/StudentForms';
+import SubmitSDRequest from './pages/StudentRequests/SubmitSDRequest';
 
 import FacultyDirectory from './pages/FacultyDirectory';
 import FacultyAddPage from './pages/AdminPanel/Faculty/FacultyAddPage';
@@ -65,7 +66,8 @@ const App = () => {
             <Route path="/admin-panel/student-resources/edit/:id" element={<StudentResourcesEditPage />} />
             <Route path="/create-student-resource" element={<StudentResourcesAddPage />} />
 
-            <Route path="/student-request" element={<StudentRequest />} />
+            <Route path="/student-forms" element={<StudentForms />} />
+            <Route path="/submit-sd-request" element={<SubmitSDRequest />} />
 
             <Route path="/faculty" element={<FacultyDirectory />} />
             <Route path="/admin-panel/faculty/edit/:id" element={<FacultyEditPage />} />
