@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SDFormCard from '../components/StudentForms/SDFormCard';
+import SDFormCard from '../components/StudentRequests/SDFormCard';
 
 const StudentForms = () => {
     return (
