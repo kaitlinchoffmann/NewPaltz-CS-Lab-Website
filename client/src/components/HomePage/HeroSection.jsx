@@ -21,7 +21,7 @@ const HeroSection = () => {
    * images: Array of imported background images for the carousel
    */
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [labImage, labImage2, labImage3,labImage4];
+  const images = [labImage, labImage2, labImage3, labImage4];
 
   /**
    * Image Carousel Effect

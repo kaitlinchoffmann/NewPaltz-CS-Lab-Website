@@ -55,7 +55,7 @@ export default function AdminPanel() {
         <div className="p-6 flex-col justify-center max-w-5xl mx-auto">
             <h1 className="text-3xl flex justify-center font-bold text-stone-800 mb-6">Admin Panel</h1>
 
-            {/* Admin Options Tab */}
+            {/* Admin Options Tab / PENDING REQUESTS */}
             <div className="flex-col justify-between items-center mb-6">
                 <h1 className="text-2xl font-semibold text-stone-700 mb-4">Pending Requests</h1>
                 <div className="flex w-1/2 items-end text-stone-700 font-semibold">
@@ -92,6 +92,8 @@ export default function AdminPanel() {
                     </div>
                 </div>
             </div>
+
+            {/* Existing Components*/}
             {/* Pending Student Highlights Section */}
             {activeCategory === "student-highlights" && (
                 <PendingHighlights />
@@ -111,11 +113,34 @@ export default function AdminPanel() {
 
                 </div>
             )}
+            {/* Faqs section */}
+            {activeCategory === "faq" && (
+                <FAQSection />
+            )}
 
+            {/* Faculty directory section */}
+            {activeCategory === "faculty-directory" && (
+                <FacultySection />
+            )}
+
+            {/* Student Resources section */}
+            {activeCategory === "student-resources" && (
+                <StudentResourceSection />
+            )}
+
+            {/* Current Student Highlights section */}
+            {activeCategory === "cur-student-highlights" && (
+                <HighlightsSection />
+            )}
+
+            {/* Current Tech Blog section */}
+            {activeCategory === "cur-tech-blog" && (
+                <TechBlogSection />
+            )}
             {/* Pending Accounts Section */}
             {activeCategory === "pending-accounts" && (
-                <PendingAccountReq />
-            )}
+                <PendingAccountReq />)}
+
 
             {/* Admin Options Tab - Resources */}
             <div className="flex-col justify-between items-center mb-6">
@@ -174,47 +199,13 @@ export default function AdminPanel() {
                         className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "student-resources" ? "bg-stone-300" : ""
                             }`}
                         onClick={handleSelect}
-                        id="PendingAccountReq"
+                        id="pending-accounts"
                     >
                         <h2>Student Resources</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "events" ? "bg-stone-300" : ""}`}
-                        onClick={handleSelect}
-                        id="events"
-                    >
-                        <h2>Events</h2>
                     </div>
                 </div>
             </div>
 
-            {/* Faqs section */}
-            {activeCategory === "faq" && (
-                <FAQSection />
-            )}
-
-            {/* Faculty directory section */}
-            {activeCategory === "faculty-directory" && (
-                <FacultySection />
-            )}
-
-            {/* Student Resources section */}
-            {activeCategory === "student-resources" && (
-                <StudentResourceSection />
-            )}
-
-            {/* Current Student Highlights section */}
-            {activeCategory === "cur-student-highlights" && (
-                <HighlightsSection />
-            )}
-
-            {/* Current Tech Blog section */}
-            {activeCategory === "cur-tech-blog" && (
-                <TechBlogSection />
-            )}
-            {/* Pending Accounts Section */}
-            {activeCategory === "pending-accounts" && (
-                <PendingAccountReq />)}
 
             {/* User management section
             TODO: make into its own component */}
