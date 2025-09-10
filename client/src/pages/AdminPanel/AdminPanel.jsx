@@ -196,12 +196,12 @@ export default function AdminPanel() {
                         <h2>Student Resources</h2>
                     </div>
                     <div
-                        className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "student-resources" ? "bg-stone-300" : ""
+                        className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "pending-accounts" ? "bg-stone-300" : ""
                             }`}
                         onClick={handleSelect}
                         id="pending-accounts"
                     >
-                        <h2>Student Resources</h2>
+                        <h2>Pending Accounts</h2>
                     </div>
                 </div>
             </div>
