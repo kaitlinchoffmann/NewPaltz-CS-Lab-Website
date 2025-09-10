@@ -6,7 +6,6 @@ import FacultySection from "../../components/AdminPanel/FacultySection"
 import StudentResourceSection from "../../components/AdminPanel/StudentResourceSection";
 import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
 import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
-import PendingAccountReq from "../../components/AdminPanel/PendingAccountReq";
 import { adminService } from "../../services/adminService";
 import { Link } from "react-router-dom";
 
@@ -123,6 +122,7 @@ export default function AdminPanel() {
                 <FacultySection />
             )}
 
+
             {/* Student Resources section */}
             {activeCategory === "student-resources" && (
                 <StudentResourceSection />
@@ -195,6 +195,7 @@ export default function AdminPanel() {
                     >
                         <h2>Student Resources</h2>
                     </div>
+
                     <div
                         className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "pending-accounts" ? "bg-stone-300" : ""
                             }`}
@@ -203,6 +204,7 @@ export default function AdminPanel() {
                     >
                         <h2>Pending Accounts</h2>
                     </div>
+
                 </div>
             </div>
 
@@ -228,10 +230,10 @@ export default function AdminPanel() {
                                     <td className="px-4 py-2 border-b">{admin.email}</td>
                                     <td className="px-4 py-2 border-b">{admin.role}</td>
                                     <td className="px-4 py-2 border-b">
-                                        <Link to={`/admin-panel/users/edit-admin/${admin.id}`}
-                                            className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Edit</Link>
+                                        <Link to={`/admin-panel/users/edit-admin/${admin.id}`} 
+                                        className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Edit</Link>
                                         <button
-                                            onClick={() => handleDelete(admin.id)}
+                                            onClick = {() => handleDelete(admin.id)}
                                             className="bg-rose-300 rounded px-3 py-1 hover:bg-rose-400 transition-all ease-in duration-300">Delete</button>
                                     </td>
                                 </tr>
