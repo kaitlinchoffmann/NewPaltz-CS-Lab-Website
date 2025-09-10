@@ -178,6 +178,13 @@ export default function AdminPanel() {
                     >
                         <h2>Student Resources</h2>
                     </div>
+                    <div
+                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "events" ? "bg-stone-300" : ""}`}
+                        onClick={handleSelect}
+                        id="events"
+                    >
+                        <h2>Events</h2>
+                    </div>
                 </div>
             </div>
 
@@ -205,6 +212,9 @@ export default function AdminPanel() {
             {activeCategory === "cur-tech-blog" && (
                 <TechBlogSection />
             )}
+            {/* Pending Accounts Section */}
+            {activeCategory === "pending-accounts" && (
+                <PendingAccountReq />)}
 
             {/* User management section
             TODO: make into its own component */}
