@@ -31,5 +31,6 @@ export const studentService = {
       return response.data.id; // Ensure the response data is returned
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to add User');
-
+    }
+  },
 };
