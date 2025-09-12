@@ -6,7 +6,7 @@ import FacultySection from "../../components/AdminPanel/FacultySection"
 import StudentResourceSection from "../../components/AdminPanel/StudentResourceSection";
 import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
 import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
-import { studentService } from "../../services/studentAccountService";
+import PendingSDAccounts from "../../components/AdminPanel/PendingSDAccounts";
 import { adminService } from "../../services/adminService";
 
 import { Link } from "react-router-dom";
@@ -142,7 +142,7 @@ export default function AdminPanel() {
             )}
             {/* Pending Accounts Section */}
             {activeCategory === "pending-accounts" && (
-                <studentService />)}
+                <PendingSDAccounts />)}
 
 
             {/* Admin Options Tab - Resources */}
