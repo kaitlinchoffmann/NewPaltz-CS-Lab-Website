@@ -18,6 +18,9 @@ import StudentResources from './pages/StudentResources';
 import StudentResourcesAddPage from './pages/AdminPanel/StudentResources/ResourceAddPage';
 import StudentResourcesEditPage from './pages/AdminPanel/StudentResources/ResourceEditPage';
 
+import StudentForms from './pages/StudentForms';
+import SubmitSDRequest from './pages/StudentRequests/SubmitSDRequest';
+
 import FacultyDirectory from './pages/FacultyDirectory';
 import FacultyAddPage from './pages/AdminPanel/Faculty/FacultyAddPage';
 import FacultyEditPage from './pages/AdminPanel/Faculty/FacultyEditPage';
@@ -63,6 +66,9 @@ const App = () => {
             <Route path="/admin-panel/student-resources/edit/:id" element={<StudentResourcesEditPage />} />
             <Route path="/create-student-resource" element={<StudentResourcesAddPage />} />
 
+            <Route path="/student-forms" element={<StudentForms />} />
+            <Route path="/submit-sd-request" element={<SubmitSDRequest />} />
+
             <Route path="/faculty" element={<FacultyDirectory />} />
             <Route path="/admin-panel/faculty/edit/:id" element={<FacultyEditPage />} />
             <Route path="/create-faculty" element={<FacultyAddPage />} />
@@ -72,11 +78,11 @@ const App = () => {
             <Route path="/create-faq" element={<CreateFAQPage />} />
 
             <Route path="/admin-login" element={<Login />} />
-              <Route path="/admin-panel" element={<AdminPanel />} />
-            
-            
-            <Route path="/admin-panel/users/create-user" element={<UsersAddPage />} /> 
-            <Route path="/admin-panel/users/edit-admin/:id" element={<UsersEditPage />} /> 
+            <Route path="/admin-panel" element={<AdminPanel />} />
+
+
+            <Route path="/admin-panel/users/create-user" element={<UsersAddPage />} />
+            <Route path="/admin-panel/users/edit-admin/:id" element={<UsersEditPage />} />
 
             <Route path="/contributions" element={<Contributions />} />
 

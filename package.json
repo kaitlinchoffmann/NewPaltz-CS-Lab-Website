@@ -7,5 +7,9 @@
   },
   "scripts": {
     "build": "vite build"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "nodemailer": "^7.0.6"
   }
 }

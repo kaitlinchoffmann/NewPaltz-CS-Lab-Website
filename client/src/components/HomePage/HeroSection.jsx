@@ -21,7 +21,7 @@ const HeroSection = () => {
    * images: Array of imported background images for the carousel
    */
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [labImage, labImage2, labImage3,labImage4];
+  const images = [labImage, labImage2, labImage3, labImage4];
 
   /**
    * Image Carousel Effect
@@ -93,7 +93,7 @@ const HeroSection = () => {
       <div className="relative z-10 mx-auto max-w-6xl space-y-8 px-6 text-stone-700 md:px-12">
         {/* Primary heading - Add text shadow */}
         <h1 className="font-bold text-white drop-shadow-lg sm:text-4xl md:text-7xl">
-          Welcome to the Hydra Lab!
+          Welcome to the Hydra Lab!!
         </h1>
 
         {/* Subheading - Add subtle text shadow */}
