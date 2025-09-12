@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const bgColor = 'bg-sky-200'; // Pick a single color since it's only one card
 
 export default function SDFormCard() {
@@ -6,7 +8,9 @@ export default function SDFormCard() {
       className={`rounded-2xl border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-2 ${bgColor}`}
     >
       <div className="flex flex-col justify-between h-60 p-6 text-center">
-        <div className="space-y-3 overflow-auto">
+
+        {/* Form Title and Description */}
+        <div className="space-y-3 overflow-auto custom-scroll">
           <h2 className="text-xl font-semibold text-stone-800">
             Server and Database Access Form
           </h2>
@@ -19,12 +23,12 @@ export default function SDFormCard() {
           </p>
         </div>
 
-        // Placeholder link for form submission
-        <a>
-          <Link
-            to="/submit-sd-request"
-          ></Link>
-        </a>
+        {/* Placeholder link for form submission */}
+        <Link
+          to="/submit-sd-request"
+        >
+          Submit Form
+        </Link>
       </div>
     </div>
   );
