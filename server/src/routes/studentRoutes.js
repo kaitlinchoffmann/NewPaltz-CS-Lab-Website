@@ -75,5 +75,15 @@ router.get('/check-email/:email', async (req, res) => {
 
 });
 
+app.post("/createUser", (req, res) => {
+  const { email, nId } = req.body;
+  execFile("./create_user.sh", [email, nId], (err, stdout, stderr) => {
+    if (err) {
+      return res.status(500).send(stderr);
+    }
+    res.send(stdout || "User created successfully");
+  });
+});
+
 module.exports = router;
 
