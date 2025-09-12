@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const baseURL = '/sd-forms';
+console.log('baseURL: ' + baseURL);
 const sdFormService = {
   // Fetch all Server and Databse forms
   async getAllForms() {
