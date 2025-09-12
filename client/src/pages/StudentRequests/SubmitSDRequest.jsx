@@ -18,7 +18,7 @@ export default function SubmitSDRequest() {
         e.preventDefault();
         try {
             const response = await sdFormService.addForm(formData);
-            alert("Thank you! Your request has been submitted and is awaiting admin review.");
+            alert("Thank you! Your request has been submitted and is awaiting admin review. Your response ID is: " + response.id);
         } catch (error) {
             alert("There was an error submitting your request. Please try again.");
         }
