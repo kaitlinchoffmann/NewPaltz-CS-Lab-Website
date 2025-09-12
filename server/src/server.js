@@ -26,7 +26,7 @@ app.use("/auth", authRoutes);
 app.use("/tech-blog", techBlogRoutes);
 app.use("/student-highlights", studentHighlightRoutes);
 app.use("/sd-forms", sdFormRoutes);
-app.use("/student", studenttRoutes);
+app.use("/student", studentRoutes);
 
 /*
 app.use("/api/faq", faqRoutes);
