@@ -34,6 +34,7 @@ app.use("/api/admins", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/tech-blog", techBlogRoutes);
 app.use("/api/student-highlights", studentHighlightRoutes);
+app.use("/api/sd-forms", sdFormRoutes);
 */
 
 app.get("/", (req, res) => {
