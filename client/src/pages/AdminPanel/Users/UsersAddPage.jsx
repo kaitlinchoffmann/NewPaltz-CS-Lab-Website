@@ -48,6 +48,7 @@ export default function UsersAddPage() {
             console.error("Error adding admin:", error);
             alert("An error occurred while adding the admin. Please try again.");
         }
+
     };
 
     return (

@@ -90,4 +90,40 @@ async function isEmailAvailable(email) {
         return result;
 
 }
-module.exports = { getAllStudents, getStudentById, editStudentById, addStudent, deleteStudent, isUserAvailable, isEmailAvailable };
+
+/**
+ * Approve an account request
+ * @param {number} id - Request ID
+ * @returns {Promise<number>} Number of affected rows
+ */
+async function approveRequest(requestData) {
+ app.post("/createUser", (req, res) => {
+  const { email, nId } = req.body;
+  execFile("./create_user.sh", [email, nId], (err, stdout, stderr) => {
+    if (err) {
+      return res.status(500).send(stderr);
+    }
+    res.send(stdout || "User created successfully");
+  });
+});
+}
+
+
+/**
+ * Deny an account request
+ * @param {number} id - Request ID
+ * @returns {Promise<number>} Number of affected rows
+ */
+async function denyRequest(requestData) {
+const conn = await pool.getConnection();
+  try {
+    const result = await conn.query(
+      "UPDATE AccountRequests SET status = 'denied' WHERE id = ?",
+      [id]
+    );
+    return result.affectedRows;
+  } finally {
+    conn.release();
+  }
+}
+module.exports = { getAllStudents, getStudentById, editStudentById, addStudent, deleteStudent, isUserAvailable, isEmailAvailable, approveRequest, denyRequest };

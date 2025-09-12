@@ -6,8 +6,11 @@ import FacultySection from "../../components/AdminPanel/FacultySection"
 import StudentResourceSection from "../../components/AdminPanel/StudentResourceSection";
 import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
 import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
+import PendingSDAccounts from "../../components/AdminPanel/PendingSDAccounts";
 import { adminService } from "../../services/adminService";
+
 import { Link } from "react-router-dom";
+
 
 export default function AdminPanel() {
     const [activeCategory, setActiveCategory] = useState("student-highlights");
@@ -139,7 +142,7 @@ export default function AdminPanel() {
             )}
             {/* Pending Accounts Section */}
             {activeCategory === "pending-accounts" && (
-                <PendingAccountReq />)}
+                <PendingSDAccounts />)}
 
 
             {/* Admin Options Tab - Resources */}
@@ -230,10 +233,10 @@ export default function AdminPanel() {
                                     <td className="px-4 py-2 border-b">{admin.email}</td>
                                     <td className="px-4 py-2 border-b">{admin.role}</td>
                                     <td className="px-4 py-2 border-b">
-                                        <Link to={`/admin-panel/users/edit-admin/${admin.id}`} 
-                                        className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Edit</Link>
+                                        <Link to={`/admin-panel/users/edit-admin/${admin.id}`}
+                                            className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Edit</Link>
                                         <button
-                                            onClick = {() => handleDelete(admin.id)}
+                                            onClick={() => handleDelete(admin.id)}
                                             className="bg-rose-300 rounded px-3 py-1 hover:bg-rose-400 transition-all ease-in duration-300">Delete</button>
                                     </td>
                                 </tr>
