@@ -16,27 +16,32 @@ CREATE TABLE IF NOT EXISTS ServerDatabaseForm (
  */
 async function getAllSDForms() {
     const conn = await pool.getConnection();
-    const rows = await conn.query("SELECT * FROM SDForms");
+    const rows = await conn.query("SELECT * FROM ServerDatabaseForm");
     conn.release();
     return rows;
 };
 
 /**
  * Adds a new Server/Database form to the database
- * @param {Object} formData - Form data containing full_name, email, and student_id
+ * @param {string} full_name - Form data containing full_name
+ * @param {string} email - Form data containing email
+ * @param {string} student_id - Form data containing student_id
  * @returns {Promise<number>} The ID of the newly created form
  * 
  */
 
-async function addSDForm(formData) {
-    const { full_name, email, student_id } = formData;
-    const conn = await pool.getConnection();
-    const result = await conn.query(
-        "INSERT INTO SDForms (full_name, email, student_id) VALUES (?, ?, ?)",
-        [full_name, email, student_id]
-    );
-    conn.release();
-    return result.insertId;
+async function addSDForm(postData) {
+    const { full_name, email, student_id } = postData;
+    try{
+        const result = await confirm.query(
+            "INSERT INTO ServerDatabaseForm (full_name, email, student_id) VALUES (?, ?, ?)",
+            [full_name, email, student_id]
+        );
+        return result.insertId; // Return the ID of the newly created form
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error('Failed to add form');
+    }
 };
 
 /**
@@ -48,7 +53,7 @@ async function addSDForm(formData) {
 async function deleteForm(id) {
     const conn = await pool.getConnection();
     const result = await conn.query(
-        "DELETE FROM SDForms WHERE id = ?",
+        "DELETE FROM ServerDatabaseForm WHERE id = ?",
         [id]
     );
     conn.release();
