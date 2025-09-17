@@ -10,7 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const techBlogRoutes = require("./routes/techBlogPostsRoutes");
 const studentHighlightRoutes = require("./routes/StudentHighlightRoutes");
 const sdFormRoutes = require("./routes/sdFormRoutes");
-const studentRoutes = require("./routes/requestAccountRoutes");
+// const studentRoutes = require("./routes/requestAccountRoutes");
 
 const app = express();
 
