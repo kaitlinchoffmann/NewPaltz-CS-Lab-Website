@@ -1,5 +1,6 @@
 import { useState } from "react";
 import sdFormService from "../../services/sdFormService";
+import Dummypanel from "../../components/StudentRequests/dummypanel";
 
 export default function SubmitSDRequest() {
     const [formData, setFormData] = useState({
@@ -52,10 +53,9 @@ export default function SubmitSDRequest() {
         if (newErrors.email || newErrors.student_id) return; // prevent submission if errors
 
         try {
-            const response = await sdFormService.addForm(formData);
+            await sdFormService.addForm(formData);
             alert(
-                "Thank you! Your request has been submitted and is awaiting admin review. Your response ID is: " +
-                response.id
+                "Thank you! Your request has been submitted and is awaiting admin review. You will be sent an email soon if you have been accepted or denied access!"
             );
         } catch (err) {
             alert("There was an error submitting your request. Please try again.");
@@ -136,6 +136,9 @@ export default function SubmitSDRequest() {
                     Submit Request
                 </button>
             </form>
+            <div className="text-stone-500 text-sm mt-4">
+                <Dummypanel />
+            </div>
         </div>
     );
 }

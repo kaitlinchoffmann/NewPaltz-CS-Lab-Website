@@ -7,9 +7,10 @@ const sdForms = require('../models/sdFormsModel');
 router.get('/', async (req, res) => {
     
     try {
-        const forms = await sdForms.getAllForms();
-        res.json(forms);
+        const rows = await sdForms.getAllSDForms();
+        res.json(rows);
     } catch (err) {
+        console.error('Error getting sdForm:', err);
         res.status(500).json({ message: err.message });
     }  
 });
@@ -19,8 +20,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         console.log('req.body: ', req.body);
-        const result = await sdForms.addSDForm(req.body);
-        res.status(201).json({ message: result });
+        await sdForms.addSDForm(req.body);
+        res.status(201).json({ message: 'Form submitted successfully' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
