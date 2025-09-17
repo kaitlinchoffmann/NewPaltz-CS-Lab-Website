@@ -32,8 +32,10 @@ async function getAllSDForms() {
 
 async function addSDForm(postData) {
     const { full_name, email, student_id } = postData;
+
+    const conn = await pool.getConnection();
     try{
-        const result = await confirm.query(
+        const result = await conn.query(
             "INSERT INTO ServerDatabaseForm (full_name, email, student_id) VALUES (?, ?, ?)",
             [full_name, email, student_id]
         );

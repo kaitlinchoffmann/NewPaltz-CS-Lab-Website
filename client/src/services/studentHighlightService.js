@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const baseURL = '/api/student-highlights';
+console.log('baseURL: ' + baseURL);
 
 const studentHighlightService = {
   async getAllPosts() {
@@ -15,11 +16,11 @@ const studentHighlightService = {
 
   async createPost(postData) {
     try {
-        const response = await axios.post(baseURL, postData);
-        return response.data;
+      const response = await axios.post(baseURL, postData);
+      return response.data;
     } catch (error) {
-        // Log and rethrow error for creating a post
-        throw new Error("Failed to create Blog Post");
+      // Log and rethrow error for creating a post
+      throw new Error('Failed to create Blog Post');
     }
   },
 
@@ -65,11 +66,11 @@ const studentHighlightService = {
 
   async editPost(id, updatedData) {
     try {
-        const response = await axios.put(`${baseURL}/${id}`, updatedData);
-        return response.data;
+      const response = await axios.put(`${baseURL}/${id}`, updatedData);
+      return response.data;
     } catch (error) {
-        // Log and rethrow error for editing a post
-        throw new Error("Failed to edit post");
+      // Log and rethrow error for editing a post
+      throw new Error('Failed to edit post');
     }
   },
 };

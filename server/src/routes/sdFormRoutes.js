@@ -3,8 +3,9 @@ const router = express.Router();
 const sdForms = require('../models/sdFormsModel');
 
 
-//get all forms
+//get all Server/Database form data
 router.get('/', async (req, res) => {
+    
     try {
         const forms = await sdForms.getAllForms();
         res.json(forms);
@@ -14,11 +15,12 @@ router.get('/', async (req, res) => {
 });
 
 
-//add a new form
+//add a new request form
 router.post('/', async (req, res) => {
     try {
-        const id = await sdForms.addSDForm(req.body);
-        res.status(201).json({ id });
+        console.log('req.body: ', req.body);
+        const result = await sdForms.addSDForm(req.body);
+        res.status(201).json({ message: result });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

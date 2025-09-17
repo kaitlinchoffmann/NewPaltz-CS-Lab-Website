@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const baseURL = '/sd-forms';
-console.log('baseURL: ' + baseURL);
+const baseURL = '/api/sd-forms';
 const sdFormService = {
   // Fetch all Server and Databse forms
   async getAllForms() {
@@ -15,6 +14,7 @@ const sdFormService = {
 
   // Add a new Server and Database request form
   async addForm(formData) {
+    console.log('formData: ' + formData);
     try {
       const response = await axios.post(baseURL, formData);
       return response.data;
