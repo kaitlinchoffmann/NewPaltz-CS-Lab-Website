@@ -96,6 +96,7 @@ async function isEmailAvailable(email) {
  * @param {number} id - Request ID
  * @returns {Promise<number>} Number of affected rows
  */
+// conect to script to create user
 async function approveRequest(requestData) {
  app.post("/createUser", (req, res) => {
   const { email, nId } = req.body;
@@ -114,12 +115,15 @@ async function approveRequest(requestData) {
  * @param {number} id - Request ID
  * @returns {Promise<number>} Number of affected rows
  */
+// connect to script to send email to student
+
 async function denyRequest(requestData) {
 const conn = await pool.getConnection();
   try {
     const result = await conn.query(
       "UPDATE AccountRequests SET status = 'denied' WHERE id = ?",
       [id]
+      //instead delete student 
     );
     return result.affectedRows;
   } finally {

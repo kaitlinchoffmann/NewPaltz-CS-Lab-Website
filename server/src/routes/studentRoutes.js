@@ -75,7 +75,7 @@ router.get('/check-email/:email', async (req, res) => {
 
 });
 
-app.post("/createUser", (req, res) => {
+router.post("/createUser", (req, res) => {
   const { email, nId } = req.body;
   execFile("./create_user.sh", [email, nId], (err, stdout, stderr) => {
     if (err) {
@@ -88,7 +88,7 @@ app.post("/createUser", (req, res) => {
 // Get all pending requests
 router.get("/pending", async (req, res) => {
   try {
-    const requests = await accountRequests.getPendingRequests();
+    const requests = await Student.getPendingRequests();
     res.json(requests);
   } catch (err) {
     console.error("Error fetching pending requests:", err);
@@ -99,7 +99,7 @@ router.get("/pending", async (req, res) => {
 // Approve a request
 router.put("/:id/approve", async (req, res) => {
   try {
-    const rows = await accountRequests.approveRequest(req.params.id);
+    const rows = await Student.approveRequest(req.params.id);
     if (rows === 0) return res.status(404).json({ message: "Request not found" });
     res.json({ message: "Request approved successfully" });
   } catch (err) {
@@ -108,10 +108,10 @@ router.put("/:id/approve", async (req, res) => {
   }
 });
 
-// Deny a request
+// Deny a request // 
 router.put("/:id/deny", async (req, res) => {
   try {
-    const rows = await accountRequests.denyRequest(req.params.id);
+    const rows = await Student.denyRequest(req.params.id);
     if (rows === 0) return res.status(404).json({ message: "Request not found" });
     res.json({ message: "Request denied successfully" });
   } catch (err) {

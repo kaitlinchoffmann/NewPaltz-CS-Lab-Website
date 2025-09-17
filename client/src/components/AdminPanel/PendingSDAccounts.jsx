@@ -10,8 +10,8 @@ export default function PendingAccounts() {
     useEffect(() => {
         const loadAccounts = async () => {
             try {
-                const data = await studentService.getPendingAccounts();
-                setPendingAccounts(data);
+                const data = await studentService.getAllStudents();
+                console.log(data);
             } catch (err) {
                 setError(err.message);
             } finally {

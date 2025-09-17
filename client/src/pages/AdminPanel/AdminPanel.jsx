@@ -7,6 +7,7 @@ import StudentResourceSection from "../../components/AdminPanel/StudentResourceS
 import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
 import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
 import PendingSDAccounts from "../../components/AdminPanel/PendingSDAccounts";
+import PendingAccountsSection from "../../components/AdminPanel/PendingAccountsSection";
 import { adminService } from "../../services/adminService";
 
 import { Link } from "react-router-dom";
@@ -23,6 +24,7 @@ export default function AdminPanel() {
         const selectedId = e.currentTarget.id;
         setActiveCategory(selectedId); // Update the active category
     };
+
 
     useEffect(() => {
         const loadAdmins = async () => {
@@ -142,7 +144,7 @@ export default function AdminPanel() {
             )}
             {/* Pending Accounts Section */}
             {activeCategory === "pending-accounts" && (
-                <PendingSDAccounts />)}
+                <PendingAccountsSection />)}
 
 
             {/* Admin Options Tab - Resources */}
@@ -252,6 +254,7 @@ export default function AdminPanel() {
                 </div>
             </div>
         </div>
+
 
     );
 }

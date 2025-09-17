@@ -40,4 +40,28 @@ export const studentService = {
       throw new Error(error.response?.data?.message || 'Failed to add User');
     }
   },
+
+  //approve a student account request
+  async approveRequest(requestData) {
+    try {
+      const response = await axios.post(`${baseURL}/approve`, requestData);
+      return response.data.affectedRows; // Return number of affected rows
+    } catch (error) {
+      throw new Error(
+        error.response?.data?.message || 'Failed to approve request'
+      );
+    }
+  },
+  //deny a student account request
+
+  async denyRequest(requestId) {
+    try {
+      const response = await axios.delete(`${baseURL}/deny/${requestId}`);
+      return response.data.affectedRows; // Return number of affected rows
+    } catch (error) {
+      throw new Error(
+        error.response?.data?.message || 'Failed to deny request'
+      );
+    }
+  },
 };
