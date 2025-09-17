@@ -1,4 +1,11 @@
 import axios from 'axios';
+/*
+import { approve } from '../../../server/src/models/studentHighlightModel';
+import {
+  approveRequest,
+  denyRequest,
+} from '../../../server/src/models/studentModel';
+*/
 
 // NEED TO SWAP TO STUDENT API
 const baseURL = '/api/student';
