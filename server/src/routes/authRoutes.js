@@ -66,10 +66,10 @@ router.post("/login", async (req, res) => {
             return res.status(500).json({ message: "Password hash not found" });
         }
 
-        // Compare provided password with stored hash
+        // // Compare provided password with stored hash
         const passwordMatch = await bcrypt.compare(password, userFound.password_hash);
 
-        // If password doesn't match
+        // // If password doesn't match
         if (!passwordMatch) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
