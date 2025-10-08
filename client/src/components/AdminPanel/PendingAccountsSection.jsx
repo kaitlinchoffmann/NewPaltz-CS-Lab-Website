@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { studentService } from "../../services/studentAccountService";
 import sdFormService from "../../services/sdFormService";
 
@@ -7,7 +7,6 @@ export default function PendingAccounts() {
     const [students, setStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
     useEffect(() => {
         const loadStudents = async () => {
             try {
@@ -24,6 +23,7 @@ export default function PendingAccounts() {
 
         loadStudents();
     }, []);
+
 
     if (isLoading) return <p className="p-4">Loading forms...</p>;
     if (error) return <p className="p-4 text-red-600">{error}</p>;
@@ -51,21 +51,32 @@ export default function PendingAccounts() {
                                     {/* <Link to={`/services/studentAccountService/${student.id}`}
                                         className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Approve</Link> */}
                                     <button
-                                        onClick={() => studentService.approveRequest(students.id)}
-                                        className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Approve
+                                        onClick={async () => {
+                                            try {
+                                                await sdFormService.approveForm(students.id);
+                                                alert("Approval email sent!");
+                                            } catch (err) {
+                                                alert("Failed to send approval email.");
+                                                console.error(err);
+                                            }
+                                        }}
+                                        className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">
+                                        Approve
                                     </button>
                                     <button
                                         onClick={async () => {
-                                            try {
-                                                await sdFormService.deleteForm(students.id);
-                                                setStudents((prev) => prev.filter((s) => s.id !== students.id));
-                                            } catch (err) {
-                                                console.error("Error denying request:", err);
-                                                setError(err.message);
+                                            if (window.confirm("Are you sure you want to deny and notify this student?")) {
+                                                try {
+                                                    await sdFormService.deleteForm(students.id); // API call
+                                                    setStudents(prev => prev.filter(s => s.id !== students.id)); // Remove from UI
+                                                    alert("Student denied and notified.");
+                                                } catch (err) {
+                                                    alert("Failed to deny student.");
+                                                    console.error(err);
+                                                }
                                             }
                                         }}
-                                        className="bg-rose-300 rounded px-3 py-1 hover:bg-rose-400 transition-all ease-in duration-300"
-                                    >
+                                        className="bg-rose-300 rounded px-3 py-1 hover:bg-rose-400 transition-all ease-in duration-300">
                                         Deny
                                     </button>
                                 </td>

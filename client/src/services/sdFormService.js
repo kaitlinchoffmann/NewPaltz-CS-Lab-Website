@@ -32,6 +32,24 @@ const sdFormService = {
       throw new Error('Failed to delete form');
     }
   },
+
+  async getForm(formId) {
+    try {
+      const response = await axios.get(`${baseURL}/${formId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to load form');
+    }
+  },
+
+  async approveForm(formId) {
+    try {
+      const response = await axios.post(`${baseURL}/${formId}/approve`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to approve form');
+    }
+  },
 };
 
 export default sdFormService;
