@@ -16,7 +16,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mariadb": "^3.4.0"
+    "mariadb": "^3.4.0",
+    "nodemailer": "^7.0.6"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",
