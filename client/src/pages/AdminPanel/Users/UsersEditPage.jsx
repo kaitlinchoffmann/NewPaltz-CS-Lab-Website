@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { adminService } from "../../../services/adminService";
 
 export default function UsersEditPage() {
     const { id } = useParams(); // Get the admin ID from the URL
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user: "",
         email: "",
@@ -44,7 +44,16 @@ export default function UsersEditPage() {
     }, [id]);
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-10">
+        <div className="max-w-2xl mx-auto px-4 py-10 relative">
+            {/* X Button */}
+            <button
+                type="button"
+                onClick={() => navigate("/admin-panel")}
+                className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-700"
+                aria-label="Close"
+            >
+                &times;
+            </button>
             <h2 className="text-3xl font-bold text-stone-800 mb-2">Admin Editor</h2>
             <p className="text-stone-600 p-2">
                 Edit the data below to edit the Admin. Once done, click "Save Edits".
