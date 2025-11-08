@@ -48,7 +48,7 @@ export default function UsersEditPage() {
             {/* X Button */}
             <button
                 type="button"
-                onClick={() => navigate("/admin-panel")}
+                onClick={() => navigate("/admin-panel", { state: { activeCategory: "user-controls" } })}
                 className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-700"
                 aria-label="Close"
             >
