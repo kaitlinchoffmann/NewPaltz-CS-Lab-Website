@@ -47,7 +47,7 @@ export default function UsersEditPage() {
         <div className="max-w-2xl mx-auto px-4 py-10">
             <h2 className="text-3xl font-bold text-stone-800 mb-2">Admin Editor</h2>
             <p className="text-stone-600 p-2">
-                Edi the data below to edit the Admin. Once done, click "Save Edits".
+                Edit the data below to edit the Admin. Once done, click "Save Edits".
             </p>
             <form
                 onSubmit={handleEdit}
@@ -99,6 +99,8 @@ export default function UsersEditPage() {
                         className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                     >
                         <option value="admin">Admin</option>
+                        <option value="admin">Club</option>
+                        <option value="admin">Editor</option>
                     </select>
                 </div>
 
