@@ -175,6 +175,26 @@ const NavBar = () => {
           </Link>
         )}
 
+        {isAuthenticated && (
+          <Link to="/club-panel">
+            <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+              <p className="flex items-center gap-1">
+                <MdOutlineAdminPanelSettings size={20} />
+                Club Panel</p>
+            </li>
+          </Link>
+        )}
+
+        {isAuthenticated && (
+          <Link to="/editor-panel">
+            <li className="transition-color rounded-xl px-1 py-1 duration-300 hover:bg-rose-300 hover:text-black hover:shadow">
+              <p className="flex items-center gap-1">
+                <MdOutlineAdminPanelSettings size={20} />
+                Editor Panel</p>
+            </li>
+          </Link>
+        )}
+
       </ul>
 
       {/* Login/Logout

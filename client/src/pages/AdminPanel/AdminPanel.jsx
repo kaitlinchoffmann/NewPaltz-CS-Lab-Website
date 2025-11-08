@@ -8,22 +8,27 @@ import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
 import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
 import PendingSDAccounts from "../../components/AdminPanel/PendingSDAccounts";
 import PendingAccountsSection from "../../components/AdminPanel/PendingAccountsSection";
-// import TestScriptSection from "../../components/AdminPanel/TestScript";
+import UserControlsSection from "../../components/AdminPanel/UserControlsSection"
+//import TestScriptSection from "../../components/AdminPanel/TestScript";
 import { adminService } from "../../services/adminService";
+import { useLocation } from "react-router-dom";
+
 
 import { Link } from "react-router-dom";
 
 
 export default function AdminPanel() {
-    const [activeCategory, setActiveCategory] = useState("student-highlights");
+    const location = useLocation();
+    const initialCategory = location.state?.activeCategory;
+    const [activeCategory, setActiveCategory] = useState(initialCategory);
     const [admins, setAdmins] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [openDropdown, setOpenDropdown] = useState(null);
 
     // Handle category selection
-    const handleSelect = (e) => {
-        const selectedId = e.currentTarget.id;
-        setActiveCategory(selectedId); // Update the active category
+    const handleSelect = (category) => {
+        setActiveCategory(category);
     };
 
 
@@ -57,215 +62,273 @@ export default function AdminPanel() {
     };
 
     return (
-        <div className="p-6 flex-col justify-center max-w-5xl mx-auto">
-            <h1 className="text-3xl flex justify-center font-bold text-stone-800 mb-6">Admin Panel</h1>
-
-            {/* Admin Options Tab / PENDING REQUESTS */}
-            <div className="flex-col justify-between items-center mb-6">
-                <h1 className="text-2xl font-semibold text-stone-700 mb-4">Pending Requests</h1>
-                <div className="flex w-1/2 items-end text-stone-700 font-semibold">
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "student-highlights" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="student-highlights"
-                    >
-                        <h2>Student Highlights</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg  outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "tech-blog" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="tech-blog"
-                    >
-                        <h2>Technology Blog</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "events" ? "bg-stone-300" : ""}`}
-                        onClick={handleSelect}
-                        id="events"
-                    >
-                        <h2>Events</h2>
-                    </div>
-
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "pending-accounts" ? "bg-stone-300" : ""}`}
-                        onClick={handleSelect}
-                        id="pending-accounts"
-                    >
-                        <h2>Pending Accounts</h2>
-                    </div>
+        <div className="flex min-h-screen mx-auto">
+            {/* Sidebar */}
+            <aside className="w-64 bg-white border-r border-gray-200 ">
+                {/* Top section */}
+                <div className="p-4 border-b border-gray-200">
+                    <h1 className="text-lg font-bold text-gray-800">Admin Panel</h1>
                 </div>
-            </div>
 
-            {/* Existing Components*/}
-            {/* Pending Student Highlights Section */}
-            {activeCategory === "student-highlights" && (
-                <PendingHighlights />
-            )}
+                {/* Nav Links */}
+                <nav className="px-4 py-6 space-y-2">
 
-
-            {/* Technology Blog Section */}
-            {activeCategory === "tech-blog" && (
-                <PendingArticles />
-            )}
-
-            {/* Events Section */}
-            {activeCategory === "events" && (
-                <div className="space-y-4 p-3">
-
-                    <h3 className="text-lg font-medium text-stone-800 mb-2">Events Page - Coming Soon</h3>
-
-                </div>
-            )}
-            {/* Faqs section */}
-            {activeCategory === "faq" && (
-                <FAQSection />
-            )}
-
-            {/* Faculty directory section */}
-            {activeCategory === "faculty-directory" && (
-                <FacultySection />
-            )}
-
-
-            {/* Student Resources section */}
-            {activeCategory === "student-resources" && (
-                <StudentResourceSection />
-            )}
-
-            {/* Current Student Highlights section */}
-            {activeCategory === "cur-student-highlights" && (
-                <HighlightsSection />
-            )}
-
-            {/* Current Tech Blog section */}
-            {activeCategory === "cur-tech-blog" && (
-                <TechBlogSection />
-            )}
-            {/* Pending Accounts Section */}
-            {activeCategory === "pending-accounts" && (
-                <PendingAccountsSection />)}
-
-
-            {/* Admin Options Tab - Resources */}
-            <div className="flex-col justify-between items-center mb-6">
-                <h1 className="text-2xl font-semibold text-stone-700 mb-4">Existing Components</h1>
-                <div className="flex w-full justify-end text-stone-700 font-semibold">
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "cur-student-highlights" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="cur-student-highlights"
-                    >
-                        <h2>Student Highlights</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg  outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "cur-tech-blog" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="cur-tech-blog"
-                    >
-                        <h2>Technology Blog</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "cur-events" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="cur-events"
-                    >
-                        <h2>Events</h2>
-                    </div>
-
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "faq" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="faq"
-                    >
-                        <h2>FAQs</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center items-center p-1 rounded-lg  outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "faculty-directory" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="faculty-directory"
-                    >
-                        <h2>Faculty Directory</h2>
-                    </div>
-                    <div
-                        className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "student-resources" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="student-resources"
-                    >
-                        <h2>Student Resources</h2>
-                    </div>
-
-                    <div
-                        className={`flex w-1/3 justify-center  items-center rounded-lg p-1 outline-stone-300 outline-1 outline hover:bg-stone-300 transition-all ease-in-out duration-200 cursor-pointer ${activeCategory === "pending-accounts" ? "bg-stone-300" : ""
-                            }`}
-                        onClick={handleSelect}
-                        id="pending-accounts"
-                    >
-                        <h2>Pending Accounts</h2>
-                    </div>
-
-                </div>
-            </div>
-
-
-            {/* User management section
-            TODO: make into its own component */}
-            <div className="flex-col justify-between items-center mb-6">
-                <h1 className="text-2xl font-semibold text-stone-700 mb-4">User Controls</h1>
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-white border border-stone-300">
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-2 border-b">Username</th>
-                                <th className="px-4 py-2 border-b">Email</th>
-                                <th className="px-4 py-2 border-b">Role</th>
-                                <th className="px-4 py-2 border-b">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {admins.map((admin) => (
-                                <tr key={admin.id} className="text-center">
-                                    <td className="px-4 py-2 border-b">{admin.user}</td>
-                                    <td className="px-4 py-2 border-b">{admin.email}</td>
-                                    <td className="px-4 py-2 border-b">{admin.role}</td>
-                                    <td className="px-4 py-2 border-b">
-                                        <Link to={`/admin-panel/users/edit-admin/${admin.id}`}
-                                            className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Edit</Link>
-                                        <button
-                                            onClick={() => handleDelete(admin.id)}
-                                            className="bg-rose-300 rounded px-3 py-1 hover:bg-rose-400 transition-all ease-in duration-300">Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
+                    {/*Student Highlights*/}
                     <div>
+                        <button
+                            onClick={() => setOpenDropdown(openDropdown === "studenthighlights" ? null : "studenthighlights")}
+                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all text-gray-700 hover:bg-gray-100"
+                        >
+                            <i className="fas fa-folder"></i> Student Highlights
+                            <span className="ml-auto">
+                                {/* Dropdown Arrow */}
+                                <svg
+                                    className={`w-4 h-4 transition-transform ${openDropdown === "studenthighlights" ? "rotate-180" : ""}`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        {/* Dropdown Menu */}
+                        {openDropdown === "studenthighlights" && (
+                            <div className="ml-6 mt-1 space-y-1">
+                                <button
+                                    onClick={() => { handleSelect("cur-student-highlights"); }}
+                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "cur-student-highlights"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                        }`}
+                                >
+                                    Student Highlights
+                                </button>
+                                <button
+                                    onClick={() => { handleSelect("student-highlights"); }}
+                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "student-highlights"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                        }`}
+                                >
+                                    Pending Student Highlights
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/*Tech Blog*/}
+                    <div>
+                        <button
+                            onClick={() => setOpenDropdown(openDropdown === "techblog" ? null : "techblog")}
+                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all text-gray-700 hover:bg-gray-100"
+                        >
+                            <i className="fas fa-folder"></i> Technology Blog
+                            <span className="ml-auto">
+                                {/* Dropdown Arrow */}
+                                <svg
+                                    className={`w-4 h-4 transition-transform ${openDropdown === "techblog" ? "rotate-180" : ""}`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        {/* Dropdown Menu */}
+                        {openDropdown === "techblog" && (
+                            <div className="ml-6 mt-1 space-y-1">
+                                <button
+                                    onClick={() => { handleSelect("cur-tech-blog"); }}
+                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "cur-tech-blog"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                        }`}
+                                >
+                                    Technology Blog
+                                </button>
+                                <button
+                                    onClick={() => { handleSelect("tech-blog"); }}
+                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "tech-blog"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                        }`}
+                                >
+                                    Pending Technology Blog
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+
+
+                    {/*Events */}
+                    <div>
+                        <button
+                            onClick={() => setOpenDropdown(openDropdown === "events" ? null : "events")}
+                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all text-gray-700 hover:bg-gray-100"
+                        >
+                            <i className="fas fa-folder"></i> Events
+                            <span className="ml-auto">
+                                {/* Dropdown Arrow */}
+                                <svg
+                                    className={`w-4 h-4 transition-transform ${openDropdown === "events" ? "rotate-180" : ""}`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        {/* Dropdown Menu */}
+                        {openDropdown === "events" && (
+                            <div className="ml-6 mt-1 space-y-1">
+                                <button
+                                    onClick={() => { handleSelect("events"); }}
+                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "events"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                        }`}
+                                >
+                                    Events
+                                </button>
+                                <button
+                                    onClick={() => { handleSelect("events"); }}
+                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "events"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
+                                        }`}
+                                >
+                                    Pending Events
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                    <button
+                        onClick={() => handleSelect("faq")}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "faq"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                    >
+                        <i className="fas fa-chart-line"></i> FAQs
+                    </button>
+
+                    <button
+                        onClick={() => handleSelect("faculty-directory")}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "faculty-directory"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                    >
+                        <i className="fas fa-chart-line"></i> Faculty Directory
+                    </button>
+                    <button
+                        onClick={() => handleSelect("student-resources")}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "student-resources"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                    >
+                        <i className="fas fa-chart-line"></i> Student Resources
+                    </button>
+                    <button
+                        onClick={() => handleSelect("pending-accounts")}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                    >
+                        <i className="fas fa-chart-line"></i> Pending Accounts
+                    </button>
+
+                    <button
+                        onClick={() => handleSelect("user-controls")}
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                    >
+                        <i className="fas fa-chart-line"></i> User Controls
+                    </button>
+                </nav>
+            </aside >
+
+            {/* Main Content Area */}
+            <main className="flex-1 p-6 overflow-x-auto">
+                {/* Pending Student Highlights Section */}
+                {activeCategory === "student-highlights" && (
+                    <PendingHighlights />
+                )}
+
+
+                {/* Technology Blog Section */}
+                {activeCategory === "tech-blog" && (
+                    <PendingArticles />
+                )}
+
+                {/* Events Section */}
+                {activeCategory === "events" && (
+                    <div className="space-y-4 p-3">
+
+                        <h3 className="text-lg font-medium text-stone-800 mb-2">Events Page - Coming Soon</h3>
+
+                    </div>
+                )}
+                {/* Faqs section */}
+                {activeCategory === "faq" && (
+                    <FAQSection />
+                )}
+
+                {/* Faculty directory section */}
+                {activeCategory === "faculty-directory" && (
+                    <FacultySection />
+                )}
+
+
+                {/* Student Resources section */}
+                {activeCategory === "student-resources" && (
+                    <StudentResourceSection />
+                )}
+
+                {/* Current Student Highlights section */}
+                {activeCategory === "cur-student-highlights" && (
+                    <HighlightsSection />
+                )}
+
+                {/* Current Tech Blog section */}
+                {activeCategory === "cur-tech-blog" && (
+                    <TechBlogSection />
+                )}
+                {/* Pending Accounts Section */}
+                {activeCategory === "pending-accounts" && (
+                    <PendingAccountsSection />)}
+
+                {activeCategory === "user-controls" && (
+                    <UserControlsSection admins={admins} handleDelete={handleDelete} />)}
+
+            </main>
+
+            {/* TEST SCRIPT SECTION WILL BE REMOVED LATER ON */}
+            {/* <div>
 
               // test script
-                        <h1>Script Test</h1>
-                        <p>Click the button below to test the backend script:</p>
+                <h1>Script Test</h1>
+                <p>Click the button below to test the backend script:</p>
 
-                        <TestScriptSection />
+                <TestScriptSection />
 
-                        <p>Check the console or below for output.</p>
-                    </div>
-
-                    <div className="mt-4">
-                        <Link to="/admin-panel/users/create-user"
-                            className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-4lue-600">
-                            Add User
-                        </Link>
-                    </div>
-                </div>
+                <p>Check the console or below for output.</p>
             </div>
+
+            <div className="mt-4">
+                <Link to="/admin-panel/users/create-user"
+                    className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-4lue-600">
+                    Add User
+                </Link>
+            </div> */}
         </div>
 
 

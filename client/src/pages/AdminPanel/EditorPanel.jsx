@@ -16,7 +16,7 @@ import { adminService } from "../../services/adminService";
 import { Link } from "react-router-dom";
 
 
-export default function AdminPanel() {
+export default function EditorPanel() {
     const [activeCategory, setActiveCategory] = useState("student-highlights");
     const [admins, setAdmins] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -70,93 +70,8 @@ export default function AdminPanel() {
                 {/* Nav Links */}
                 <nav className="px-4 py-6 space-y-2">
 
-                    {/*Student Highlights*/}
-                    <div>
-                        <button
-                            onClick={() => setOpenDropdown(openDropdown === "studenthighlights" ? null : "studenthighlights")}
-                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all text-gray-700 hover:bg-gray-100"
-                        >
-                            <i className="fas fa-folder"></i> Student Highlights
-                            <span className="ml-auto">
-                                {/* Dropdown Arrow */}
-                                <svg
-                                    className={`w-4 h-4 transition-transform ${openDropdown === "studenthighlights" ? "rotate-180" : ""}`}
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </span>
-                        </button>
-                        {/* Dropdown Menu */}
-                        {openDropdown === "studenthighlights" && (
-                            <div className="ml-6 mt-1 space-y-1">
-                                <button
-                                    onClick={() => { handleSelect("cur-student-highlights"); }}
-                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "cur-student-highlights"
-                                        ? "bg-gray-200 text-gray-900"
-                                        : "text-gray-700 hover:bg-gray-100"
-                                        }`}
-                                >
-                                    Student Highlights
-                                </button>
-                                <button
-                                    onClick={() => { handleSelect("student-highlights"); }}
-                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "student-highlights"
-                                        ? "bg-gray-200 text-gray-900"
-                                        : "text-gray-700 hover:bg-gray-100"
-                                        }`}
-                                >
-                                    Pending Student Highlights
-                                </button>
-                            </div>
-                        )}
-                    </div>
 
-                    {/*Tech Blog*/}
-                    <div>
-                        <button
-                            onClick={() => setOpenDropdown(openDropdown === "techblog" ? null : "techblog")}
-                            className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all text-gray-700 hover:bg-gray-100"
-                        >
-                            <i className="fas fa-folder"></i> Technology Blog
-                            <span className="ml-auto">
-                                {/* Dropdown Arrow */}
-                                <svg
-                                    className={`w-4 h-4 transition-transform ${openDropdown === "techblog" ? "rotate-180" : ""}`}
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </span>
-                        </button>
-                        {/* Dropdown Menu */}
-                        {openDropdown === "techblog" && (
-                            <div className="ml-6 mt-1 space-y-1">
-                                <button
-                                    onClick={() => { handleSelect("cur-tech-blog"); }}
-                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "cur-tech-blog"
-                                        ? "bg-gray-200 text-gray-900"
-                                        : "text-gray-700 hover:bg-gray-100"
-                                        }`}
-                                >
-                                    Technology Blog
-                                </button>
-                                <button
-                                    onClick={() => { handleSelect("tech-blog"); }}
-                                    className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "tech-blog"
-                                        ? "bg-gray-200 text-gray-900"
-                                        : "text-gray-700 hover:bg-gray-100"
-                                        }`}
-                                >
-                                    Pending Technology Blog
-                                </button>
-                            </div>
-                        )}
-                    </div>
+
 
 
 
@@ -203,15 +118,6 @@ export default function AdminPanel() {
                             </div>
                         )}
                     </div>
-                    <button
-                        onClick={() => handleSelect("faq")}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "faq"
-                            ? "bg-gray-200 text-gray-900"
-                            : "text-gray-700 hover:bg-gray-100"
-                            }`}
-                    >
-                        <i className="fas fa-chart-line"></i> FAQs
-                    </button>
 
                     <button
                         onClick={() => handleSelect("faculty-directory")}
@@ -222,34 +128,7 @@ export default function AdminPanel() {
                     >
                         <i className="fas fa-chart-line"></i> Faculty Directory
                     </button>
-                    <button
-                        onClick={() => handleSelect("student-resources")}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "student-resources"
-                            ? "bg-gray-200 text-gray-900"
-                            : "text-gray-700 hover:bg-gray-100"
-                            }`}
-                    >
-                        <i className="fas fa-chart-line"></i> Student Resources
-                    </button>
-                    <button
-                        onClick={() => handleSelect("pending-accounts")}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
-                            ? "bg-gray-200 text-gray-900"
-                            : "text-gray-700 hover:bg-gray-100"
-                            }`}
-                    >
-                        <i className="fas fa-chart-line"></i> Pending Accounts
-                    </button>
 
-                    <button
-                        onClick={() => handleSelect("user-controls")}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
-                            ? "bg-gray-200 text-gray-900"
-                            : "text-gray-700 hover:bg-gray-100"
-                            }`}
-                    >
-                        <i className="fas fa-chart-line"></i> User Controls
-                    </button>
                 </nav>
             </aside >
 
