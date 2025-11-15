@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Student = require('../models/studentModel');
+const { execFile } = require('child_process');
 
 
 router.get('/', async (req, res) => {
@@ -29,9 +30,9 @@ router.post('/login', async (req, res) => {
         const student = await Student.login(req.body);
 
         // Remove password_hash before sending the response
-        const { password_hash, ...adminWithoutPassword } = admin;
+        const { password_hash, ...adminWithoutPassword } = student;
 
-        res.send(adminWithoutPassword);
+        res.send(studentWithoutPassword);
     } catch (err) {
         res.status(401).json({ message: err.message });
     }
@@ -74,15 +75,39 @@ router.get('/check-email/:email', async (req, res) => {
 
 });
 
+// creating a new user using the script
 router.post("/createUser", (req, res) => {
   const { email, nId } = req.body;
-  execFile("./create_user.sh", [email, nId], (err, stdout, stderr) => {
-    if (err) {
-      return res.status(500).send(stderr);
+
+  if (!email || !nId) {
+    return res.status(400).json({ success: false, error: "Missing email or nId" });
+  }
+
+  const scriptPath = "/opt/hydra-scripts/create_user.sh";
+
+// Run the script as sudo
+  const child = execFile(
+    "sudo",
+    ["bash", scriptPath, email, nId],
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error("Error executing script:", error);
+        return res.status(500).json({
+          success: false,
+          error: stderr || error.message,
+        });
+      }
+
+      console.log("Script output:", stdout);
+      res.json({
+        success: true,
+        message: "User created successfully via server script",
+        output: stdout,
+      });
     }
-    res.send(stdout || "User created successfully");
-  });
+  );
 });
+
 
 // Get all pending requests
 router.get("/pending", async (req, res) => {

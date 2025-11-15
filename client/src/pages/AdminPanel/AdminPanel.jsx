@@ -272,6 +272,54 @@ export default function AdminPanel() {
 
                         <h3 className="text-lg font-medium text-stone-800 mb-2">Events Page - Coming Soon</h3>
 
+            {/* User management section
+            TODO: make into its own component */}
+            <div className="flex-col justify-between items-center mb-6">
+                <h1 className="text-2xl font-semibold text-stone-700 mb-4">User Controls</h1>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full bg-white border border-stone-300">
+                        <thead>
+                            <tr>
+                                <th className="px-4 py-2 border-b">Username</th>
+                                <th className="px-4 py-2 border-b">Email</th>
+                                <th className="px-4 py-2 border-b">Role</th>
+                                <th className="px-4 py-2 border-b">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {admins.map((admin) => (
+                                <tr key={admin.id} className="text-center">
+                                    <td className="px-4 py-2 border-b">{admin.user}</td>
+                                    <td className="px-4 py-2 border-b">{admin.email}</td>
+                                    <td className="px-4 py-2 border-b">{admin.role}</td>
+                                    <td className="px-4 py-2 border-b">
+                                        <Link to={`/admin-panel/users/edit-admin/${admin.id}`}
+                                            className="bg-green-300 rounded px-3 py-1 hover:bg-green-400 mr-2 transition-all ease-in duration-300">Edit</Link>
+                                        <button
+                                            onClick={() => handleDelete(admin.id)}
+                                            className="bg-rose-300 rounded px-3 py-1 hover:bg-rose-400 transition-all ease-in duration-300">Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    <div>
+
+              // test script
+                        <h1>Script Test</h1>
+                        <p>Click the button below to test the backend script:</p>
+
+                        <TestScriptSection />
+
+                        <p>Check the console or below for output.</p>
+                    </div>
+
+                    <div className="mt-4">
+                        <Link to="/admin-panel/users/create-user"
+                            className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-4lue-600">
+                            Add User
+                        </Link>
                     </div>
                 )}
                 {/* Faqs section */}

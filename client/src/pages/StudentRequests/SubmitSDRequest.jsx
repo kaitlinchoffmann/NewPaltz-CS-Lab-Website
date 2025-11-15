@@ -19,14 +19,30 @@ export default function SubmitSDRequest() {
         try {
             const res = await axios.post("http://localhost:5001/send-alert", {
                 subject: "Student Account Request",
-                message: "A student has requested an account on the hydra server. Please login and review the submition :) ",
+                message: "A student has requested an account on the hydra server. Please login and review the submission :)",
             });
+
+            // If successful
             alert(res.data.msg);
         } catch (err) {
-            alert("Error sending email");
-            console.error(err);
+            // More detailed error logging
+            if (err.response) {
+                // The server responded with a status code outside 2xx
+                console.error("Server error:", err.response.data);
+                console.error("Status code:", err.response.status);
+                alert(`Server error: ${err.response.data.msg || "Unknown error"}`);
+            } else if (err.request) {
+                // The request was made but no response received
+                console.error("No response received:", err.request);
+                alert("No response from the server. Check if it's running.");
+            } else {
+                // Something happened before the request was made
+                console.error("Error setting up request:", err.message);
+                alert("Error setting up request.");
+            }
         }
     };
+
 
 
     const validateField = (name, value) => {
@@ -78,6 +94,8 @@ export default function SubmitSDRequest() {
             console.log("formData:", JSON.stringify(formData));
         }
     };
+
+
 
     const inputClass = (fieldError) =>
         `px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-300 ${fieldError ? "border-red-600" : "border-stone-300"

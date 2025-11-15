@@ -62,10 +62,30 @@ async function deleteForm(id) {
     return result.affectedRows;
 }
 
+/**
+ * Retrieves a Server/Database form by ID
+ * @param {number} id - Form ID
+ * @returns {Promise<Object|null>} The form object or null if not found
+ */
+async function getSDFormById(id) {
+    const conn = await pool.getConnection();
+    try {
+        const rows = await conn.query(
+            "SELECT * FROM ServerDatabaseForm WHERE id = ?",
+            [id]
+        );
+        return rows[0] || null;
+    } finally {
+        conn.release();
+    }
+}
+
+
 module.exports = {
     getAllSDForms,
     addSDForm,
-    deleteForm
+    deleteForm,
+    getSDFormById
 };
     
 

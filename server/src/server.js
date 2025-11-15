@@ -12,7 +12,8 @@ const techBlogRoutes = require("./routes/techBlogPostsRoutes");
 const studentHighlightRoutes = require("./routes/StudentHighlightRoutes");
 const sdFormRoutes = require("./routes/sdFormRoutes");
 
-//const adminProxy = require("./routes/adminProxy");
+// const adminProxy = require("./routes/adminProxy");
+const adminProxy = require("./routes/adminRoutes.js");
 const student2Routes = require("./routes/studentRoutes");
 
 const app = express();
@@ -53,7 +54,7 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
-/*
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
@@ -80,4 +81,4 @@ app.post("/send-alert", async (req, res) => {
   }
 });
 
-*/
+
