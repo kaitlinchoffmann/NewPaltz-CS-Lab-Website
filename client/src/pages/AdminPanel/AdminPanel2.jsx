@@ -9,7 +9,7 @@ import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
 import PendingSDAccounts from "../../components/AdminPanel/PendingSDAccounts";
 import PendingAccountsSection from "../../components/AdminPanel/PendingAccountsSection";
 import UserControlsSection from "../../components/AdminPanel/UserControlsSection"
-//import TestScriptSection from "../../components/AdminPanel/TestScript";
+import TestScriptSection from "../../components/AdminPanel/TestScript";
 import { adminService } from "../../services/adminService";
 
 
@@ -311,7 +311,7 @@ export default function AdminPanel() {
             {/* TEST SCRIPT SECTION WILL BE REMOVED LATER ON */}
             <div>
 
-              // test script
+                {/* test script*/}
                 <h1>Script Test</h1>
                 <p>Click the button below to test the backend script:</p>
 
