@@ -29,34 +29,7 @@ export default function EditorPanel() {
     };
 
 
-    useEffect(() => {
-        const loadAdmins = async () => {
-            try {
-                setIsLoading(true);
-                const admins = await adminService.getAllAdmins();
-                setAdmins(admins);
-            } catch (err) {
-                console.error("Error loading admins:", err);
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
 
-        loadAdmins();
-    }, []);
-
-    const handleDelete = async (adminId) => {
-        if (window.confirm("Are you sure you want to delete this Admin?")) {
-            try {
-                await adminService.deleteAdmin(adminId);
-                setAdmins((prevAdmins) => prevAdmins.filter((admin) => admin.id !== adminId));
-            } catch (err) {
-                console.error("Error deleting admin:", err);
-                alert("Failed to delete admin. Please try again.");
-            }
-        }
-    };
 
     return (
         <div className="flex min-h-screen mx-auto">
@@ -64,7 +37,7 @@ export default function EditorPanel() {
             <aside className="w-64 bg-white border-r border-gray-200 ">
                 {/* Top section */}
                 <div className="p-4 border-b border-gray-200">
-                    <h1 className="text-lg font-bold text-gray-800">Admin Panel</h1>
+                    <h1 className="text-lg font-bold text-gray-800">Editor Panel</h1>
                 </div>
 
                 {/* Nav Links */}

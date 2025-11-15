@@ -243,7 +243,7 @@ export default function AdminPanel() {
 
                     <button
                         onClick={() => handleSelect("user-controls")}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "user-controls"
                             ? "bg-gray-200 text-gray-900"
                             : "text-gray-700 hover:bg-gray-100"
                             }`}
@@ -309,7 +309,7 @@ export default function AdminPanel() {
             </main>
 
             {/* TEST SCRIPT SECTION WILL BE REMOVED LATER ON */}
-            {/* <div>
+            * <div>
 
               // test script
                 <h1>Script Test</h1>
@@ -325,7 +325,7 @@ export default function AdminPanel() {
                     className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-4lue-600">
                     Add User
                 </Link>
-            </div> */}
+            </div>
         </div>
 
 

@@ -11,16 +11,13 @@ import PendingAccountsSection from "../../components/AdminPanel/PendingAccountsS
 import UserControlsSection from "../../components/AdminPanel/UserControlsSection"
 //import TestScriptSection from "../../components/AdminPanel/TestScript";
 import { adminService } from "../../services/adminService";
-import { useLocation } from "react-router-dom";
 
 
 import { Link } from "react-router-dom";
 
 
 export default function AdminPanel() {
-    const location = useLocation();
-    const initialCategory = location.state?.activeCategory;
-    const [activeCategory, setActiveCategory] = useState(initialCategory);
+    const [activeCategory, setActiveCategory] = useState("student-highlights");
     const [admins, setAdmins] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -246,7 +243,7 @@ export default function AdminPanel() {
 
                     <button
                         onClick={() => handleSelect("user-controls")}
-                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
+                        className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "user-controls"
                             ? "bg-gray-200 text-gray-900"
                             : "text-gray-700 hover:bg-gray-100"
                             }`}
