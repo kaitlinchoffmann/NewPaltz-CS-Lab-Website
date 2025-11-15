@@ -309,7 +309,7 @@ export default function AdminPanel() {
             </main>
 
             {/* TEST SCRIPT SECTION WILL BE REMOVED LATER ON */}
-            * <div>
+            <div>
 
               // test script
                 <h1>Script Test</h1>
