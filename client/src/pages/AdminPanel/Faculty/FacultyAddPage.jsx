@@ -7,10 +7,18 @@ export default function FacultyAddPage() {
         role: "",
         email: "",
         website: "",
-        office_hours: "",
         phone_number: "",
         office_location: "",
-        img: ""
+        img: "",
+        office_hours: {
+            Monday: "",
+            Tuesday: "",
+            Wednesday: "",
+            Thursday: "",
+            Friday: "",
+            Saturday: "",
+            Sunday: ""
+        }
     });
 
     const handleChange = (e) => {
@@ -18,11 +26,33 @@ export default function FacultyAddPage() {
         setFormData({ ...formData, [name]: value });
     };
 
+    // Handle office hours change for a specific day
+    const handleOfficeHourChange = (day, value) => {
+        setFormData({
+            ...formData,
+            office_hours: {
+                ...formData.office_hours,
+                [day]: value
+            }
+        });
+    };
+
     const handleAdd = async (e) => {
         e.preventDefault();
+
+        // Convert office_hours object to a single string like "Monday 5-9PM, Tuesday 3-4PM"
+        const officeHoursString = Object.entries(formData.office_hours)
+            .filter(([, hours]) => hours.trim() !== "") // filter out empty hours
+            .map(([day, hours]) => `${day} ${hours}`)
+            .join(", ");
+
         try {
-            const response = await facultyService.addFaculty(formData);
-            alert(`Faculty added successfully! ID: ${response.id}`); // Display the ID of the new faculty
+            const payload = {
+                ...formData,
+                office_hours: officeHoursString
+            };
+            const response = await facultyService.addFaculty(payload);
+            alert(`Faculty added successfully! ID: ${response.id}`);
             window.location.href = "/admin-panel";
         } catch (error) {
             console.error("Error adding Faculty:", error.message);
@@ -90,17 +120,19 @@ export default function FacultyAddPage() {
 
                 {/* Office Hours */}
                 <div className="flex flex-col">
-                    <label htmlFor="office_hours" className="text-sm font-medium text-stone-700 mb-1">
-                        Office Hours(If Applicable)
-                    </label>
-                    <input
-                        type="text"
-                        name="office_hours"
-                        id="office_hours"
-                        value={formData.office_house}
-                        onChange={handleChange}
-                        className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
-                    />
+                    <label className="text-sm font-medium text-stone-700 mb-1">Office Hours (if applicable)</label>
+                    {Object.keys(formData.office_hours).map((day) => (
+                        <div key={day} className="flex items-center mb-1">
+                            <span className="w-20">{day}:</span>
+                            <input
+                                type="text"
+                                placeholder="e.g., 5-9PM"
+                                value={formData.office_hours[day]}
+                                onChange={(e) => handleOfficeHourChange(day, e.target.value)}
+                                className="px-2 py-1 border border-stone-300 rounded-md shadow-sm flex-1 focus:ring-2 focus:ring-blue-300"
+                            />
+                        </div>
+                    ))}
                 </div>
 
                 {/* Office Location */}
@@ -114,7 +146,7 @@ export default function FacultyAddPage() {
                         id="office_location"
                         value={formData.office_location}
                         onChange={handleChange}
-                        
+
                         className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                     />
                 </div>
@@ -130,7 +162,7 @@ export default function FacultyAddPage() {
                         id="phone_number"
                         value={formData.phone_number}
                         onChange={handleChange}
-                        
+
                         className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
                     />
                 </div>
@@ -152,23 +184,23 @@ export default function FacultyAddPage() {
 
                 {/* Image Upload */}
                 <div className="flex flex-col">
-                <label htmlFor="img" className="text-sm font-medium text-stone-700 mb-1">
-                    Faculty Headshot
-                </label>
-                <input
-                    type="file"
-                    name="img"
-                    id="img"
-                    accept="image/*"
-                    value={formData.img.name}
-                    onChange={handleChange}
-                    className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
-                />
-                {formData.img && (
-                    <p className="text-xs text-stone-600 mt-1">
-                    Selected: {formData.img.name}
-                    </p>
-                )}
+                    <label htmlFor="img" className="text-sm font-medium text-stone-700 mb-1">
+                        Faculty Headshot
+                    </label>
+                    <input
+                        type="file"
+                        name="img"
+                        id="img"
+                        accept="image/*"
+                        value={formData.img.name}
+                        onChange={handleChange}
+                        className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
+                    />
+                    {formData.img && (
+                        <p className="text-xs text-stone-600 mt-1">
+                            Selected: {formData.img.name}
+                        </p>
+                    )}
                 </div>
 
                 {/* Submit */}

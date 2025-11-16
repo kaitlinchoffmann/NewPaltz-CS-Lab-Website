@@ -33,6 +33,9 @@ import AdminPanel from './pages/AdminPanel/AdminPanel';
 import UsersAddPage from './pages/AdminPanel/Users/UsersAddPage';
 import UsersEditPage from './pages/AdminPanel/Users/UsersEditPage';
 
+import ClubPanel from './pages/AdminPanel/ClubPanel'
+import EditorPanel from './pages/AdminPanel/EditorPanel'
+
 import Contributions from './pages/Contributions';
 
 import Login from './pages/Login';
@@ -83,7 +86,9 @@ const App = () => {
             <Route path="/admin-panel/users/create-user" element={<UsersAddPage />} />
             <Route path="/admin-panel/users/edit-admin/:id" element={<UsersEditPage />} />
 
+            <Route path="/club-panel" element={<ClubPanel />} />
 
+            <Route path="/editor-panel" element={<EditorPanel />} />
 
             <Route path="/contributions" element={<Contributions />} />
 

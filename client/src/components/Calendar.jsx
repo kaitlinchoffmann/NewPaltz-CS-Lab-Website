@@ -1,9 +1,17 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import PopupWindow from "./PopupWindow";
+import facultyService from "../services/facultyService";
 
 export default function Calendar() {
     const [viewDate, setViewDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(null);
+
+    // Faculty list state
+    const [facultyList, setFacultyList] = useState([]);
+    // Popup visibility state
     const [showPopup, setShowPopup] = useState(false);
+    // Search bar state
+    const [searchQuery, setSearchQuery] = useState("");
 
     // FAKE EVENTS DATABASE
     const events = {
@@ -19,11 +27,50 @@ export default function Calendar() {
         "2025-10-31": [" Halloween Party - 7 PM"],
     };
 
+    // Fetch faculty data for popup
+    useEffect(() => {
+        const fetchFaculty = async () => {
+            try {
+                const data = await facultyService.getAllFaculty();
+                setFacultyList(data);
+            } catch (err) {
+                console.error("Failed to load faculty", err);
+            }
+        };
+        fetchFaculty();
+    }, []);
+
+    // Filter faculty based on search query
+    const filteredFaculty = facultyList.filter(f => {
+        const name = f?.name?.toLowerCase() ?? "";
+        const officeHours = f?.office_hours?.toLowerCase() ?? "";
+        const query = searchQuery?.toLowerCase() ?? "";
+        return name.includes(query) || officeHours.includes(query);
+    });
+
+    // --- Updated hasOfficeHours function ---
+    const hasOfficeHours = (date) => {
+        const dayStr = date.toLocaleDateString("en-US", { weekday: "long" });
+        return filteredFaculty.some(f => {
+            const officeHoursStr = f.office_hours || ""; // string-based office hours
+            return officeHoursStr.toLowerCase().includes(dayStr.toLowerCase());
+        });
+    };
+
     // Click handler
     const onDateSelect = (date) => {
         setSelectedDate(date);
         setShowPopup(true);
     };
+
+    // Filter events based on search query
+    const filteredEvents = Object.keys(events).reduce((acc, dateKey) => {
+        const matched = events[dateKey].filter((ev) =>
+            ev.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        if (matched.length) acc[dateKey] = matched;
+        return acc;
+    }, {});
 
     // Compute month info
     const { year, month, daysInMonth, startWeekday } = useMemo(() => {
@@ -57,6 +104,22 @@ export default function Calendar() {
                 position: "relative",
             }}
         >
+            {/* Search Bar */}
+            <div style={{ padding: "10px 20px" }}>
+                <input
+                    type="text"
+                    placeholder="Search events or faculty office hours..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        borderRadius: 6,
+                        border: "1px solid #ccc",
+                        fontSize: 16,
+                    }}
+                />
+            </div>
             {/* Header */}
             <div
                 style={{
@@ -132,7 +195,8 @@ export default function Calendar() {
                     const day = i + 1;
                     const date = new Date(year, month, day);
                     const dateKey = formatDateKey(date);
-                    const hasEvents = !!events[dateKey];
+                    const hasEvents = !!filteredEvents[dateKey];
+                    const officeHours = hasOfficeHours(date);
 
                     return (
                         <div
@@ -146,21 +210,11 @@ export default function Calendar() {
                                 textAlign: "right",
                                 fontWeight: 600,
                                 color: "#444",
-                                background: hasEvents
-                                    ? "#fff8c2" // yellow tint for event days
-                                    : "white",
+                                background: "white",
                                 position: "relative",
                             }}
-                            onMouseEnter={(e) =>
-                            (e.currentTarget.style.background = hasEvents
-                                ? "#fff4a6"
-                                : "#e5e1b1ff")
-                            }
-                            onMouseLeave={(e) =>
-                            (e.currentTarget.style.background = hasEvents
-                                ? "#fff8c2"
-                                : "white")
-                            }
+                            onMouseEnter={(e) => (e.currentTarget.style.background = "#e5e1b1ff")} // light hover
+                            onMouseLeave={(e) => (e.currentTarget.style.background = "white")} // back to white
                         >
                             {day}
                             {/* Small event indicator dot */}
@@ -174,6 +228,21 @@ export default function Calendar() {
                                         position: "absolute",
                                         bottom: 6,
                                         left: 6,
+                                    }}
+                                ></div>
+                            )}
+
+                            {/* Blue dot for office hours */}
+                            {officeHours && (
+                                <div
+                                    style={{
+                                        width: 8,
+                                        height: 8,
+                                        borderRadius: "50%",
+                                        background: "blue",
+                                        position: "absolute",
+                                        bottom: 6,
+                                        right: 6,
                                     }}
                                 ></div>
                             )}
@@ -195,60 +264,18 @@ export default function Calendar() {
                 ))}
             </div>
 
-            {/* Popup modal */}
+            {/* Popup Window */}
             {showPopup && selectedDate && (
-                <div
-                    style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        background: "rgba(0,0,0,0.5)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 1000,
-                    }}
-                    onClick={() => setShowPopup(false)}
-                >
-                    <div
-                        style={{
-                            background: "white",
-                            padding: "20px 30px",
-                            borderRadius: 12,
-                            minWidth: 300,
-                            boxShadow: "0 0 15px rgba(0,0,0,0.3)",
-                            position: "relative",
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            onClick={() => setShowPopup(false)}
-                            style={{
-                                position: "absolute",
-                                top: 8,
-                                right: 10,
-                                border: "none",
-                                background: "transparent",
-                                fontSize: 18,
-                                cursor: "pointer",
-                            }}
-                        >
-                            ✕
-                        </button>
-                        <h3>Events for {selectedDate.toDateString()}</h3>
-                        <ul style={{ paddingLeft: 20 }}>
-                            {events[formatDateKey(selectedDate)] ? (
-                                events[formatDateKey(selectedDate)].map((ev, i) => (
-                                    <li key={i}>{ev}</li>
-                                ))
-                            ) : (
-                                <p>No events for this day.</p>
-                            )}
-                        </ul>
-                    </div>
-                </div>
+                <PopupWindow
+                    date={selectedDate}
+                    faculty={filteredFaculty.filter(f => {
+                        const dayStr = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
+                        const officeHoursStr = f.office_hours || "";
+                        return officeHoursStr.toLowerCase().includes(dayStr.toLowerCase());
+                    })}
+                    events={events[formatDateKey(selectedDate)] || []}
+                    onClose={() => setShowPopup(false)}
+                />
             )}
         </div>
     );
