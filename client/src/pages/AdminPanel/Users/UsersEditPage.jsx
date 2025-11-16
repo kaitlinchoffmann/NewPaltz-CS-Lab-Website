@@ -110,7 +110,6 @@ export default function UsersEditPage() {
                         <option value="admin">Admin</option>
                         <option value="admin">Club</option>
                         <option value="admin">Editor</option>
-                        <option value="student">Student</option>
                     </select>
                 </div>
 

@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PendingHighlights from "../../components/AdminPanel/PendingHighlights";
-import PendingArticles from "../../components/AdminPanel/PendingArticles";
-import FAQSection from "../../components/AdminPanel/FAQSection"
-import FacultySection from "../../components/AdminPanel/FacultySection"
-import StudentResourceSection from "../../components/AdminPanel/StudentResourceSection";
-import HighlightsSection from "../../components/AdminPanel/HighlightsSection";
-import TechBlogSection from "../../components/AdminPanel/TechBlogSection";
-import PendingSDAccounts from "../../components/AdminPanel/PendingSDAccounts";
-import PendingAccountsSection from "../../components/AdminPanel/PendingAccountsSection";
-import UserControlsSection from "../../components/AdminPanel/UserControlsSection"
-//import TestScriptSection from "../../components/AdminPanel/TestScript";
 import { adminService } from "../../services/adminService";
-
 
 import { Link } from "react-router-dom";
 
@@ -107,16 +95,7 @@ export default function EditorPanel() {
 
             {/* Main Content Area */}
             <main className="flex-1 p-6 overflow-x-auto">
-                {/* Pending Student Highlights Section */}
-                {activeCategory === "student-highlights" && (
-                    <PendingHighlights />
-                )}
 
-
-                {/* Technology Blog Section */}
-                {activeCategory === "tech-blog" && (
-                    <PendingArticles />
-                )}
 
                 {/* Events Section */}
                 {activeCategory === "events" && (
@@ -126,37 +105,6 @@ export default function EditorPanel() {
 
                     </div>
                 )}
-                {/* Faqs section */}
-                {activeCategory === "faq" && (
-                    <FAQSection />
-                )}
-
-                {/* Faculty directory section */}
-                {activeCategory === "faculty-directory" && (
-                    <FacultySection />
-                )}
-
-
-                {/* Student Resources section */}
-                {activeCategory === "student-resources" && (
-                    <StudentResourceSection />
-                )}
-
-                {/* Current Student Highlights section */}
-                {activeCategory === "cur-student-highlights" && (
-                    <HighlightsSection />
-                )}
-
-                {/* Current Tech Blog section */}
-                {activeCategory === "cur-tech-blog" && (
-                    <TechBlogSection />
-                )}
-                {/* Pending Accounts Section */}
-                {activeCategory === "pending-accounts" && (
-                    <PendingAccountsSection />)}
-
-                {activeCategory === "user-controls" && (
-                    <UserControlsSection admins={admins} handleDelete={handleDelete} />)}
 
             </main>
 
