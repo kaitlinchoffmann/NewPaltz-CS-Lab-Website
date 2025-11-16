@@ -75,8 +75,8 @@ export default function AdminPanel() {
                                 <button
                                     onClick={() => handleSelect("cur-student-highlights")}
                                     className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "cur-student-highlights"
-                                            ? "bg-gray-200 text-gray-900"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     Student Highlights
@@ -85,8 +85,8 @@ export default function AdminPanel() {
                                 <button
                                     onClick={() => handleSelect("student-highlights")}
                                     className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "student-highlights"
-                                            ? "bg-gray-200 text-gray-900"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     Pending Student Highlights
@@ -109,8 +109,8 @@ export default function AdminPanel() {
                                 <button
                                     onClick={() => handleSelect("cur-tech-blog")}
                                     className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "cur-tech-blog"
-                                            ? "bg-gray-200 text-gray-900"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     Technology Blog
@@ -119,8 +119,8 @@ export default function AdminPanel() {
                                 <button
                                     onClick={() => handleSelect("tech-blog")}
                                     className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "tech-blog"
-                                            ? "bg-gray-200 text-gray-900"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     Pending Technology Blog
@@ -143,8 +143,8 @@ export default function AdminPanel() {
                                 <button
                                     onClick={() => handleSelect("events")}
                                     className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "events"
-                                            ? "bg-gray-200 text-gray-900"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     Events
@@ -153,8 +153,8 @@ export default function AdminPanel() {
                                 <button
                                     onClick={() => handleSelect("events")}
                                     className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-all ${activeCategory === "events"
-                                            ? "bg-gray-200 text-gray-900"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-gray-200 text-gray-900"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     Pending Events
@@ -174,8 +174,8 @@ export default function AdminPanel() {
                     <button
                         onClick={() => handleSelect("faculty-directory")}
                         className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "faculty-directory"
-                                ? "bg-gray-200 text-gray-900"
-                                : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
                             }`}
                     >
                         Faculty Directory
@@ -184,8 +184,8 @@ export default function AdminPanel() {
                     <button
                         onClick={() => handleSelect("student-resources")}
                         className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "student-resources"
-                                ? "bg-gray-200 text-gray-900"
-                                : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
                             }`}
                     >
                         Student Resources
@@ -194,8 +194,8 @@ export default function AdminPanel() {
                     <button
                         onClick={() => handleSelect("pending-accounts")}
                         className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "pending-accounts"
-                                ? "bg-gray-200 text-gray-900"
-                                : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
                             }`}
                     >
                         Pending Accounts
@@ -204,8 +204,8 @@ export default function AdminPanel() {
                     <button
                         onClick={() => handleSelect("user-controls")}
                         className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md w-full text-left transition-all ${activeCategory === "user-controls"
-                                ? "bg-gray-200 text-gray-900"
-                                : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-gray-200 text-gray-900"
+                            : "text-gray-700 hover:bg-gray-100"
                             }`}
                     >
                         User Controls
