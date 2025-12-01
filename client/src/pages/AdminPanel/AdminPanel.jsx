@@ -67,9 +67,9 @@ export default function AdminPanel() {
             ]
         },
         { key: 'faq', component: <FAQSection />, roles: ['admin'], label: 'FAQs' },
-        { key: 'faculty-directory', component: <FacultySection />, roles: ['admin'], label: 'Faculty Directory' },
+        { key: 'faculty-directory', component: <FacultySection />, roles: ['admin', 'editor'], label: 'Faculty Directory' },
         { key: 'student-resources', component: <StudentResourceSection />, roles: ['admin', 'editor'], label: 'Student Resources' },
-        { key: 'pending-accounts', component: <PendingAccountsSection />, roles: ['admin', 'editor'], label: 'Pending Accounts' },
+        { key: 'pending-accounts', component: <PendingAccountsSection />, roles: ['admin'], label: 'Pending Accounts' },
         { key: 'user-controls', component: <UserControlsSection admins={admins} handleDelete={handleDelete} />, roles: ['admin'], label: 'User Controls' },
 
     ];
