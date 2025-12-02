@@ -1,7 +1,7 @@
 // src/pages/Admin/AdminPanel.jsx
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
-
+import { Link } from "react-router-dom";
 import PendingHighlights from '../../components/AdminPanel/PendingHighlights';
 import HighlightsSection from '../../components/AdminPanel/HighlightsSection';
 import PendingArticles from '../../components/AdminPanel/PendingArticles';
@@ -185,7 +185,15 @@ export default function AdminPanel() {
                     return null;
                 })}
             </main>
-
+            {/* Add User Button */}
+            <div className="mt-4">
+                <Link
+                    to="/admin-panel/users/create-user"
+                    className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Add User
+                </Link>
+            </div>
         </div>
     );
 
