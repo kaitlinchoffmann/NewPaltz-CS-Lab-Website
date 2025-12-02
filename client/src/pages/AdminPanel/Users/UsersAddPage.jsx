@@ -103,6 +103,26 @@ export default function UsersAddPage() {
                     />
                 </div>
 
+                {/* Role */}
+                <div className="flex flex-col">
+                    <label htmlFor="role" className="text-sm font-medium text-stone-700 mb-1">
+                        Role
+                    </label>
+                    <select
+                        name="role"
+                        id="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        required
+                        className="px-4 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-300"
+                    >
+                        <option value="" disabled>Select role</option>
+                        <option value="admin">Admin</option>
+                        <option value="club">Club</option>
+                        <option value="editor">Editor</option>
+                    </select>
+                </div>
+
                 {/*Password*/}
                 <div className="flex flex-col">
                     <label htmlFor="password" className="text-sm font-medium text-stone-700 mb-1">

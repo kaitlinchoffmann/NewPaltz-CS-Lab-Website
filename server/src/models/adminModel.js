@@ -42,14 +42,14 @@ async function getAdminById(id) {
 
 
 // Add a new admin and hash the password before saving
-async function addAdmin(user, email, password) {
+async function addAdmin(user, email, password,role) {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds); // Hash the password
 
     const conn = await pool.getConnection();
     const result = await conn.query(
-        "INSERT INTO Admins (user, email, password_hash) VALUES (?, ?, ?)",
-        [user, email, hashedPassword]
+        "INSERT INTO Admins (user, email, password_hash, role) VALUES (?, ?, ?,?)",
+        [user, email, hashedPassword,role]
     );
     conn.release();
     return result.insertId;
