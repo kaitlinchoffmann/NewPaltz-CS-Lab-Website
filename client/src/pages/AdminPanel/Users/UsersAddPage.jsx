@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { adminService } from "../../../services/adminService";
 
 export default function UsersAddPage() {
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user: "",
         email: "",
@@ -52,10 +53,19 @@ export default function UsersAddPage() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-10">
+        <div className="max-w-2xl mx-auto px-4 py-10 relative">
+            {/* X Button */}
+            <button
+                type="button"
+                onClick={() => navigate("/admin-panel", { state: { activeCategory: "user-controls" } })}
+                className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-700"
+                aria-label="Close"
+            >
+                &times;
+            </button>
             <h2 className="text-3xl font-bold text-stone-800 mb-2">Create a new Admin</h2>
             <p className="text-stone-600 p-2">
-                Fill in the data below to create a new Admin. Once done, click "Create Admin".
+                Fill in the data below to create a new User. Once done, click "Create Admin".
             </p>
             <form
                 onSubmit={handleAdd}
@@ -130,7 +140,7 @@ export default function UsersAddPage() {
                     type="submit"
                     className="w-full py-2 px-4 bg-blue-300 text-white rounded-md hover:bg-blue-400 transition font-medium"
                 >
-                    Create Admin
+                    Create User
                 </button>
             </form>
         </div>

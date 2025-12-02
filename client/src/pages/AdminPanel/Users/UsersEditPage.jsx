@@ -54,9 +54,9 @@ export default function UsersEditPage() {
             >
                 &times;
             </button>
-            <h2 className="text-3xl font-bold text-stone-800 mb-2">Admin Editor</h2>
+            <h2 className="text-3xl font-bold text-stone-800 mb-2">User Editor</h2>
             <p className="text-stone-600 p-2">
-                Edit the data below to edit the Admin. Once done, click "Save Edits".
+                Edit the data below to edit the User. Once done, click "Save Edits".
             </p>
             <form
                 onSubmit={handleEdit}
