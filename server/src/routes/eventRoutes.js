@@ -100,20 +100,49 @@ router.post('/', upload.single('flyer'), validateEvent, async (req, res) => {
 });
 
 
-// Delete an event by ID
 router.delete('/:id', async (req, res) => {
     try {
         const id = Number(req.params.id);
+
+        //Get event first so we know the flyer path
+        const existingRows = await eventsModel.getEventById(id);
+        const existingEvent = existingRows[0];
+
+        if (!existingEvent) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        //Delete the flyer file IF it's not the default image
+        if (existingEvent.flyer_url && !existingEvent.flyer_url.includes("noFlyer.jpg")) {
+
+            // absolute path: server/uploads/<filename.jpg>
+            const flyerPath = path.join(__dirname, '..', existingEvent.flyer_url);
+
+            fs.unlink(flyerPath, (err) => {
+                if (err) {
+                    console.error("Failed to delete flyer:", err);
+                } else {
+                    console.log("Flyer deleted:", flyerPath);
+                }
+            });
+        }
+
+        //Delete event from DB
         const affectedRows = await eventsModel.deleteEvent(id);
+
         if (affectedRows === 0) {
             return res.status(404).json({ message: 'Event not found' });
         }
+
+        // Respond
         res.json({ message: 'Event deleted successfully', affectedRows });
+
     } catch (err) {
         console.error('Error deleting event:', err);
         res.status(500).json({ message: 'Failed to delete event' });
     }
 });
+
 
 // Get events by admin ID
 router.get('/admin/:adminId', async (req, res) => {
@@ -128,28 +157,73 @@ router.get('/admin/:adminId', async (req, res) => {
 });
 
 
-// Edit an event by ID with optional flyer update
-router.put('/:id', upload.single('flyer'), async (req, res) => {
+// Get event by ID
+router.get('/:id', async (req, res) => {
     try {
         const id = Number(req.params.id);
+        const rows = await eventsModel.getEventById(id);
+        const event = rows[0];
+
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        res.json(event);
+    } catch (err) {
+        console.error('Error getting event by ID:', err);
+        res.status(500).json({ message: 'Failed to fetch event' });
+    }
+});
+
+
+// Edit an existing event by ID with optional flyer replacement
+router.put('/:id', upload.single('flyer'), async (req, res) => {
+    console.log("REQ BODY:", req.body);
+console.log("REQ FILE:", req.file);
+    try {
+        const id = Number(req.params.id);
+        const existingRows = await eventsModel.getEventById(id);
+        const existingEvent = existingRows[0];
+
+        if (!existingEvent) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
         const { title, description, start_time, end_time, location } = req.body;
-        const flyer_url = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+        let flyer_url = existingEvent.flyer_url;
+
+        // Replace flyer if uploaded
+        if (req.file) {
+            flyer_url = `/uploads/${req.file.filename}`;
+
+            if (existingEvent.flyer_url && !existingEvent.flyer_url.includes('noFlyer.jpg')) {
+                const oldPath = path.join(__dirname, '..', existingEvent.flyer_url);
+
+                fs.unlink(oldPath, (err) =>
+                    err ? console.error("Failed to delete old flyer:", err)
+                        : console.log("Old flyer deleted:", oldPath)
+                );
+            }
+        }
+
         const eventData = {
             title,
             description,
             start_time,
             end_time,
             location,
+            flyer_url,
         };
-        if (flyer_url) {
-            eventData.flyer_url = flyer_url;
-        }
 
         const affectedRows = await eventsModel.editEvent(id, eventData);
+
         if (affectedRows === 0) {
             return res.status(404).json({ message: 'Event not found' });
         }
+
         res.json({ message: 'Event updated successfully', affectedRows });
+
     } catch (err) {
         console.error('Error updating event:', err);
         res.status(500).json({ message: 'Failed to update event' });

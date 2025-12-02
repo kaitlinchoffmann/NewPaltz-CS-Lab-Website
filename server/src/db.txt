@@ -31,8 +31,18 @@ CREATE TABLE `Admins` (
   `role` enum('admin','club','editor') NOT NULL DEFAULT 'club',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Admins`
+--
+
+LOCK TABLES `Admins` WRITE;
+/*!40000 ALTER TABLE `Admins` DISABLE KEYS */;
+INSERT INTO `Admins` VALUES (1,'cool','test@gmail.com','$2b$10$mY7pN1Pkz/zMM0KCq0HKweY/qxZBNUCJsH/I8y3muhB088.YqQ5ou','admin'),(2,'taylorpitman','taylordianebusiness@gmail.com','$2b$10$DV79Dl12btdVlMeczE3eNeEnrXzFc1hGef2u.g8H4s0UJvrGaZWFm','admin'),(4,'kaitlin','hoffmank4@newpaltz.edu','$2b$10$YzLx/42CDLMtMqR2RrMnluPEnopsCcSl55SCXqPLDJfxFvZbyJQE2','admin'),(5,'admin','admin@example.com','$2b$10$PbS4DUrP06F8/O/Y81F7z.RsSvBA99LToqYRdJYJlt3LRioUHFs1C','admin'),(6,'alejilal1','alejilal1@newpaltz.edu','$2b$10$lFxaWmtLSzmBP/42mtsCPetdjGrzt5tRO/77fHONr5xPqa2PWbUiO','admin'),(7,'slaterm2','slaterm2@newpaltz.edu','$2b$10$OQMBJbu7tIJ8Mf.lJgTPqO9jqxNdFc0REPIyo0HAHUYZDn0SRDWCy','admin'),(8,'mathewj10','mathewj10@newpaltz.edu','$2b$10$jMObqpwrvl5cz128aFFqVO72RoEa9Q5CpVHPilQqdfo9NH.CPRKXi','admin'),(11,'mollytslater','mollytslater@gmail.com','$2b$10$RvR3fK6IkU2o83y.07h26eHigRtVioP2XMAKoZMlzl2TCDynY57sm','admin'),(12,'testrole12345t6','testrole@example.com','$2b$10$examplehashvalue','admin'),(13,'mathew','testroles@gmail.com','$2b$10$MMvof/vtdF0wusr6lPGS.uIA3Vpeg9I3ogxkzxixW03YhbFWZYwXe','club'),(15,'dummy_admin','dummyadmin@example.com','$2a$12$sHOmcYiSubPmwRAr.PSMQ.Upy7p71qdv5lKfrABIcqFXxquCEDqMq','admin'),(16,'dummy_club','dummyclub@example.com','$2a$12$sHOmcYiSubPmwRAr.PSMQ.Upy7p71qdv5lKfrABIcqFXxquCEDqMq','editor'),(17,'dummy_editor','dummyeditor@example.com','$2a$12$sHOmcYiSubPmwRAr.PSMQ.Upy7p71qdv5lKfrABIcqFXxquCEDqMq','editor');
+/*!40000 ALTER TABLE `Admins` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Events`
@@ -43,6 +53,7 @@ DROP TABLE IF EXISTS `Events`;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `start_time` datetime NOT NULL,
@@ -50,9 +61,20 @@ CREATE TABLE `Events` (
   `location` varchar(255) DEFAULT NULL,
   `flyer_url` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `admin_id` (`admin_id`),
+  CONSTRAINT `Events_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `Admins` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Events`
+--
+
+LOCK TABLES `Events` WRITE;
+/*!40000 ALTER TABLE `Events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Events` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Faculty`
@@ -77,6 +99,16 @@ CREATE TABLE `Faculty` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Faculty`
+--
+
+LOCK TABLES `Faculty` WRITE;
+/*!40000 ALTER TABLE `Faculty` DISABLE KEYS */;
+INSERT INTO `Faculty` VALUES (28,'Sreya Banerjee','banerjes@newpaltz.edu','sbanerj2.wixsite.com',NULL,'(845) 257-3997','Assistant Professor','SH 250',NULL),(29,'Min Chen','chenm@newpaltz.edu',NULL,NULL,'(845) 257-3547','Associate Professor/Chair','SH 255',NULL),(30,'Mike Curry','currym6@newpaltz.edu',NULL,NULL,'(845) 257-3529','Lecturer/Associate Chair','SH 245',NULL),(31,'Chirakkal Easwaran','easwaran@newpaltz.edu','http://www.cs.newpaltz.edu',NULL,'(845) 257-3514','Professor','SH 244',NULL),(32,'Kaitlin Hoffmann','hoffmank4@newpaltz.edu','','Tuesday 3-5 Pm','(845) 257-3533','Lecturer/Graduate Coordinator','SH 243',NULL),(33,'Keqin Li','lik@newpaltz.edu','www.cs.newpaltz.edu',NULL,'(845) 257-3534','Professor','SH 249',NULL),(34,'Hanh Pham','phamh@newpaltz.edu','www.cs.newpaltz.edu',NULL,'(845) 257-3574','Associate Professor','SH 248',NULL),(35,'Ashley Suchy','suchya1@newpaltz.edu',NULL,NULL,NULL,'Assistant Professor','SH 247',NULL),(36,'Katherine Brainard','brainark@newpaltz.edu',NULL,NULL,NULL,'Adjunct Faculty','SH 247',NULL),(37,'Charles DeGennaro','degenna1@newpaltz.edu',NULL,NULL,NULL,'Adjunct Faculty','SH 247',NULL),(38,'Christian Golden','goldenc2@newpaltz.edu',NULL,NULL,NULL,'Adjunct Faculty','SH 247',NULL),(39,'Moshe Plotkin','plotkinm@newpaltz.edu',NULL,NULL,'(845) 257-3992','Adjunct Faculty','SH 244',NULL),(40,'Ashlee Dykeman','dykemana2@newpaltz.edu',NULL,NULL,'(845) 257-3990','Administrative Assistant 1','SH 253',NULL);
+/*!40000 ALTER TABLE `Faculty` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Faqs`
 --
 
@@ -93,6 +125,16 @@ CREATE TABLE `Faqs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `Faqs`
+--
+
+LOCK TABLES `Faqs` WRITE;
+/*!40000 ALTER TABLE `Faqs` DISABLE KEYS */;
+INSERT INTO `Faqs` VALUES (9,'What degrees are offered?','The department offers Bachelor of Science (BS) and Master of Science (MS) degrees in Computer Science.','https://catalog.newpaltz.edu/undergraduate/school-science-engineering/computer-science/'),(10,'What are the core Computer Science courses?','Core courses include Computer Science I & II, Data Structures, Computer Organization, Operating Systems, Software Engineering, and Algorithms.','https://catalog.newpaltz.edu/undergraduate/school-science-engineering/computer-science/major-computer-science/'),(11,'What labs or facilities are available?','Students have access to specialized computer labs equipped with Windows and Linux systems, as well as general-purpose labs across campus.','https://www.newpaltz.edu/compsci/facilities.html'),(12,'How do I get an academic advisor?','Upon declaring the Computer Science major, students are assigned a faculty advisor to assist with course selection and academic planning.','https://catalog.newpaltz.edu/graduate/graduate-academic-policies-handbook/academic-policies-procedures/advising/'),(13,'What career options are available?','Graduates pursue careers in software development, data analysis, cybersecurity, systems administration, and more.','https://www.newpaltz.edu/pointsofpride/school-of-science---engineering/Computer%20Science.html'),(14,'Are internships available?','Yes, the department assists students in finding internships through industry partnerships and career services.','https://www.newpaltz.edu/pointsofpride/school-of-science---engineering/Computer%20Science.html');
+/*!40000 ALTER TABLE `Faqs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ServerDatabaseForm`
 --
 
@@ -107,8 +149,18 @@ CREATE TABLE `ServerDatabaseForm` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ServerDatabaseForm`
+--
+
+LOCK TABLES `ServerDatabaseForm` WRITE;
+/*!40000 ALTER TABLE `ServerDatabaseForm` DISABLE KEYS */;
+INSERT INTO `ServerDatabaseForm` VALUES (4,'Dana Lopez','dana.lopez@example.com','N44332211','2025-09-12 20:49:44'),(5,'Ethan Patel','ethan.patel@example.com','N99887766','2025-09-12 20:49:44'),(24,'sfsdf','kontol@newpaltz.edu','N23123222','2025-11-19 12:13:42'),(26,'Molly','mollyTwo@newpaltz.edu','N01010101','2025-11-24 03:38:43');
+/*!40000 ALTER TABLE `ServerDatabaseForm` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `StudentHighlightBlog`
@@ -137,6 +189,16 @@ CREATE TABLE `StudentHighlightBlog` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `StudentHighlightBlog`
+--
+
+LOCK TABLES `StudentHighlightBlog` WRITE;
+/*!40000 ALTER TABLE `StudentHighlightBlog` DISABLE KEYS */;
+INSERT INTO `StudentHighlightBlog` VALUES (1,'../assets/student_pictures/pitman_headshot.jpg','Taylor Pitman','Computer Science Lab Website','The Computer Science Department Website is a full-stack web application designed to centralize key resources, announcements, and engagement tools for students, faculty, and staff. The platform includes an event calendar, searchable faculty directory, student project showcase with admin approvals, tech blog, FAQ page, and an internship board.\n\nThe frontend was built using React.js and Tailwind CSS, while the backend uses Node.js with Express.js and a MariaDB database. User authentication is handled via JWT, and the app is deployed on the Hydra server. Admins can manage content through a secure dashboard. GitHub API integration allows students to showcase their code directly.\n\nThis project was built for long-term use by the department and is structured to be easy to maintain and scale.','React, Express, MariaDB, Tailwind CSS','https://github.com/taylorpitman/NewPaltz-CS-Lab-Website','https://hydra.newpaltz.edu','2025-04-18 14:41:22',1,1,'A full-stack website that centralizes CS department events and resources to improve communication and engagement across students and faculty.'),(4,'','Maya Thompson','EcoRoute: Smart Carpooling Web App','EcoRoute uses Google Maps API to suggest carpool matches and real-time reroutes. It allows users to create commuting profiles, join local groups, and schedule recurring carpools. Built with React.js, Express.js, and MongoDB, it also features carbon savings tracking and a badge system for active users.',NULL,'https://github.com/mayathompson/ecoroute','','2025-04-30 13:51:27',1,NULL,'An intelligent carpooling platform that helps users find eco-friendly commuting partners based on route compatibility and shared preferences.'),(5,'','Arjun Patel','CodeCanvas: A Collaborative Coding Whiteboard','Designed for remote learning environments, CodeCanvas offers shared terminals, syntax highlighting, and version history. It uses WebSockets for real-time collaboration and Docker containers to safely run code. The project also includes a peer review mode and inline comments for collaborative debugging.\n',NULL,'','https://codecanvas.live','2025-04-30 13:52:08',1,NULL,'A real-time collaborative code editor for students and instructors, integrating live chat and code execution for over 12 languages.'),(6,'','Liliana Cruz','FoodieFinder: Social Restaurant Discovery','FoodieFinder allows users to post food reviews, create foodie friend circles, and build visual wishlists. It features an ML-based suggestion system and real-time map integration with filtering by dietary restrictions. Built using Vue.js and Firebase.',NULL,'https://github.com/lilianacruz-dev/foodiefinder','','2025-04-30 13:52:55',1,NULL,'A mobile-first web app that blends social recommendations with location-based restaurant.'),(7,'','Jonah Lee','PlantPal: Indoor Plant Monitoring System','Using an Arduino and Raspberry Pi combo, PlantPal tracks soil moisture, sunlight, and temperature. Data is pushed to a React dashboard where users can view trends, receive alerts, and remotely trigger watering. Built with Node.js, Chart.js, and MQTT protocol for real-time updates.',NULL,' https://github.com/jonahlee-iot/plantpal','','2025-04-30 13:53:30',1,NULL,'A hardware and  software solution for monitoring and automating indoor plant care using IoT.'),(8,'','Riley Chen','MindMappr: Visual Note-Taking for Neurodivergent Learners','MindMappr is designed for learners with ADHD, dyslexia, and autism who benefit from visual structure over traditional note-taking. The app allows drag-and-drop nodes, color-coded branches, and voice-to-text input. Built with React.js, D3.js for dynamic visuals, and Firebase for real-time syncing and storage. It includes accessibility features like dyslexia-friendly fonts and a distraction-free mode.',NULL,'','https://mindmappr.net','2025-04-30 15:47:55',1,NULL,'An accessible web app that helps neurodivergent students organize thoughts using customizable mind maps, icons, and visual cues!!');
+/*!40000 ALTER TABLE `StudentHighlightBlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `StudentResources`
 --
 
@@ -151,6 +213,16 @@ CREATE TABLE `StudentResources` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `StudentResources`
+--
+
+LOCK TABLES `StudentResources` WRITE;
+/*!40000 ALTER TABLE `StudentResources` DISABLE KEYS */;
+INSERT INTO `StudentResources` VALUES (2,'CS50 – Introduction to Computer Science','A free, comprehensive introduction to computer science from Harvard University, covering topics like algorithms, data structures, and web development.','https://cs50.harvard.edu/'),(3,'Teach Yourself Computer Science','A self-study guide recommending the best resources across foundational CS topics, ideal for independent learners.','https://teachyourselfcs.com/'),(4,'freeCodeCamp','An interactive platform offering free coding lessons and certifications in web development, data science, and more.','https://www.freecodecamp.org/'),(5,'Khan Academy – Computer Science','Provides beginner-friendly lessons on programming, algorithms, and computer science principles through interactive exercises.','https://www.khanacademy.org/computing/computer-science'),(6,'GeeksforGeeks','A vast repository of tutorials, coding problems, and interview preparation materials for computer science students and professionals.','https://www.geeksforgeeks.org/'),(7,'Code.org','Offers engaging coding tutorials and curricula for K-12 students, including the popular Hour of Code initiative.','https://code.org/'),(8,'Coursera – Computer Science Courses','Features online courses from top universities covering various CS topics, from beginner to advanced levels.','https://www.coursera.org/browse/computer-science'),(9,'MIT OpenCourseWare – Computer Science','Access free course materials from MIT\'s computer science classes, including lecture notes, assignments, and exams.','https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/'),(10,'CodeHS','An interactive platform teaching computer science and programming to high school students through engaging lessons and exercises.','https://codehs.com/'),(11,'CodeCombat','A game-based learning platform where students write code to navigate through challenges, making programming fun and interactive.','https://codecombat.com/'),(12,'CS First by Google','A free computer science curriculum designed for elementary and middle school students to learn coding with Scratch.','https://csfirst.withgoogle.com/'),(13,'Codecademy','Offers interactive coding lessons in various programming languages and computer science concepts.','https://www.codecademy.com/'),(14,'edX – Computer Science Courses','Provides a range of CS courses from leading institutions, covering topics like algorithms, AI, and software development.','https://www.edx.org/learn/computer-science'),(15,'The Odin Project','A full-stack curriculum that teaches web development from scratch, including HTML, CSS, JavaScript, and more.','https://www.theodinproject.com/'),(16,'CS Educators Stack Exchange','A Q&A community for computer science educators to share resources, teaching strategies, and curriculum advice.','https://cseducators.stackexchange.com/');
+/*!40000 ALTER TABLE `StudentResources` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `TechBlog`
@@ -172,8 +244,48 @@ CREATE TABLE `TechBlog` (
   PRIMARY KEY (`id`),
   KEY `admin_id` (`admin_id`),
   CONSTRAINT `TechBlog_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `Admins` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TechBlog`
+--
+
+LOCK TABLES `TechBlog` WRITE;
+/*!40000 ALTER TABLE `TechBlog` DISABLE KEYS */;
+INSERT INTO `TechBlog` VALUES (5,'The Roles of Mathematics in Computer Science','Explores how math principles underpin computer science, influencing everything from algorithms to data structures.','https://dl.acm.org/doi/abs/10.1145/2537753.2537777','Douglas Baldwin, Henry M. Walker, Peter B. Henderson','2025-04-30 05:38:32',1,NULL,NULL),(6,'How Computer Science Serves the Developing World','Shows how computer science improves education, health, and infrastructure in underdeveloped regions.','https://www.researchgate.net/publication/220425468_How_Computer_Science_Serves_the_Developing_World','M. Bernardine Dias, Eric Brewer','2025-04-30 05:38:32',1,NULL,NULL),(7,'Expanding Access and Diversity in Computer Science','Highlights initiatives working to broaden inclusion and accessibility in CS education and careers.','https://dl.acm.org/doi/abs/10.1145/2807704','Hadi Partovi','2025-04-30 05:38:32',1,NULL,NULL),(8,'Computer Scientists Rethink the Foundations','Explores shifts in computer science’s core principles and increasing interdisciplinarity.','https://www.science.org/doi/10.1126/science.7660119','David A. Patterson','2025-04-30 05:38:32',1,NULL,NULL),(9,'Why Agility Matters for Computer Science Engineers','Discusses the value of adaptability and lifelong learning in the fast-evolving tech industry.','https://www.bennett.edu.in/bennett-life/life-at-campus/events/agility-critical-computer-science-engineer/','Anurag Goswami','2025-04-30 05:38:32',1,NULL,NULL),(10,'Why JavaScript’s Future Lies Beyond the Browser','This article explores the evolving role of JavaScript in backend development, IoT, and AI workflows. It discusses frameworks like Node.js and Deno, and why developers are pushing JavaScript beyond the browser into universal app ecosystems.','https://techpulse.io/articles/javascript-beyond-browser','Devonte Richards','2025-04-30 13:54:39',1,NULL,NULL),(11,'The Hidden Costs of Free APIs: What Every Developer Should Know','While free APIs are great for prototyping, they often come with hidden limits, poor uptime, and lack of support. This article breaks down common issues developers face and how to evaluate an API’s long-term viability.','https://stackbrief.com/blog/free-api-pitfalls','Aisha Mehta','2025-04-30 13:55:07',1,NULL,NULL),(13,'How Dark Mode Took Over Our Screens','This article explores the widespread adoption of dark mode across various applications and operating systems. It examines the historical roots of dark mode, its resurgence in modern UI design, and the reasons behind its popularity.','https:/example.com','WIRED Staff','2025-04-30 15:49:30',1,NULL,NULL),(14,'What Are ‘Top Tier’ Watches and Why Do Collectors Seek Them?','Understanding why high-fidelity replica watches, also known as Top Tier models, are gaining ground among collectors, jewelers, and security-conscious clients in the luxury ecosystem.','https://www.relogiostoptier.com.br','Ricardo F. Ramos','2025-07-18 13:46:49',1,NULL,NULL),(15,'sad','sdfsdf','https://hydra.newpaltz.edu/kontol','sdf','2025-11-19 12:10:33',0,NULL,NULL),(16,'sfsdf','sdfdsf','https://hydra.newpaltz.edu/memek1','sdfsdf','2025-11-19 12:12:37',0,NULL,NULL),(17,'sfsdf','sdfdsf','https://hydra.newpaltz.edu/memek21','sdfsdf','2025-11-19 12:12:56',0,NULL,NULL);
+/*!40000 ALTER TABLE `TechBlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profiles`
+--
+
+DROP TABLE IF EXISTS `profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_profiles_admin` (`user_id`),
+  CONSTRAINT `fk_profiles_admin` FOREIGN KEY (`user_id`) REFERENCES `Admins` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profiles`
+--
+
+LOCK TABLES `profiles` WRITE;
+/*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+INSERT INTO `profiles` VALUES (2,'Test User','testuser@example.com','student','This is a test bio.',1);
+/*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -184,4 +296,4 @@ CREATE TABLE `TechBlog` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-11-09 17:59:36
+-- Dump completed on 2025-11-28 21:00:16

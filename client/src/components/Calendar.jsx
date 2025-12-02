@@ -7,17 +7,55 @@ export default function Calendar() {
     const [viewDate, setViewDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(null);
 
-    // Faculty list state
     const [facultyList, setFacultyList] = useState([]);
-    // Popup visibility state
     const [showPopup, setShowPopup] = useState(false);
-    // Search bar state
     const [searchQuery, setSearchQuery] = useState("");
-    // Events state
     const [events, setEvents] = useState({});
 
+    // ⭐ Pastel background colors by month
+    const monthColors = [
+        "#FFE8E8", "#FFF3E0", "#FFF9C5", "#C6FFCB",
+        "#B8DCF5", "#DCC8FB", "#FCE4EC", "#FFF2C9",
+        "#89BEC5", "#D4F7AC", "#FFFAC4", "#F8CEFF",
+    ];
 
-    // Fetch faculty data for popup
+    // Make lighter/darker versions of color
+    const shadeColor = (color, percent) => {
+        let num = parseInt(color.replace("#", ""), 16),
+            amt = Math.round(2.55 * percent),
+            r = (num >> 16) + amt,
+            g = ((num >> 8) & 0x00FF) + amt,
+            b = (num & 0x0000FF) + amt;
+
+        return (
+            "#" +
+            (
+                0x1000000 +
+                (r < 255 ? (r < 0 ? 0 : r) : 255) * 0x10000 +
+                (g < 255 ? (g < 0 ? 0 : g) : 255) * 0x100 +
+                (b < 255 ? (b < 0 ? 0 : b) : 255)
+            )
+                .toString(16)
+                .slice(1)
+        );
+    };
+
+    // Compute date pieces first
+    const { year, month, daysInMonth, startWeekday } = useMemo(() => {
+        const y = viewDate.getFullYear();
+        const m = viewDate.getMonth();
+        const dim = new Date(y, m + 1, 0).getDate();
+        const start = new Date(y, m, 1).getDay();
+        return { year: y, month: m, daysInMonth: dim, startWeekday: start };
+    }, [viewDate]);
+
+    // Now color logic is safe
+    const monthColor = monthColors[month];
+    const borderColor = shadeColor(monthColor, -25); // darker
+    const searchColor = shadeColor(monthColor, +15); // lighter
+
+
+    // Fetch faculty
     useEffect(() => {
         const fetchFaculty = async () => {
             try {
@@ -30,14 +68,15 @@ export default function Calendar() {
         fetchFaculty();
     }, []);
 
-    // Fetch events from backend
+    // Fetch events
     useEffect(() => {
         const fetchEvents = async () => {
             try {
                 const data = await eventService.getAllEvents();
-                // Convert array of events to an object keyed by date
                 const eventsByDate = data.reduce((acc, ev) => {
-                    const dateKey = new Date(ev.start_time).toISOString().split("T")[0];
+                    const dateKey = new Date(ev.start_time)
+                        .toISOString()
+                        .split("T")[0];
                     if (!acc[dateKey]) acc[dateKey] = [];
                     acc[dateKey].push(ev);
                     return acc;
@@ -50,31 +89,26 @@ export default function Calendar() {
         fetchEvents();
     }, []);
 
-    // Filter faculty based on search query
-    const filteredFaculty = facultyList.filter(f => {
+    const filteredFaculty = facultyList.filter((f) => {
         const name = f?.name?.toLowerCase() ?? "";
         const officeHours = f?.office_hours?.toLowerCase() ?? "";
         const query = searchQuery?.toLowerCase() ?? "";
         return name.includes(query) || officeHours.includes(query);
     });
 
-    // Updated hasOfficeHours function
     const hasOfficeHours = (date) => {
         const dayStr = date.toLocaleDateString("en-US", { weekday: "long" });
-        return filteredFaculty.some(f => {
-            const officeHoursStr = f.office_hours || ""; // string-based office hours
-            return officeHoursStr.toLowerCase().includes(dayStr.toLowerCase());
+        return filteredFaculty.some((f) => {
+            const hours = f.office_hours || "";
+            return hours.toLowerCase().includes(dayStr.toLowerCase());
         });
     };
 
-
-    // Click handler
     const onDateSelect = (date) => {
         setSelectedDate(date);
         setShowPopup(true);
     };
 
-    // Filter events based on search query
     const filteredEvents = Object.keys(events).reduce((acc, dateKey) => {
         const matched = events[dateKey].filter((ev) =>
             ev.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -83,18 +117,6 @@ export default function Calendar() {
         return acc;
     }, {});
 
-
-
-
-    // Compute month info
-    const { year, month, daysInMonth, startWeekday } = useMemo(() => {
-        const y = viewDate.getFullYear();
-        const m = viewDate.getMonth();
-        const dim = new Date(y, m + 1, 0).getDate();
-        const start = new Date(y, m, 1).getDay();
-        return { year: y, month: m, daysInMonth: dim, startWeekday: start };
-    }, [viewDate]);
-
     const monthLabel = viewDate.toLocaleString(undefined, {
         month: "long",
         year: "numeric",
@@ -102,24 +124,38 @@ export default function Calendar() {
 
     const gotoPrev = () =>
         setViewDate((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1));
+
     const gotoNext = () =>
         setViewDate((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1));
 
     const formatDateKey = (date) => date.toLocaleDateString("en-CA");
 
+
+    // ---------------------------------------------------------
+    // RENDER
+    // ---------------------------------------------------------
     return (
         <div
             style={{
                 width: "100%",
-                maxWidth: 800,
-                margin: "20px auto",
+                maxWidth: 850,
+                margin: "30px auto",
                 fontFamily: "system-ui, sans-serif",
-                border: "1px solid #1a1818ff",
-                position: "relative",
+                background: monthColor,
+                borderRadius: 18,
+                boxShadow: "0 4px 22px rgba(0,0,0,0.09)",
+                overflow: "hidden",
+                border: `2px solid ${borderColor}`,
             }}
         >
-            {/* Search Bar */}
-            <div style={{ padding: "10px 20px" }}>
+            {/* Search */}
+            <div
+                style={{
+                    padding: "15px 20px",
+                    borderBottom: `1px solid ${borderColor}`,
+                    background: searchColor,
+                }}
+            >
                 <input
                     type="text"
                     placeholder="Search events or faculty office hours..."
@@ -127,57 +163,79 @@ export default function Calendar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
                         width: "100%",
-                        padding: "8px 12px",
-                        borderRadius: 6,
-                        border: "1px solid #ccc",
+                        padding: "12px 14px",
+                        borderRadius: 10,
+                        border: `1px solid ${borderColor}`,
                         fontSize: 16,
+                        background: "#ffffffaa",
+                        transition: "0.2s",
                     }}
                 />
             </div>
+
             {/* Header */}
             <div
                 style={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    padding: "10px 20px",
-                    borderBottom: "1px solid #1a1818ff",
+                    padding: "16px 20px",
+                    background: shadeColor(monthColor, -5),
+                    borderBottom: `1px solid ${borderColor}`,
                 }}
             >
                 <button
                     onClick={gotoPrev}
-                    onMouseDown={(e) => {
-                        e.currentTarget.interval = setInterval(gotoPrev, 150);
+                    style={{
+                        padding: "6px 14px",
+                        borderRadius: 8,
+                        background: "white",
+                        border: `1px solid ${borderColor}`,
+                        cursor: "pointer",
+                        fontSize: 18,
                     }}
-                    onMouseUp={(e) => clearInterval(e.currentTarget.interval)}
-                    onMouseLeave={(e) => clearInterval(e.currentTarget.interval)}
                 >
-                    &lt;
+                    ‹
                 </button>
 
-                <h2 style={{ margin: 0 }}>{monthLabel}</h2>
+                <h2
+                    style={{
+                        margin: 0,
+                        fontSize: 22,
+                        fontWeight: 700,
+                        color: "#333",
+                    }}
+                >
+                    {monthLabel}
+                </h2>
 
                 <button
                     onClick={gotoNext}
-                    onMouseDown={(e) => {
-                        e.currentTarget.interval = setInterval(gotoNext, 150);
+                    style={{
+                        padding: "6px 14px",
+                        borderRadius: 8,
+                        background: "white",
+                        border: `1px solid ${borderColor}`,
+                        cursor: "pointer",
+                        fontSize: 18,
                     }}
-                    onMouseUp={(e) => clearInterval(e.currentTarget.interval)}
-                    onMouseLeave={(e) => clearInterval(e.currentTarget.interval)}
                 >
-                    &gt;
+                    ›
                 </button>
             </div>
 
-            {/* Weekday headers */}
+            {/* Weekdays */}
             <div
                 style={{
                     display: "grid",
                     gridTemplateColumns: "repeat(7, 1fr)",
                     textAlign: "center",
-                    padding: "10px 0",
-                    background: "#f9f9f9",
+                    padding: "12px 0",
+                    background: shadeColor(monthColor, +10),
                     fontWeight: 600,
+                    fontSize: 15,
+                    borderBottom: `1px solid ${borderColor}`,
+                    color: "#555",
                 }}
             >
                 {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
@@ -185,30 +243,31 @@ export default function Calendar() {
                 ))}
             </div>
 
-            {/* Calendar grid */}
+            {/* Days Grid */}
             <div
                 style={{
                     display: "grid",
                     gridTemplateColumns: "repeat(7, 1fr)",
-                    borderTop: "1px solid #1a1818ff",
                 }}
             >
-                {/* Blank cells before month start */}
+                {/* Empty cells start */}
                 {Array.from({ length: startWeekday }).map((_, i) => (
                     <div
                         key={"blank" + i}
                         style={{
-                            border: "1px solid #919191ff",
-                            background: "#d2d2d2ff",
+                            border: `1px solid ${borderColor}`,
+                            minHeight: 95,
+                            background: monthColor,
                         }}
                     ></div>
                 ))}
 
-                {/* Days */}
+                {/* Real days */}
                 {Array.from({ length: daysInMonth }).map((_, i) => {
                     const day = i + 1;
                     const date = new Date(year, month, day);
                     const dateKey = formatDateKey(date);
+
                     const hasEvents = !!filteredEvents[dateKey];
                     const officeHours = hasOfficeHours(date);
 
@@ -217,46 +276,46 @@ export default function Calendar() {
                             key={day}
                             onClick={() => onDateSelect(date)}
                             style={{
-                                border: "1px solid #1a1818ff",
+                                border: `1px solid ${borderColor}`,
                                 padding: "10px",
-                                minHeight: 80,
+                                minHeight: 95,
                                 cursor: "pointer",
                                 textAlign: "right",
                                 fontWeight: 600,
-                                color: "#444",
-                                background: "white",
+                                color: "#333",
+                                background: monthColor,
                                 position: "relative",
+                                transition: "0.18s",
                             }}
-                            onMouseEnter={(e) => (e.currentTarget.style.background = "#e5e1b1ff")} // light hover
-                            onMouseLeave={(e) => (e.currentTarget.style.background = "white")} // back to white
                         >
                             {day}
-                            {/* Small event indicator dot */}
+
+                            {/* Event dot */}
                             {hasEvents && (
                                 <div
                                     style={{
-                                        width: 8,
-                                        height: 8,
+                                        width: 10,
+                                        height: 10,
                                         borderRadius: "50%",
-                                        background: "red",
+                                        background: "#d32f2f",
                                         position: "absolute",
-                                        bottom: 6,
-                                        left: 6,
+                                        bottom: 8,
+                                        left: 8,
                                     }}
                                 ></div>
                             )}
 
-                            {/* Blue dot for office hours */}
+                            {/* Office hours dot */}
                             {officeHours && (
                                 <div
                                     style={{
-                                        width: 8,
-                                        height: 8,
+                                        width: 10,
+                                        height: 10,
                                         borderRadius: "50%",
-                                        background: "blue",
+                                        background: "#1e88e5",
                                         position: "absolute",
-                                        bottom: 6,
-                                        right: 6,
+                                        bottom: 8,
+                                        right: 8,
                                     }}
                                 ></div>
                             )}
@@ -264,28 +323,31 @@ export default function Calendar() {
                     );
                 })}
 
-                {/* Fill end blanks */}
+                {/* Empty end cells */}
                 {Array.from({
                     length: 7 - ((startWeekday + daysInMonth) % 7 || 7),
                 }).map((_, i) => (
                     <div
                         key={"endblank" + i}
                         style={{
-                            border: "1px solid #919191ff",
-                            background: "#d2d2d2ff",
+                            border: `1px solid ${borderColor}`,
+                            minHeight: 95,
+                            background: monthColor,
                         }}
                     ></div>
                 ))}
             </div>
 
-            {/* Popup Window */}
+            {/* Popup */}
             {showPopup && selectedDate && (
                 <PopupWindow
                     date={selectedDate}
-                    faculty={filteredFaculty.filter(f => {
-                        const dayStr = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
-                        const officeHoursStr = f.office_hours || "";
-                        return officeHoursStr.toLowerCase().includes(dayStr.toLowerCase());
+                    faculty={filteredFaculty.filter((f) => {
+                        const dayStr = selectedDate.toLocaleDateString(
+                            "en-US",
+                            { weekday: "long" }
+                        );
+                        return f.office_hours?.toLowerCase().includes(dayStr.toLowerCase());
                     })}
                     events={filteredEvents[formatDateKey(selectedDate)] || []}
                     onClose={() => setShowPopup(false)}

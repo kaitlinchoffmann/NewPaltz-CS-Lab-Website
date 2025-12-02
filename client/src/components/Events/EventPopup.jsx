@@ -1,83 +1,100 @@
-import React from 'react';
+import React from "react";
+import { FaTimes, FaClock, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 
 export default function EventPopup({ event, onClose }) {
     if (!event) return null;
 
     const flyerSrc = event.flyer
-        ? `http://localhost:5001${event.flyer}`
-        : 'http://localhost:5001/uploads/noFlyer.jpg';
+        ? `/api${event.flyer}`
+        : "/api/uploads/noFlyer.jpg";
 
     const handleImageError = (e) => {
-        if (e.target.src !== 'http://localhost:5001/uploads/noFlyer.jpg') {
-            e.target.src = 'http://localhost:5001/uploads/noFlyer.jpg';
+        if (e.target.src !== "/api/uploads/noFlyer.jpg") {
+            e.target.src = "/api/uploads/noFlyer.jpg";
         }
     };
 
     return (
         <div
-            style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                background: "rgba(0,0,0,0.5)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1000,
-            }}
+            className="
+                fixed inset-0 bg-black/50 backdrop-blur-md 
+                flex items-center justify-center z-[2000]
+                animate-fadeIn
+            "
             onClick={onClose}
         >
             <div
-                style={{
-                    background: "white",
-                    padding: "30px 40px",
-                    borderRadius: "16px",
-                    minWidth: 400,
-                    maxWidth: 600,
-                    maxHeight: "90vh",
-                    overflowY: "auto",
-                    boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-                    position: "relative",
-                    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                }}
+                className="
+                    relative w-full max-w-2xl mx-4
+                    bg-white/80 backdrop-blur-2xl
+                    rounded-3xl shadow-2xl
+                    border border-white/30
+                    p-8 max-h-[90vh] overflow-y-auto
+                    animate-slideUp
+                "
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close button */}
                 <button
                     onClick={onClose}
-                    style={{
-                        position: "absolute",
-                        top: 12,
-                        right: 12,
-                        border: "none",
-                        background: "#f2f2f2",
-                        borderRadius: "50%",
-                        width: 30,
-                        height: 30,
-                        fontSize: 18,
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                    }}
+                    className="
+                        absolute top-5 right-5 w-10 h-10 rounded-full
+                        bg-white/90 backdrop-blur-md
+                        border border-gray-200 shadow-md
+                        flex items-center justify-center
+                        hover:bg-gray-100 hover:scale-110
+                        transition-all duration-200
+                    "
                 >
-                    ✕
+                    <FaTimes className="text-gray-600 text-lg" />
                 </button>
 
-                {/* Event details */}
-                <h2 style={{ marginBottom: 10 }}>{event.title}</h2>
-                <p>📅 {new Date(event.start_time).toLocaleString()} - {new Date(event.end_time).toLocaleString()}</p>
-                {event.location && <p>📍 {event.location}</p>}
-                {event.description && <p style={{ marginTop: 10 }}>{event.description}</p>}
-                <img
-                    src={flyerSrc}
-                    alt={event.title}
-                    onError={handleImageError}
-                    style={{ maxWidth: "100%", borderRadius: 8, marginTop: 12 }}
-                />
+                {/* Title */}
+                <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
+                    {event.title}
+                </h2>
+
+                {/* Date & Time block */}
+                <div className="space-y-2 mb-6 text-gray-700">
+                    <div className="flex items-center gap-3">
+                        <FaCalendarAlt className="text-gray-500" />
+                        <span className="text-sm">
+                            {new Date(event.start_time).toLocaleDateString()}
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <FaClock className="text-gray-500" />
+                        <span className="text-sm">
+                            {new Date(event.start_time).toLocaleTimeString()} –{" "}
+                            {new Date(event.end_time).toLocaleTimeString()}
+                        </span>
+                    </div>
+
+                    {event.location && (
+                        <div className="flex items-center gap-3">
+                            <FaMapMarkerAlt className="text-gray-500" />
+                            <span className="text-sm">{event.location}</span>
+                        </div>
+                    )}
+                </div>
+
+                {/* Description */}
+                {event.description && (
+                    <p className="text-gray-800 leading-relaxed mb-6 text-[15px] whitespace-pre-line">
+                        {event.description}
+                    </p>
+                )}
+
+                {/* Flyer */}
+                <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+                    <img
+                        src={flyerSrc}
+                        onError={handleImageError}
+                        alt={event.title}
+                        className="w-full object-contain bg-white"
+                    />
+                </div>
             </div>
         </div>
     );

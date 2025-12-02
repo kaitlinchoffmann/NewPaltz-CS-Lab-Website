@@ -46,21 +46,34 @@ export default function EventEditPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Submitting:", formData);
+
         try {
             const data = new FormData();
-            for (let key of ["title", "description", "start_time", "end_time", "location", "flyer_url"]) {
-                if (formData[key] != null) {
-                    data.append(key, formData[key]);
-                }
+
+            // Always send text fields
+            data.append("title", formData.title);
+            data.append("description", formData.description);
+            data.append("start_time", formData.start_time);
+            data.append("end_time", formData.end_time);
+            data.append("location", formData.location);
+
+            // Only send flyer if user selected a new one
+            if (formData.flyer instanceof File) {
+                data.append("flyer", formData.flyer);
             }
+
             await eventService.editEvent(id, data);
+
             alert("Event updated successfully!");
             window.location.href = "/admin-panel/events";
+
         } catch (err) {
             console.error("Error updating event:", err);
             alert("Failed to update event. Please try again.");
         }
     };
+
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-10">

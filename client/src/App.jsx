@@ -18,6 +18,12 @@ import StudentResources from './pages/StudentResources';
 import StudentResourcesAddPage from './pages/AdminPanel/StudentResources/ResourceAddPage';
 import StudentResourcesEditPage from './pages/AdminPanel/StudentResources/ResourceEditPage';
 
+import Courses from './pages/Courses/Courses';
+import CoursePage from './pages/Courses/CoursePage';
+import CourseForm from './pages/AdminPanel/Courses/CourseForm';
+import CompExam from './pages/Resources/CompExam';
+import CourseProgression from './pages/Resources/CourseProgression';
+
 import StudentForms from './pages/StudentForms';
 import SubmitSDRequest from './pages/StudentRequests/SubmitSDRequest';
 
@@ -44,6 +50,8 @@ import Footer from './components/Footer';
 import Event from './pages/Events/EventPage';
 import EventAddPage from './pages/Events/EventAddPage';
 import EventEditPage from './pages/Events/EventEditPage';
+
+import MonitoringPanelPage from './pages/AdminPanel/MonitoringPanelPage';
 
 const App = () => {
   return (
@@ -96,6 +104,15 @@ const App = () => {
             <Route path="/create-event" element={<EventAddPage />} />
             <Route path="/admin-panel/events/edit/:id" element={<EventEditPage />} />
 
+            <Route path="/admin-panel/monitoring-panel" element={<MonitoringPanelPage />} />
+
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:slug" element={<CoursePage />} />
+            <Route path="/admin-panel/courses/add" element={<CourseForm />} />
+            <Route path="/admin-panel/courses/edit/:id" element={<CourseForm isEdit={true} />} />
+
+            <Route path="/comp-exam" element={<CompExam />} />
+            <Route path="/course-progression" element={<CourseProgression />} />
 
           </Routes>
         </main>

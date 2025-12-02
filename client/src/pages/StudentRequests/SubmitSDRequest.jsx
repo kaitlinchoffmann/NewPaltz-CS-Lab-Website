@@ -17,7 +17,7 @@ export default function SubmitSDRequest() {
     });
     const sendAlert = async () => {
         try {
-            const res = await axios.post("http://localhost:5001/send-alert", {
+            const res = await axios.post("/api/send-alert", {
                 subject: "Student Account Request",
                 message: "A student has requested an account on the hydra server. Please login and review the submission :)",
             });

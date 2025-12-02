@@ -1,4 +1,3 @@
-// src/components/AdminPanel/EventsSection.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EventCard from "../Events/EventCard";

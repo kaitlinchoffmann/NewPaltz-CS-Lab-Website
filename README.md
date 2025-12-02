@@ -1,9 +1,25 @@
-# 📌 Computer Science Department Website
+# Tech Handbook: Hydra Server/Lab Website
 
-🚀 **Capstone Project | Full-Stack Web Development**  
+This project aims to develop a **fully functional and intuitive website** for the Computer Science Department, serving as a **central hub** for department activities, resources, and student engagement. Designed with **scalability and ease of maintenance** in mind, the platform will be used by faculty, students, lab assistants, and clubs
 
-This project aims to develop a **fully functional and intuitive website** for the Computer Science Department, serving as a **central hub** for department activities, resources, and student engagement. Designed with **scalability and ease of maintenance** in mind, the platform will be used by faculty, students, and lab assistants.
+---
+## Table of Context
 
+### Welcome
+- [Welcome](handbook/welcome/welcome.md)
+
+### Setup and Onboarding
+- [Setup](handbook/setup%20and%20onboarding/setup.md)
+- [Onboarding](handbook/setup%20and%20onboarding/onbaording.md)
+
+### Frontend
+- [ProfilePages](handbook/frontend/ProfilePages.md)
+### Serverside
+- [profileRoute](handbook/serverside/profileRoute.md)
+
+- [profileModel](handbook/serverside/profileModel.md)
+
+### Database
 ---
 
 ## 🔧 Tech Stack  

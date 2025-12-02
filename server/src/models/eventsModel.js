@@ -91,7 +91,7 @@ async function editEvent(id, eventData) {
     const { title, description, start_time, end_time, location, flyer_url } = eventData;
     const conn = await pool.getConnection();
     try {
-        const [result] = await conn.query(
+        const result = await conn.query(
             "UPDATE Events SET title = ?, description = ?, start_time = ?, end_time = ?, location = ?, flyer_url = ? WHERE id = ?",
             [title, description, start_time, end_time, location, flyer_url, id]
         );
@@ -101,10 +101,22 @@ async function editEvent(id, eventData) {
     }
 }
 
+async function getEventById(id) {
+    const conn = await pool.getConnection();
+    try {
+        const rows = await conn.query("SELECT * FROM Events WHERE id = ?", [id]);
+        return rows;
+    } finally {
+        conn.release();
+    }
+}
+
+
 module.exports = {
     getAllEvents,
     addEvent,
     deleteEvent,
     editEvent,
-    getEventsByAdminId
+    getEventsByAdminId,
+    getEventById
 };

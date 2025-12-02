@@ -1,139 +1,124 @@
+import React from "react";
+
 export default function PopupWindow({ date, events, faculty, onClose }) {
     return (
         <div
-            style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                background: "rgba(0,0,0,0.5)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1000,
-            }}
+            className="
+                fixed inset-0 bg-black/50 backdrop-blur-md
+                flex items-center justify-center z-[2000]
+                p-4 animate-fadeIn
+            "
             onClick={onClose}
         >
             <div
-                style={{
-                    background: "white",
-                    padding: "30px 40px",
-                    borderRadius: "16px",
-                    minWidth: 400,
-                    maxWidth: 600,
-                    boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-                    position: "relative",
-                    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                }}
+                className="
+        relative w-full max-w-2xl
+        bg-white/80 backdrop-blur-2xl
+        rounded-3xl shadow-2xl border border-white/30
+        p-6 
+        max-h-[85vh] overflow-y-auto popup-scroll
+        animate-slideUp
+        scrollbar-gutter-stable
+    "
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close button */}
                 <button
                     onClick={onClose}
-                    style={{
-                        position: "absolute",
-                        top: 12,
-                        right: 12,
-                        border: "none",
-                        background: "#f2f2f2",
-                        borderRadius: "50%",
-                        width: 30,
-                        height: 30,
-                        fontSize: 18,
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                        transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "#e0e0e0")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "#f2f2f2")}
+                    className="
+                        absolute top-4 right-4 w-10 h-10 rounded-full
+                        bg-white/90 border border-gray-300 shadow-md
+                        flex items-center justify-center
+                        text-gray-700 text-lg
+                        hover:bg-gray-100 hover:scale-110 transition-all
+                    "
                 >
                     ✕
                 </button>
 
-                {/* Events section */}
-                <h3
-                    style={{
-                        fontSize: 20,
-                        marginBottom: 10,
-                        color: "#333",
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 5,
-                    }}
-                >
+                {/* Header */}
+                <h2 className="text-2xl font-extrabold text-gray-900 mb-4">
                     Events for {date.toDateString()}
-                </h3>
+                </h2>
 
+                {/* Events */}
                 {events.length > 0 ? (
-                    <ul style={{ paddingLeft: 0, lineHeight: 1.6, listStyle: "none" }}>
-                        {events.map((ev, i) => (
-                            <li
-                                key={i}
-                                style={{
-                                    marginBottom: 16,
-                                    padding: "8px 12px",
-                                    borderRadius: 6,
-                                    border: "1px solid #ddd",
-                                    transition: "background 0.2s",
-                                }}
-                                onMouseEnter={(e) => (e.currentTarget.style.background = "#f9f9f9")}
-                                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                            >
-                                <strong>{ev.title}</strong>
-                                <p style={{ margin: "4px 0" }}>
-                                    📅 {new Date(ev.start_time).toLocaleString()} - {new Date(ev.end_time).toLocaleString()}
-                                </p>
-                                {ev.location && <p>📍 {ev.location}</p>}
-                                {ev.flyer_url && (
+                    <div className="space-y-6">
+                        {events.map((ev, i) => {
+                            const flyerSrc = ev.flyer
+                                ? `/api${ev.flyer}`
+                                : "/api/uploads/noFlyer.jpg";
+
+                            return (
+                                <div
+                                    key={i}
+                                    className="
+                                        p-4 rounded-2xl border border-gray-200
+                                        bg-white/60 shadow-sm
+                                        hover:shadow-md transition-all
+                                    "
+                                >
+                                    <h3 className="font-semibold text-lg text-gray-800 mb-1">
+                                        {ev.title}
+                                    </h3>
+
+                                    <p className="text-sm text-gray-600">
+                                        📅{" "}
+                                        {new Date(ev.start_time).toLocaleString()}{" "}
+                                        – {new Date(ev.end_time).toLocaleString()}
+                                    </p>
+
+                                    {ev.location && (
+                                        <p className="text-sm text-gray-600 mt-1">
+                                            📍 {ev.location}
+                                        </p>
+                                    )}
+
+                                    {/* Flyer */}
                                     <img
-                                        src={ev.flyer_url}
+                                        src={flyerSrc}
                                         alt={ev.title}
-                                        style={{ maxWidth: "100%", borderRadius: 8, marginTop: 6 }}
+                                        onError={(e) =>
+                                        (e.target.src =
+                                            "/api/uploads/noFlyer.jpg")
+                                        }
+                                        className="
+                                            w-full mt-3 rounded-xl
+                                            border border-gray-200 shadow 
+                                            object-contain bg-white
+                                        "
                                     />
-                                )}
-                            </li>
-                        ))}
-                    </ul>
+                                </div>
+                            );
+                        })}
+                    </div>
                 ) : (
-                    <p>No events for this day.</p>
+                    <p className="text-gray-700">No events for this day.</p>
                 )}
 
-                {/* Faculty office hours section */}
-                <h3
-                    style={{
-                        fontSize: 18,
-                        margin: "20px 0 10px",
-                        color: "#2c3e50",
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: 5,
-                    }}
-                >
+                {/* Faculty Office Hours */}
+                <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3 border-b border-gray-300 pb-1">
                     Faculty Office Hours
-                </h3>
+                </h2>
 
                 {faculty.length > 0 ? (
-                    <ul style={{ paddingLeft: 20, lineHeight: 1.6 }}>
+                    <ul className="space-y-3">
                         {faculty.map((f, i) => (
                             <li
                                 key={i}
-                                style={{
-                                    marginBottom: 6,
-                                    padding: "4px 0",
-                                    borderRadius: 4,
-                                    transition: "background 0.2s",
-                                }}
-                                onMouseEnter={(e) => (e.currentTarget.style.background = "#f9f9f9")}
-                                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                                className="
+                                    p-3 rounded-xl bg-white/60
+                                    border border-gray-200 shadow-sm
+                                    hover:bg-white/80 transition-all
+                                "
                             >
-                                <strong>{f.name}:</strong> {f.office_hours}
+                                <strong className="text-gray-800">{f.name}:</strong>{" "}
+                                <span className="text-gray-700">{f.office_hours}</span>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <p>No matching faculty office hours.</p>
+                    <p className="text-gray-700">No matching faculty office hours.</p>
                 )}
             </div>
         </div>

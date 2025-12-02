@@ -53,7 +53,7 @@ const sdFormService = {
 
   async createUser(email, nId) {
     try {
-      const response = await axios.post('/api/students/createUser', { email, nId });
+      const response = await axios.post('/api/scripts/admin/createUser', { email, nId });
       return response.data;
     } catch (error) {
       throw new Error('Failed to create user');

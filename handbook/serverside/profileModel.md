@@ -1,0 +1,3 @@
+# Profile Model
+
+Defines the database logic for retrieving and updating user profile records in the profiles table. It also imports the configured database connection, then provides two asynchronous functions that wrap MySQL queries in Promises for clean async handling. The getProfileById function accepts a profile ID, runs a SQL SELECT query to fetch the profile’s fields, and returns the first matching row; if no record exists, it rejects with a “Profile not found” error. The updateProfile function processes incoming profile data by filtering it against a list of allowed fields (name, email, role, bio), dynamically builds an SQL UPDATE statement, and only updates fields that were actually provided, otherwise it rejects with an appropriate error.
