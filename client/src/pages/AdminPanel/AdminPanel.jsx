@@ -19,7 +19,6 @@ import MonitoringPanelPage from './MonitoringPanelPage';
 
 import CoursesManagement from './Courses/CoursesManagement';
 import CompExamSection from '../../components/AdminPanel/CompExamSection';
-
 import { adminService } from '../../services/adminService';
 
 export default function AdminPanel() {
@@ -80,6 +79,8 @@ export default function AdminPanel() {
         { key: 'user-controls', component: <UserControlsSection admins={admins} handleDelete={handleDelete} />, roles: ['admin'], label: 'User Controls' },
 
         { key: 'monitoring-panel', component: <MonitoringPanelPage />, roles: ['admin'], label: 'Monitoring Panel' },
+
+
 
     ];
 
@@ -194,15 +195,7 @@ export default function AdminPanel() {
                     return null;
                 })}
             </main>
-            {/* Add User Button */}
-            <div className="mt-4">
-                <Link
-                    to="/admin-panel/users/create-user"
-                    className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                    Add User
-                </Link>
-            </div>
+
         </div>
     );
 
